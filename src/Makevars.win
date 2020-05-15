@@ -1,0 +1,44 @@
+COMPILED_BY ?= gcc-4.6.3
+TARGET = lib$(subst gcc,,$(COMPILED_BY))$(R_ARCH)
+
+RGEODALIB = ./libgeoda_src
+
+PKG_CPPFLAGS=\
+	-I$(RGEODALIB) \
+	-D__USE_PTHREAD__ \
+	-D__RGEODA__ \
+	-pthread
+
+
+PKG_LIBS=\
+	-L$(RWINLIB)/$(TARGET) \
+	-L$(RWINLIB)/lib$(R_ARCH) \
+	-pthread
+
+CPP_SRC_FILES = \
+	$(wildcard $(RGEODALIB)/sa/*.cpp) \
+	$(wildcard $(RGEODALIB)/knn/*.cpp) \
+	$(wildcard $(RGEODALIB)/weights/*.cpp) \
+	$(wildcard $(RGEODALIB)/clustering/*.cpp) \
+	$(wildcard $(RGEODALIB)/*.cpp) \
+
+C_SRC_FILES = \
+	$(wildcard $(RGEODALIB)/pg/*.c) \
+	$(wildcard $(RGEODALIB)/shapelib/*.c) \
+
+
+OBJECTS = \
+	$(patsubst %.c, %.o, $(C_SRC_FILES)) \
+	$(patsubst %.cpp, %.o, $(CPP_SRC_FILES)) \
+	rgeoda.o \
+
+CXX_STD = CXX11
+
+.PHONY: clean all
+
+all: clean $(SHLIB)
+
+clean:
+	rm -f $(SHLIB) $(OBJECTS)
+
+
