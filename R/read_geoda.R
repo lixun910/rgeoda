@@ -21,7 +21,7 @@ geoda <- setRefClass("geoda",
     initialize = function(o_gda) {
       "Constructor with a geoda object (internally used)"
       .self$gda = o_gda
-      #.self$map_type = gda$GetMapType()
+      .self$map_type = gda$GetMapType()
       .self$n_cols = gda$GetNumCols()
       .self$n_obs = gda$GetNumObs()
       .self$field_names = gda$GetFieldNames()
@@ -32,7 +32,7 @@ geoda <- setRefClass("geoda",
         for (i in 1:.self$n_cols) {
           f_nm <- .self$field_names[[i]]
           f_tp <- .self$field_types[[i]]
-          if (f_tp == "numeric") {
+          if (f_tp == "real") {
             .self$table[[f_nm]] <- gda$GetNumericCol(f_nm)
           } else if (f_tp == "integer") {
             .self$table[[f_nm]] <- gda$GetIntegerCol(f_nm)
@@ -90,6 +90,11 @@ geoda_open <- function(ds_path) {
   return(geoda$new(o_gda))
 }
 
+#' @title convert rgeoda instance to data.frame
+#' @description Override the as.data.frame function for rgeoda instance
+#' @param gda_obj A rgeoda object
+#' @return A data.frame object
+#' @export
 as.data.frame.geoda <- function(gda_obj) {
   return (gda_obj$table)
 }
