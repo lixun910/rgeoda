@@ -24,6 +24,7 @@ Like GeoDa desktop software, `rgeoda` is avaiable to different platforms includi
 NOTE: please install it from github source for testing
 
 ```r
+install.packages("devtools")
 devtools::install_github("lixun910/rgeoda")
 ```
 
@@ -48,7 +49,6 @@ Install rgeoda on windows from source package is not recommended. You would try 
 
 If everything installed without error, you should be able to load rgeoda:
 
-
 ```{r setup}
 library(rgeoda)
 ```
@@ -68,11 +68,15 @@ The `geoda_open` function returns a geoda object, which can be used to access th
 
 ```{r}
 guerry_df <- as.data.frame(guerry)
+class(guerry_df)
 ```
+
+Now guerry_df is a data frame.
 
 #### 2.1 Attributes of `geoda_df` dataframe
 
 ```{r}
+head(guerry_df)
 cat("\nnumber of columns:", ncol(guerry_df))
 cat("\nnumber of observations:", nrow(guerry_df))
 cat("\nfield names:", names(guerry_df))
@@ -96,24 +100,26 @@ Get data from 3-rd and 5-th columns:
 guerry_df[,c(3,5)]
 ```
 
-Get data from colmen 'Crm_prs'
+Get data from column 'Crm_prs'
 ```{r}
 guerry_df['Crm_prs']
 ```
 
-The above code returns a data.frame structure, you can get the list values by:
+The above code returns a data.frame, you can get the list values by:
 ```{r}
 crm_prs <- guerry_df['Crm_prs'][,1]
+class(crm_prs)
 ```
 
 Get data from multiple columns using the column names:
 ```{r}
 crm_prs_prp <- guerry_df[c('Crm_prs', 'Crm_prp')]
+head(crm_prs_prp)
 ```
 
 ## 3. Spatial Weights
 
-Spatial weights are central components in spatial data analysis. The spatial weights represents the possible spatial interaction between observations in space. Like GeoDa desktop software, `rgeoda` provides a rich variety of methods to create several different types of spatial weights:
+Spatial weights are central components in spatial data analysis. The spatial weights represent the possible spatial interactions between observations in space. Like GeoDa desktop software, `rgeoda` provides a rich variety of methods to create several different types of spatial weights:
 
 * Contiguity Based Weights: `queen_weights()`, `rook_weights()`
 * Distance Based Weights: `distance_weights()`
@@ -159,13 +165,13 @@ We can also access the details of the weights: e.g. list the neighbors of a spec
 
 ```{r}
 nbrs <- get_neighbors(queen_w, idx = 1)
-cat("\nNeighbors of 1-st observation are:", nbrs)
+cat("\nNeighbors of the 1-st observation are:", nbrs)
 ```
 We can also compute the spatial lag of a specified observation by passing the values of the selected variable:
 
 ```{r}
 lag0 <- spatial_lag(queen_w, idx = 1, values = crm_prs)
-cat("\nSpatial lag of 1-st observation is:", lag0)
+cat("\nSpatial lag of the 1-st observation of variable crm_prs is:", lag0)
 ```
 
 ### 3.2 Rook Contiguity Weights
@@ -205,24 +211,29 @@ Then, we should find the file "Guerry_r.gal" in the output directory.
 
 ### 3.3 Distance Based Weights
 
-To create a Distance based weights, we can call rgeoda's function 
+To create a Distance based weights, we can call rgeoda's function `distance_weights`
 ```r
 distance_weights(geoda_obj, dist_thres, power=1.0,  is_inverse=False, is_arc=False, is_mile=True)
 ``` 
-by passing the GeoDa object `guerry` we just created and the value of distance threshold. Like GeoDa, rgeoda provides a function to help you find a optimized distance threshold that guarantees that every observation has at least one neighbor:
+by passing the GeoDa object `guerry` we just created the value of distance threshold. 
+
+Like GeoDa, rgeoda also provides a function `min_distthreshold` to help you find a optimized distance threshold that guarantees that every observation has at least one neighbor:
 
 ```r
-min_distthreshold(GeoDa gda, bool is_arc = False, bool is_mile = True)
+min_distthreshold(GeoDa gda, bool is_arc = False, is_mile = True)
 ```
+For example, we first find the distance threshold using `min_distthreshold`, save the results into `dist_thres`, then pass this threshold `dist_thres` into the function `dist_w` to create a distance based weights for `guerry`.    
 
 ```{r}
 dist_thres <- min_distthreshold(guerry)
+dist_thres
 dist_w <- distance_weights(guerry, dist_thres)
 summary(dist_w)
 ```
 ### 3.4 K-Nearest Neighbor Weights
 
-A special case of distance based weights is K-Nearest neighbor weights, in which every obersvation will have exactly k neighbors. To create a KNN weights, we can call rgeoda's function:
+A special case of distance based weights is K-Nearest neighbor weights, in which every obersvation will have exactly k neighbors. To create a KNN weights, we can call rgeoda's function `knn_weights`:
+
 ```r
 knn_weights(gda, k, power = 1.0,is_inverse = False, is_arc = False, is_mile = True)
 ```
