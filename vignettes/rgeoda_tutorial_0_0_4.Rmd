@@ -14,14 +14,14 @@ knitr::opts_chunk$set(
 )
 ```
 
-rgeoda is a R library for spatial data analysis. It is a R wrapper of the libgeoda C++ library, which is built based on the GeoDa software. The version used in this tutorial is version 0.0.4.
+`rgeoda` is an R library for spatial data analysis. It is an R wrapper of the libgeoda C++ library, which is built based on the `GeoDa` software. The version used in this tutorial is version 0.0.4.
 
 
-## 1. Install rgeoda
+## 1. Install `rgeoda`
 
-Like GeoDa desktop software, `rgeoda` is avaiable to different platforms including: Mac, Linux and Windows. 
+Like `GeoDa` desktop software, `rgeoda` is avaiable to different platforms including: Mac, Linux and Windows. 
 
-NOTE: please install it from github source for testing
+NOTE: please install it from github source for testing.  
 
 ```r
 install.packages("devtools")
@@ -30,7 +30,7 @@ devtools::install_github("lixun910/rgeoda")
 
 ### Mac OSX and Linux
 
-In R console, use install.packages() function to install rgeoda from its source pacakge at: https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda_0.0.4.tar.gz
+In R console, use install.packages() function to install `rgeoda` from its source pacakge at: https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda_0.0.4.tar.gz
 
 ```r
 install.packages("https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda_0.0.4.tar.gz")
@@ -38,16 +38,16 @@ install.packages("https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda
 
 ### Windows
 
-In R console, use install.packages() function to install rgeoda from its source pacakge at: https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda_0.0.4.zip
+In R console, use install.packages() function to install `rgeoda` from its source pacakge at: https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda_0.0.4.zip
 
 ```r
 install.packages("https://github.com/lixun910/rgeoda/releases/download/nb/rgeoda_0.0.4.zip")
 ```
-Install rgeoda on windows from source package is not recommended. You would try if you know how to deal with [R devtools](https://www.r-project.org/nosvn/pandoc/devtools.html) on windows.
+Install `rgeoda` on windows from source package is not recommended. You would try if you know how to deal with [R devtools](https://www.r-project.org/nosvn/pandoc/devtools.html) on windows.
 
-### Load rgeoda library in R
+### Load `rgeoda` library in R
 
-If everything installed without error, you should be able to load rgeoda:
+If everything installed without error, you should be able to load `rgeoda`:
 
 ```{r setup}
 library(rgeoda)
@@ -55,7 +55,7 @@ library(rgeoda)
 
 ## 2. Load Spatial Data
 
-The data formats that rgeoda can read directly includes: ESRI Shapefile (Geojson later).
+The data formats that `rgeoda` can read directly includes: ESRI Shapefile (Geojson later).
 
 For example, to load the ESRI Shapefile `Guerry.shp` comes with the package:
 
@@ -64,7 +64,7 @@ guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
 guerry <- geoda_open(guerry_path)
 ```
 
-The `geoda_open` function returns a geoda object, which can be used to access the meta-data, fields, and columns of the input dataset.
+The `geoda_open` function returns a `geoda` object, which can be used to access the meta-data, fields, and columns of the input dataset.
 
 ```{r}
 guerry_df <- as.data.frame(guerry)
@@ -77,10 +77,9 @@ Now guerry_df is a data frame.
 
 ```{r}
 head(guerry_df)
-cat("\nnumber of columns:", ncol(guerry_df))
-cat("\nnumber of observations:", nrow(guerry_df))
-cat("\nfield names:", names(guerry_df))
-cat("\nfield types:", str(guerry_df))
+ncol(guerry_df)
+nrow(guerry_df)
+names(guerry_df)
 ```
 
 ### 2.2 Access Table Data
@@ -119,7 +118,7 @@ head(crm_prs_prp)
 
 ## 3. Spatial Weights
 
-Spatial weights are central components in spatial data analysis. The spatial weights represent the possible spatial interactions between observations in space. Like GeoDa desktop software, `rgeoda` provides a rich variety of methods to create several different types of spatial weights:
+Spatial weights are central components in spatial data analysis. The spatial weights represent the possible spatial interactions between observations in space. Like `GeoDa` desktop software, `rgeoda` provides a rich variety of methods to create several different types of spatial weights:
 
 * Contiguity Based Weights: `queen_weights()`, `rook_weights()`
 * Distance Based Weights: `distance_weights()`
@@ -130,9 +129,9 @@ Spatial weights are central components in spatial data analysis. The spatial wei
 
 To create a Queen contiguity weights, we can call rgeoda's function 
 ```r
-gda_queen(gda, order=1, include_lower_order = False, precision_threshold = 0)
+queen_weights(gda, order=1, include_lower_order = False, precision_threshold = 0)
 ``` 
-by passing the GeoDa object `guerry` we just created: 
+by passing the `GeoDa` object `guerry` we just created: 
 
 ```{r}
 queen_w <- queen_weights(guerry)
@@ -176,18 +175,18 @@ cat("\nSpatial lag of the 1-st observation of variable crm_prs is:", lag0)
 
 ### 3.2 Rook Contiguity Weights
 
-To create a Rook contiguity weights, we can call rgeoda's function 
+To create a Rook contiguity weights, we can call `rgeoda`'s function `rook_weights`: 
 ```r
 rook_weights(gda, order=1,include_lower_order=False, precision_threshold = 0)
 ``` 
-by passing the GeoDa object `guerry` we just created: 
+by passing the `GeoDa` object `guerry` we just created: 
 
 ```{r}
 rook_w <- rook_weights(guerry)
 summary(rook_w)
 ```
 
-The weights we created are in memory, which makes it straight forward for spatial data analysis and also are good for programming your application. To save the weights to a file, we need to call GeoDaWeight's function 
+The weights we created are in memory, which makes it straight forward for spatial data analysis and also are good for programming your application. To save the weights to a file, we need to call the function `save_weights` 
 ```r
 save_weights(gda_w, out_path, layer_name, id_name, id_values)
 ```
@@ -211,13 +210,13 @@ Then, we should find the file "Guerry_r.gal" in the output directory.
 
 ### 3.3 Distance Based Weights
 
-To create a Distance based weights, we can call rgeoda's function `distance_weights`
+To create a Distance based weights, we can call `rgeoda`'s function `distance_weights`
 ```r
 distance_weights(geoda_obj, dist_thres, power=1.0,  is_inverse=False, is_arc=False, is_mile=True)
 ``` 
-by passing the GeoDa object `guerry` we just created the value of distance threshold. 
+by passing the `GeoDa` object `guerry` we just created the value of distance threshold. 
 
-Like GeoDa, rgeoda also provides a function `min_distthreshold` to help you find a optimized distance threshold that guarantees that every observation has at least one neighbor:
+Like `GeoDa`, `rgeoda` also provides a function `min_distthreshold` to help you find a optimized distance threshold that guarantees that every observation has at least one neighbor:
 
 ```r
 min_distthreshold(GeoDa gda, bool is_arc = False, is_mile = True)
@@ -232,7 +231,7 @@ summary(dist_w)
 ```
 ### 3.4 K-Nearest Neighbor Weights
 
-A special case of distance based weights is K-Nearest neighbor weights, in which every obersvation will have exactly k neighbors. To create a KNN weights, we can call rgeoda's function `knn_weights`:
+A special case of distance based weights is K-Nearest neighbor weights, in which every obersvation will have exactly k neighbors. To create a KNN weights, we can call `rgeoda`'s function `knn_weights`:
 
 ```r
 knn_weights(gda, k, power = 1.0,is_inverse = False, is_arc = False, is_mile = True)
@@ -257,9 +256,9 @@ The kernl functions include
 * quartic
 * gaussian
 
-Two functions are provided in rgeoda to create kernel weights.
+Two functions are provided in `rgeoda` to create kernel weights.
 
-** Kernel Weights with adaptive bandwidth**
+#### Use `kernel_weights` for Kernel Weights with adaptive bandwidth
 
 To create a kernel weights with fixed bandwith:
 ```{r}
@@ -268,13 +267,13 @@ kernel_w <- kernel_weights(guerry, bandwidth, kernel_method = "uniform")
 summary(kernel_w)
 ```
 
-Besides the options `is_inverse`, `power`, `is_arc` and `is_mile` that are the same with the distance based weights, this kernel weights function has another option:
+The arguments `is_inverse`, `power`, `is_arc` and `is_mile` are the same with the distance based weights. Additionally, `kernel_weights` has another argument that user can specify:
 ```
 use_kernel_diagonals	
 (optional) FALSE (default) or TRUE, apply kernel on the diagonal of weights matrix
 ```
 
-** Kernel Weights with adaptive bandwidth**
+#### Use `kernel_knn_weights` for Kernel Weights with adaptive bandwidth
 
 To create a kernel weights with adaptive bandwidth or using max Knn distance as bandwidth:
 ```{r}
@@ -283,7 +282,7 @@ adptkernel_w = kernel_knn_weights(guerry, 6, "uniform")
 summary(adptkernel_w)
 ```
 
-This kernel weights function two more options:
+This kernel weights function two more arguments that user can specify:
 ```
 adaptive_bandwidth	
 (optional) TRUE (default) or FALSE: TRUE use adaptive bandwidth calculated using distance of k-nearest neithbors, FALSE use max distance of all observation to their k-nearest neighbors
@@ -297,7 +296,7 @@ use_kernel_diagonals
 
 ### 4.1 Local Spatial Autocorrelation
 
-rgeoda 0.0.4 provids following methods for univariate local spatial autocorrelation statistics:
+`rgeoda` 0.0.4 provids following methods for *univariate local* spatial autocorrelation statistics:
 
 
 * Local Moran: local_moran()
@@ -307,13 +306,13 @@ rgeoda 0.0.4 provids following methods for univariate local spatial autocorrelat
 * Quantile LISA: local_quantilelisa()
 
 
-Methods for bivariate and multivariate local spatial autocorrelation statistics, as well as global spatial autocorrelation satatistics, will be included in next release of rgeoda.
+Methods for *bivariate* and *multivariate local* spatial autocorrelation statistics, as well as *global* spatial autocorrelation satatistics, will be included in the next release of `rgeoda`.
 
-In this tutorial, we will only introduce how to call these methods using rgeoda. For more information about the local spatial autocorrelation statisticis, please read: http://geodacenter.github.io/workbook/6a_local_auto/lab6a.html. 
+In this tutorial, we will only introduce how to call these methods using `rgeoda`. Please read [here](http://geodacenter.github.io/workbook/6a_local_auto/lab6a.html) for more information about the local spatial autocorrelation statisticis. 
 
 #### 4.1.1 Local Moran
 
-The Local Moran statistic is a method to identify local clusters and local spatial outliers. For example, we can call  function `local_moran()` with the created Queen weights and the data “crm_prp” as input parameters:
+The Local Moran statistic is a method to identify local clusters and local spatial outliers. For example, we can call  the function `local_moran()` with the created Queen weights and apply the Local Moran to analyze the spatial patterns for the variable “crm_prp”:
 
 ```{r}
 lisa <- local_moran(queen_w, crm_prs)
@@ -321,20 +320,20 @@ lisa <- local_moran(queen_w, crm_prs)
 
 The `local_moran()` function will return a `lisa` object, which we can call its public functions to access the results of lisa computation.
 
-For example, we can call the function `lisa_values()` to get the values of local Moran:
+For example, we can call the function `lisa_values()` to get the values of the local Moran:
 
 ```{r}
 lms <- lisa_values(gda_lisa = lisa)
 lms
 ```
 
-To get the pseudo-p values of significance of local Moran computation:
+We can use `lisa_pvalues()` to get the pseudo-p values of significance of local Moran computation:
 ```{r}
 pvals <- lisa_pvalues(lisa)
 pvals
 ```
 
-To get the cluster indicators of local Moran computation:
+We can use `lisa_clusters()` to get the cluster indicators of local Moran computation. The p-value threshold can be specified via the argument `cutoff`. 
 
 ```{r}
 cats <- lisa_clusters(lisa, cutoff = 0.05)
@@ -348,10 +347,10 @@ The predefined values of the indicators of LISA cluster are:
 2 Low-Low
 3 High-Low
 4 Low-High
-5 Neighborless
-6 Undefined
+5 Undefined
+6 Isolated
 ```
-which can be accessed via function `lisa_labels()`:
+which can be accessed via the function `lisa_labels()`:
 ```{r}
 lbls <- lisa_labels(lisa)
 lbls
@@ -362,9 +361,9 @@ By default, the `local_moran()` function will run with some default parameters, 
 permutation number: 999
 seed for random number generator: 123456789
 ```
-, which are identical to GeoDa desktop software so that we can replicate the results as using  GeoDa software. It is also easy to change the paremter and re-run the LISA computation by calling Run() function. 
+These default parameters are identical to the GeoDa desktop software so that we can replicate the results as using the GeoDa software. It is also easy to change these paremters by specifying particular arguments and re-run the LISA computation.
 
-For example, re-run the above local Moran example using 9999 permutations 
+For example, re-run the above local Moran example using 9999 permutations. 
 ```{r}
 lisa <- local_moran(queen_w, crm_prs, perm = 9999)
 ```
@@ -374,15 +373,15 @@ pvals <- lisa_pvalues(lisa)
 pvals
 ```
 
-rgeoda uses GeoDa’s C++ code, in which multi-threading is used to accelerate the computation of LISA. We can specify how many threads to run the computation:
+`rgeoda` uses `GeoDa`’s C++ code, in which multi-threading is used to accelerate the computation of LISA. We can use the argument `ncpu` to specify how many threads to run the computation:
 
 ```{r}
-lisa<-local_moran(queen_w, crm_prs, ncpu = 4)
+lisa <- local_moran(queen_w, crm_prs, ncpu = 4)
 ```
 
 Get the False Discovery Rate value based on current pseudo-p values:
 ```{r}
-fdr<-lisa_fdr(lisa, 0.05)
+fdr <- lisa_fdr(lisa, 0.05)
 fdr
 ```
 
@@ -391,11 +390,11 @@ Then, one can set the FDR value as the cutoff p-value to filter the cluster resu
 cat_fdr <- lisa_clusters(lisa, cutoff = fdr)
 ```
 
-#### 4.1.2 Local Geary
+#### 4.1.2 Use `local_geary` for Local Geary
 
-Local Geary is a type of LISA that focuses on squared differences/dissimilarity. A small value of the local geary statistics suggest positive spatial autocorrelation, whereas large values suggest negative spatial autocorrelation. 
+Local Geary is a type of LISA that focuses on squared differences/dissimilarity. A small value of the local geary statistics suggests positive spatial autocorrelation, whereas large values suggest negative spatial autocorrelation. 
 
-For example, we can call the function `local_geary()` with the created Queen weights and the data “crm_prp” as input parameters:
+For example, we can call the function `local_geary()` with the created Queen weights and apply the Local Gary to analyze the spatial patterns of the variable “crm_prp”:
 
 ```{r}
 geary_crmprs <- local_geary(queen_w, crm_prs)
@@ -412,7 +411,7 @@ To get the pseudo-p values of the local Geary computation:
 lisa_pvalues(geary_crmprs)
 ```
 
-#### 4.1.3 Multivariate Local Geary:
+#### 4.1.3 Use `local_multigeary` for Multivariate Local Geary:
 
 ```{r}
 data <-guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
@@ -506,11 +505,11 @@ lisa_clusters(qsa)
 
 #### 4.2.1 Pincinple Components
 
-This PCA function aims to reproduce the PCA feature and results in GeoDa. However, one can use `prcomp` function in R to apply same PCA computations. 
+This PCA function aims to reproduce the PCA feature and results in `GeoDa`. However, one can use `prcomp` function in R to apply same PCA computations. 
 
 For example, the following example will apply PCA on 6 variables. The `standardize()` function is called to standardize the data, which `pca()` function applies on. 
 
-Other standardization functions include: `demean()` and `mad()`, which are same in GeoDa program.
+Other standardization functions include: `demean()` and `mad()`, which are same in the `GeoDa` program.
 ```{r}
 #data <- as.list(guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')])
 std_data <- standardize(data)
@@ -541,7 +540,7 @@ mds_v
  
 Spatial clustering aims to group of a large number of geographic areas or points into a smaller number of regions based on similiarities in one or more variables. Spatially constrained clustering is needed when clusters are required to be spatially contiguous. 
 
-In GeoDa, there are three different approaches explicitly incorporate the contiguity constraint in the optimization process: SKATER, Redcap and Max-p. More more details, please check: http://geodacenter.github.io/workbook/8_spatial_clusters/lab8.html All of these methods are included in rgeoda 0.0.4.
+In `GeoDa`, there are three different approaches explicitly incorporate the contiguity constraint in the optimization process: SKATER, Redcap and Max-p. More more details, please check: http://geodacenter.github.io/workbook/8_spatial_clusters/lab8.html All of these methods are included in rgeoda 0.0.4.
 
 For example, to apply spatial clustering on the Guerry dataset, we use the queen weights to define the spatial contiguity and select 6 variables for similarity measure: "Crm_prs", "Crm_prp", "Litercy", "Donatns", "Infants", "Suicids". 
 
@@ -555,7 +554,7 @@ data <- as.list(guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','S
 
 The Spatial C(K)luster Analysis by Tree Edge Removal(SKATER) algorithm introduced by Assuncao et al. (2006) is based on the optimal pruning of a minimum spanning tree that reflects the contiguity structure among the observations. It provides an optimized algorithm to prune to tree into several clusters that their values of selected variables are as similar as possible.
 
-The rgeoda's SKATER function is: 
+The `rgeoda`'s SKATER function is: 
 ```r
 skater(k, w, data, distance_method='euclidean', bound_vals = [],  min_bound = 0, random_seed=123456789)
 ```
@@ -568,7 +567,7 @@ guerry_clusters
 
 This `skater()` function returns a 2D list, which represents 4 clusters. Each cluster is composed by several contiguity areas, e.g. 15, 74, 16, 55, 60, 39, 68, 33, 17, 82, 81, 0, 2, 40, 20, 80
 
-rgeoda also provides utility functions to compute some descriptive statistics of the clustering results, e.g. to compute the ratio of between to total sum of squares:
+`rgeoda` also provides utility functions to compute some descriptive statistics of the clustering results, e.g. to compute the ratio of between to total sum of squares:
 
 
 ```{r}
@@ -580,7 +579,7 @@ cat("The ratio of between to total sum of square:", ratio)
 
 #### 4.3.2 REDCAP
 
-REDCAP (Regionalization with dynamically constrained agglomerative clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP starts from building a spanning tree with 3 different ways (single-linkage, average-linkage, and the complete-linkage). The single-linkage way leads to build a minimum spanning tree. Then,REDCAP provides 2 different ways (first‐order and full-order constraining) to prune the tree to find clusters. The first-order approach with a minimum spanning tree is exactly the same with SKATER. In GeoDa and rgeoda, the following methods are provided:
+REDCAP (Regionalization with dynamically constrained agglomerative clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP starts from building a spanning tree with 3 different ways (single-linkage, average-linkage, and the complete-linkage). The single-linkage way leads to build a minimum spanning tree. Then,REDCAP provides 2 different ways (first‐order and full-order constraining) to prune the tree to find clusters. The first-order approach with a minimum spanning tree is exactly the same with SKATER. In `GeoDa` and `rgeoda`, the following methods are provided:
 
 * First-order and Single-linkage
 * Full-order and Complete-linkage
@@ -603,7 +602,7 @@ cat("The ratio of between to total sum of square:", ratio)
 
 The so-called max-p regions model (outlined in Duque, Anselin, and Rey 2012) uses a different approach and considers the regionalization problem as an application of integer programming. In addition, the number of regions is determined endogenously.
 
-The algorithm itself consists of a search process that starts with an initial feasible solution and iteratively improves upon it while maintaining contiguity among the elements of each cluster. Like Geoda, rgeoda provides three different heuristic algorithms to find an optimal solution for max-p:
+The algorithm itself consists of a search process that starts with an initial feasible solution and iteratively improves upon it while maintaining contiguity among the elements of each cluster. Like `Geoda`, `rgeoda` provides three different heuristic algorithms to find an optimal solution for max-p:
 
 * greedy
 * Tabu Search
