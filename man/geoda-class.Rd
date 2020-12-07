@@ -4,9 +4,9 @@
 \name{geoda-class}
 \alias{geoda-class}
 \alias{geoda}
-\title{A R wrapper for GeoDa}
+\title{A R wrapper for p_GeoDa}
 \description{
-geoda is a RefClass that wraps the C++ GeoDa class (via _p_GeoDa defines in rgeoda.R)
+geoda is a RefClass that wraps the C++ GeoDa class (via p_GeoDa defines in rgeoda.R)
 }
 \section{Fields}{
 

@@ -10,24 +10,35 @@ PKG_CPPFLAGS=\
 PKG_LIBS=\
 	-pthread
 
-#CXX_STD=CXX11
+CXX_STD=CXX11
 
 CPP_SRC_FILES = \
-	$(wildcard $(RGEODALIB)/sa/*.cpp) \
-	$(wildcard $(RGEODALIB)/knn/*.cpp) \
-	$(wildcard $(RGEODALIB)/weights/*.cpp) \
-	$(wildcard $(RGEODALIB)/clustering/*.cpp) \
-	$(wildcard $(RGEODALIB)/*.cpp) \
+	$(RGEODALIB)/libgeoda.cpp \
+	$(RGEODALIB)/pg/geoms.c \
+	$(RGEODALIB)/shapelib/dbfopen.c \
+	$(RGEODALIB)/shapelib/safileio.c \
+	$(RGEODALIB)/shapelib/shpopen.c \
+	$(RGEODALIB)/weights/PointsToContigWeights.cpp \
+	rcpp_rgeoda.cpp \
+	rcpp_weights.cpp \
+	RcppExports.cpp
 
-C_SRC_FILES = \
-	$(wildcard $(RGEODALIB)/pg/*.c) \
-	$(wildcard $(RGEODALIB)/shapelib/*.c) \
+#C_SRC_FILES = \
+#	$(wildcard $(RGEODALIB)/pg/*.c) \
+#	$(wildcard $(RGEODALIB)/shapelib/*.c)
 
 
 OBJECTS = \
-	$(patsubst %.c, %.o, $(C_SRC_FILES)) \
-	$(patsubst %.cpp, %.o, $(CPP_SRC_FILES)) \
-	rgeoda.o \
+	$(RGEODALIB)/libgeoda.o \
+	$(RGEODALIB)/pg/geoms.o \
+	$(RGEODALIB)/pg/utils.o \
+	$(RGEODALIB)/shapelib/dbfopen.o \
+	$(RGEODALIB)/shapelib/safileio.o \
+	$(RGEODALIB)/shapelib/shpopen.o \
+	$(RGEODALIB)/weights/PointsToContigWeights.o \
+	rcpp_rgeoda.o \
+	rcpp_weights.o \
+	RcppExports.o
 
 .PHONY: all clean
 

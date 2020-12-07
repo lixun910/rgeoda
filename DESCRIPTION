@@ -1,4 +1,5 @@
 Package: rgeoda
+Type: Package
 Title: R library for spatial data analysis
 Version: 0.0.4
 Authors@R: person("Xun","Li", email="lixun910@gmail.com", role=c("aut","cre"))
@@ -7,20 +8,20 @@ Description: A package for spatial data analysis based on libgeoda and GeoDa.
 Depends: R (>= 3.3.0), methods
 License: GPL-3 + file LICENSE
 Collate: 
-    rgeoda-package.R 
-    rgeoda.R 
-    sf_geoda.R 
-    read_geoda.R 
-    weights.R 
-    lisa.R
-    clustering.R
-    utils.R
+    init.R
+    rgeoda.R
+    sf_geoda.R
+    RcppExports.R 
+    read_geoda.R
+    weights.R
 Imports:
-    wkb
+    wkb,
+    Rcpp (>= 1.0.1)
 LinkingTo:
+    Rcpp,
     BH,
     RcppEigen
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 Encoding: UTF-8
 Suggests: 
     knitr,
@@ -28,3 +29,4 @@ Suggests:
     sp,
     sf
 VignetteBuilder: knitr
+SystemRequirements: C++11

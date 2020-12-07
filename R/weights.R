@@ -1,5 +1,5 @@
 #################################################################
-#' @title GeoDa Weight class
+#' @title Weight class
 #' @description A wrapper class for GeoDaWeight class
 #' @field gda_w An object of GeoDaWeight
 #' @field is_symmetric If weights matrix is symmetric
@@ -13,7 +13,7 @@
 #' @export
 Weight <- setRefClass("Weight",
   fields = list(
-    gda_w = "_p_GeoDaWeight",
+    gda_w = "p_GeoDaWeight",
     is_symmetric = "logical",
     sparsity = "numeric",
     density = "numeric",
@@ -27,47 +27,45 @@ Weight <- setRefClass("Weight",
     initialize = function(o_gda_w) {
       "Constructor with a GeoDaWeight object (internally used)"
       .self$gda_w = o_gda_w
-      .self$is_symmetric = o_gda_w$is_symmetric
-      .self$sparsity = o_gda_w$sparsity
-      .self$density = o_gda_w$density
-      .self$min_neighbors = o_gda_w$min_nbrs
-      .self$max_neighbors = o_gda_w$max_nbrs
-      .self$mean_neighbors = o_gda_w$mean_nbrs
-      .self$median_neighbors = o_gda_w$median_nbrs
-      .self$num_obs = o_gda_w$num_obs
+      .self$is_symmetric = o_gda_w$IsSymmetric()
+      .self$sparsity = o_gda_w$GetSparsity()
+      .self$density = o_gda_w$GetDensity()
+      .self$min_neighbors = o_gda_w$GetMinNeighbors()
+      .self$max_neighbors = o_gda_w$GetMaxNeighbors()
+      .self$mean_neighbors = o_gda_w$GetMeanNeighbors()
+      .self$median_neighbors = o_gda_w$GetMedianNeighbors()
+      .self$num_obs = o_gda_w$GetNumObs()
     },
     IsSymmetric = function() {
       "Check if weights matrix is symmetric"
-      return(gda_w$is_symmetric)
+      return(gda_w$IsSymmetric())
     },
-    HasIsolates = function() {
+    HasIsolations = function() {
       "Check if weights matrix has isolates, or if any observation has no neighbors"
-      return(gda_w$HasIsolates())
+      return(gda_w$HasIsolations())
     },
     GetSparsity = function() {
       "Get sparsity computed from weights matrix"
-      return(gda_w$sparsity)
+      return(gda_w$GetSparsity())
     },
     GetDensity = function() {
       "Get density computed from weights matrix"
-      return (gda_w$density)
+      return (gda_w$GetDensity())
     },
-    GetNbrSize = function(idx) {
-      return (gda_w$GetNbrSize(idx))
+    GetNeighborSize = function(idx) {
+      return (gda_w$GetNeighborSize(idx))
     },
     GetNeighbors = function(idx) {
       "Get neighbors for idx-th observation, idx starts from 0"
-      nn <- gda_w$GetNbrSize(idx)
-      nbrs <- gda_w$GetNeighbors(idx)
-      rtn_nbrs <- vector()
-      for (i in 1:nn) {
-        rtn_nbrs[i]  <- nbrs[i]
-      }
-      return(rtn_nbrs)
+      return (gda_w$GetNeighbors(idx))
+    },
+    GetNeighborWeights = function(idx) {
+      "Get weights values of neighbors for idx-th observation, idx starts from 0"
+      return (gda_w$GetNeighborWeights(idx))
     },
     SpatialLag = function(idx, values) {
       "Compute spatial lag values of idx-th observation, idx starts from 0"
-      return(gda_w$SpatialLag(idx,values))
+      return (gda_w$SpatialLag(idx,values))
     },
     SaveToFile = function(out_path, layer_name, id_name, id_values) {
       "Save current spatial weights to a file.\\cr \\cr
@@ -75,7 +73,8 @@ Weight <- setRefClass("Weight",
         layer_name : The name of the layer of input dataset \\cr
         id_name : The id name (or field name), which is an associated column contains unique values, that makes sure that the weights are connected to the correct observations in the data table.\\cr
         id_values : The tuple of values of selected id_name (column/field)"
-      return(gda_w$Save(out_path, layer_name, id_name, id_values))
+
+      return (gda_w$Save(out_path, layer_name, id_name, id_values))
     }
   )
 )
@@ -208,7 +207,7 @@ save_weights <- function(gda_w, out_path, layer_name, id_name, id_values) {
 #' @return dist A real value of minimum threshold of distance
 #' @export
 min_distthreshold <- function(geoda_obj, is_arc = FALSE, is_mile = TRUE) {
-  return (gda_min_distthreshold(geoda_obj$gda, is_arc, is_mile))
+  return (p_gda_min_distthreshold(geoda_obj$gda, is_arc, is_mile))
 }
 
 #################################################################
@@ -235,7 +234,7 @@ queen_weights <- function(geoda_obj, order=1, include_lower_order = FALSE, preci
     stop("precision_threshold has to be a positive numeric number.")
   }
 
-  w <- gda_queen_weights(geoda_obj$gda, order, include_lower_order, precision_threshold)
+  w <- p_gda_queen_weights(geoda_obj$gda, order, include_lower_order, precision_threshold)
   return(Weight$new(w))
 }
 
@@ -263,7 +262,7 @@ rook_weights <- function(geoda_obj, order = 1, include_lower_order = FALSE, prec
     stop("precision_threshold has to be a positive numeric number.")
   }
 
-  w <- gda_rook_weights(geoda_obj$gda, order, include_lower_order, precision_threshold)
+  w <- p_gda_rook_weights(geoda_obj$gda, order, include_lower_order, precision_threshold)
   return(Weight$new(w))
 }
 
@@ -290,7 +289,7 @@ distance_weights <- function(geoda_obj, dist_thres, power = 1.0, is_inverse = FA
     stop("dist_thres has to be a positive numeric number.")
   }
 
-  w <- gda_distance_weights(geoda_obj$gda, dist_thres, "", power, is_inverse, is_arc, is_mile, "", FALSE)
+  w <- p_gda_distance_weights(geoda_obj$gda, dist_thres, "", power, is_inverse, is_arc, is_mile, "", FALSE)
   return(Weight$new(w))
 }
 
@@ -325,7 +324,7 @@ kernel_weights <- function(geoda_obj, bandwidth, kernel_method,
     stop("kernel_method has to be one of 'triangular', 'uniform', 'epanechnikov', 'quartic', 'gaussian'.")
   }
 
-  w <- gda_distance_weights(geoda_obj$gda, bandwidth, "", power, is_inverse, is_arc, is_mile, kernel_method, use_kernel_diagonals)
+  w <- p_gda_distance_weights(geoda_obj$gda, bandwidth, "", power, is_inverse, is_arc, is_mile, kernel_method, use_kernel_diagonals)
   return(Weight$new(w))
 }
 
@@ -353,7 +352,7 @@ knn_weights <- function(geoda_obj, k, power = 1.0, is_inverse = FALSE,
     stop("k has to be a positive integernumeric.")
   }
 
-  w <- gda_knn_weights(geoda_obj$gda, k, power, is_inverse, is_arc, is_mile, "", 0, FALSE, FALSE, "")
+  w <- p_gda_knn_weights(geoda_obj$gda, k, power, is_inverse, is_arc, is_mile, "", 0, FALSE, FALSE, "")
   return(Weight$new(w))
 }
 

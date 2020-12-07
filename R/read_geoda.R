@@ -1,5 +1,5 @@
-#' @title A R wrapper for GeoDa
-#' @description geoda is a RefClass that wraps the C++ GeoDa class (via _p_GeoDa defines in rgeoda.R)
+#' @title A R wrapper for p_GeoDa
+#' @description geoda is a RefClass that wraps the C++ GeoDa class (via p_GeoDa defines in rgeoda.R)
 #' @field gda A pointer to C++ GeoDa object
 #' @field map_type The map type: Point, Polygon (or LineSegment)
 #' @field n_cols The number of columns
@@ -9,7 +9,7 @@
 #' @export
 geoda <- setRefClass("geoda",
   fields = list(
-    gda = "_p_GeoDa",
+    gda = "p_GeoDa",
     map_type = "integer",
     n_cols = "numeric",
     n_obs = "numeric",
@@ -72,7 +72,7 @@ geoda <- setRefClass("geoda",
     },
     GetUndefinedVals = function(col_name) {
       "Get the undefined flags from a column"
-      return(gda$GetUndefinesCol(col_name))
+      return(gda$GetNullValues(col_name))
     }
   )
 )
@@ -86,7 +86,7 @@ geoda_open <- function(ds_path) {
   if (typeof(ds_path) != "character") {
     stop ("Only a string of input datasource is allowed")
   }
-  o_gda <- GeoDa(ds_path)
+  o_gda <- p_GeoDa(ds_path)
   return(geoda$new(o_gda))
 }
 
