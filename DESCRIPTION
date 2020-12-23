@@ -14,6 +14,7 @@ Collate:
     RcppExports.R 
     read_geoda.R
     weights.R
+    utils.R
 Imports:
     wkb,
     Rcpp (>= 1.0.1)

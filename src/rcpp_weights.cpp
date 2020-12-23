@@ -19,7 +19,7 @@ using namespace Rcpp;
 //  [[Rcpp::export]]
 int p_GeoDaWeight__GetNumObs(SEXP xp)
 {
-  // grab the object as a XPtr (smart pointer) to GeoDa
+  // grab the object as a XPtr (smart pointer) to GeoDaWeight
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
@@ -51,7 +51,7 @@ bool p_GeoDaWeight__HasIsolations(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  bool has_iso = ptr->HasIsolations();
+  bool has_iso = ptr->HasIsolates();
 
   return has_iso;
 }
@@ -96,7 +96,7 @@ int p_GeoDaWeight__GetMinNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  int min_nbrs = ptr->GetMinNbrs();
+  int min_nbrs = ptr->GetMinNumNbrs();
 
   return min_nbrs;
 }
@@ -111,7 +111,7 @@ int p_GeoDaWeight__GetMaxNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  int max_nbrs = ptr->GetMaxNbrs();
+  int max_nbrs = ptr->GetMaxNumNbrs();
 
   return max_nbrs;
 }
@@ -126,7 +126,7 @@ double p_GeoDaWeight__GetMeanNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  return ptr->GetMeanNbrs();
+  return ptr->GetMeanNumNbrs();
 }
 
 //' @title p_GeoDaWeight__GetMedianNeighbors
@@ -139,7 +139,7 @@ double p_GeoDaWeight__GetMedianNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  return ptr->GetMedianNbrs();
+  return ptr->GetMedianNumNbrs();
 }
 
 //' @title p_GeoDaWeight__GetSpatialLag
@@ -262,10 +262,10 @@ double p_gda_min_distthreshold(SEXP xp_geoda, bool is_arc, bool is_mile)
   return min_dist;
 }
 
-//' @title p_queen_weights
+//' @title p_gda_queen_weights
 //' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
-SEXP p_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold)
+SEXP p_gda_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
   Rcpp::XPtr<GeoDa> ptr(xp_geoda);
@@ -274,14 +274,14 @@ SEXP p_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, double 
   // invoke the function
   GeoDaWeight* w = gda_queen_weights(geoda, order, include_lower_order, precision_threshold);
 
-  Rcpp::XPtr<GeoDaWeight> w_ptr(w, true);
+  Rcpp::XPtr<GeoDaWeight> w_ptr(w, true); // true: we need to register a delete finalizer with the external pointer.
   return w_ptr;
 }
 
-//' @title p_rook_weights
+//' @title p_gda_rook_weights
 //' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
-SEXP p_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold)
+SEXP p_gda_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
   Rcpp::XPtr<GeoDa> ptr(xp_geoda);
@@ -294,10 +294,10 @@ SEXP p_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, double p
   return w_ptr;
 }
 
-//' @title p_distance_weights
+//' @title p_gda_distance_weights
 //' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
-SEXP p_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool is_inverse, bool is_arc, bool is_mile)
+SEXP p_gda_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool is_inverse, bool is_arc, bool is_mile)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
   Rcpp::XPtr<GeoDa> ptr(xp_geoda);
@@ -310,10 +310,10 @@ SEXP p_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool is_
   return w_ptr;
 }
 
-//' @title p_kernel_weights
+//' @title p_gda_kernel_weights
 //' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
-SEXP p_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_method, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile)
+SEXP p_gda_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_method, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
   Rcpp::XPtr<GeoDa> ptr(xp_geoda);
@@ -326,10 +326,10 @@ SEXP p_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_method
   return w_ptr;
 }
 
-//' @title p_knn_weights
+//' @title p_gda_knn_weights
 //' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
-SEXP p_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile)
+SEXP p_gda_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
   Rcpp::XPtr<GeoDa> ptr(xp_geoda);
@@ -345,7 +345,7 @@ SEXP p_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_
 //' @title p_kernel_knn_weights
 //' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
-SEXP p_kernel_knn_weights(SEXP xp_geoda, int k, std::string kernel_method, bool adaptive_bandwidth, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile)
+SEXP p_gda_kernel_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile, std::string kernel_method, double bandwidth, bool adaptive_bandwidth, bool use_kernel_diagonals)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
   Rcpp::XPtr<GeoDa> ptr(xp_geoda);

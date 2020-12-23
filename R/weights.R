@@ -289,7 +289,7 @@ distance_weights <- function(geoda_obj, dist_thres, power = 1.0, is_inverse = FA
     stop("dist_thres has to be a positive numeric number.")
   }
 
-  w <- p_gda_distance_weights(geoda_obj$gda, dist_thres, "", power, is_inverse, is_arc, is_mile, "", FALSE)
+  w <- p_gda_distance_weights(geoda_obj$gda, dist_thres, power, is_inverse, is_arc, is_mile)
   return(Weight$new(w))
 }
 
@@ -324,7 +324,7 @@ kernel_weights <- function(geoda_obj, bandwidth, kernel_method,
     stop("kernel_method has to be one of 'triangular', 'uniform', 'epanechnikov', 'quartic', 'gaussian'.")
   }
 
-  w <- p_gda_distance_weights(geoda_obj$gda, bandwidth, "", power, is_inverse, is_arc, is_mile, kernel_method, use_kernel_diagonals)
+  w <- p_gda_kernel_weights(geoda_obj$gda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile)
   return(Weight$new(w))
 }
 
@@ -352,7 +352,7 @@ knn_weights <- function(geoda_obj, k, power = 1.0, is_inverse = FALSE,
     stop("k has to be a positive integernumeric.")
   }
 
-  w <- p_gda_knn_weights(geoda_obj$gda, k, power, is_inverse, is_arc, is_mile, "", 0, FALSE, FALSE, "")
+  w <- p_gda_knn_weights(geoda_obj$gda, k, power, is_inverse, is_arc, is_mile)
   return(Weight$new(w))
 }
 
@@ -389,6 +389,6 @@ kernel_knn_weights <- function(geoda_obj, k, kernel_method, adaptive_bandwidth =
     stop("kernel_method has to be one of 'triangular', 'uniform', 'epanechnikov', 'quartic', 'gaussian'.")
   }
 
-  w <- gda_knn_weights(geoda_obj$gda, k, power, is_inverse, is_arc, is_mile, kernel_method, 0, adaptive_bandwidth, use_kernel_diagonals, "")
+  w <- p_gda_kernel_knn_weights(geoda_obj$gda, k, power, is_inverse, is_arc, is_mile, kernel_method, 0, adaptive_bandwidth, use_kernel_diagonals)
   return(Weight$new(w))
 }

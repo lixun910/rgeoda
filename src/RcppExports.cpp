@@ -135,6 +135,39 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// p_gda_demean
+Rcpp::List p_gda_demean(Rcpp::List data);
+RcppExport SEXP _rgeoda_p_gda_demean(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_gda_demean(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_gda_standardize
+Rcpp::List p_gda_standardize(Rcpp::List data);
+RcppExport SEXP _rgeoda_p_gda_standardize(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_gda_standardize(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_gda_standardize_mad
+Rcpp::List p_gda_standardize_mad(Rcpp::List data);
+RcppExport SEXP _rgeoda_p_gda_standardize_mad(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_gda_standardize_mad(data));
+    return rcpp_result_gen;
+END_RCPP
+}
 // p_GeoDaWeight__GetNumObs
 int p_GeoDaWeight__GetNumObs(SEXP xp);
 RcppExport SEXP _rgeoda_p_GeoDaWeight__GetNumObs(SEXP xpSEXP) {
@@ -311,9 +344,9 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// p_queen_weights
-SEXP p_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold);
-RcppExport SEXP _rgeoda_p_queen_weights(SEXP xp_geodaSEXP, SEXP orderSEXP, SEXP include_lower_orderSEXP, SEXP precision_thresholdSEXP) {
+// p_gda_queen_weights
+SEXP p_gda_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold);
+RcppExport SEXP _rgeoda_p_gda_queen_weights(SEXP xp_geodaSEXP, SEXP orderSEXP, SEXP include_lower_orderSEXP, SEXP precision_thresholdSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -321,13 +354,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type order(orderSEXP);
     Rcpp::traits::input_parameter< bool >::type include_lower_order(include_lower_orderSEXP);
     Rcpp::traits::input_parameter< double >::type precision_threshold(precision_thresholdSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_queen_weights(xp_geoda, order, include_lower_order, precision_threshold));
+    rcpp_result_gen = Rcpp::wrap(p_gda_queen_weights(xp_geoda, order, include_lower_order, precision_threshold));
     return rcpp_result_gen;
 END_RCPP
 }
-// p_rook_weights
-SEXP p_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold);
-RcppExport SEXP _rgeoda_p_rook_weights(SEXP xp_geodaSEXP, SEXP orderSEXP, SEXP include_lower_orderSEXP, SEXP precision_thresholdSEXP) {
+// p_gda_rook_weights
+SEXP p_gda_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold);
+RcppExport SEXP _rgeoda_p_gda_rook_weights(SEXP xp_geodaSEXP, SEXP orderSEXP, SEXP include_lower_orderSEXP, SEXP precision_thresholdSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -335,13 +368,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type order(orderSEXP);
     Rcpp::traits::input_parameter< bool >::type include_lower_order(include_lower_orderSEXP);
     Rcpp::traits::input_parameter< double >::type precision_threshold(precision_thresholdSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_rook_weights(xp_geoda, order, include_lower_order, precision_threshold));
+    rcpp_result_gen = Rcpp::wrap(p_gda_rook_weights(xp_geoda, order, include_lower_order, precision_threshold));
     return rcpp_result_gen;
 END_RCPP
 }
-// p_distance_weights
-SEXP p_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool is_inverse, bool is_arc, bool is_mile);
-RcppExport SEXP _rgeoda_p_distance_weights(SEXP xp_geodaSEXP, SEXP dist_thresSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
+// p_gda_distance_weights
+SEXP p_gda_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool is_inverse, bool is_arc, bool is_mile);
+RcppExport SEXP _rgeoda_p_gda_distance_weights(SEXP xp_geodaSEXP, SEXP dist_thresSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -351,13 +384,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type is_inverse(is_inverseSEXP);
     Rcpp::traits::input_parameter< bool >::type is_arc(is_arcSEXP);
     Rcpp::traits::input_parameter< bool >::type is_mile(is_mileSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_distance_weights(xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile));
+    rcpp_result_gen = Rcpp::wrap(p_gda_distance_weights(xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile));
     return rcpp_result_gen;
 END_RCPP
 }
-// p_kernel_weights
-SEXP p_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_method, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile);
-RcppExport SEXP _rgeoda_p_kernel_weights(SEXP xp_geodaSEXP, SEXP bandwidthSEXP, SEXP kernel_methodSEXP, SEXP use_kernel_diagonalsSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
+// p_gda_kernel_weights
+SEXP p_gda_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_method, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile);
+RcppExport SEXP _rgeoda_p_gda_kernel_weights(SEXP xp_geodaSEXP, SEXP bandwidthSEXP, SEXP kernel_methodSEXP, SEXP use_kernel_diagonalsSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -369,13 +402,13 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type is_inverse(is_inverseSEXP);
     Rcpp::traits::input_parameter< bool >::type is_arc(is_arcSEXP);
     Rcpp::traits::input_parameter< bool >::type is_mile(is_mileSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_kernel_weights(xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile));
+    rcpp_result_gen = Rcpp::wrap(p_gda_kernel_weights(xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile));
     return rcpp_result_gen;
 END_RCPP
 }
-// p_knn_weights
-SEXP p_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile);
-RcppExport SEXP _rgeoda_p_knn_weights(SEXP xp_geodaSEXP, SEXP kSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
+// p_gda_knn_weights
+SEXP p_gda_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile);
+RcppExport SEXP _rgeoda_p_gda_knn_weights(SEXP xp_geodaSEXP, SEXP kSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -385,26 +418,27 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< bool >::type is_inverse(is_inverseSEXP);
     Rcpp::traits::input_parameter< bool >::type is_arc(is_arcSEXP);
     Rcpp::traits::input_parameter< bool >::type is_mile(is_mileSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_knn_weights(xp_geoda, k, power, is_inverse, is_arc, is_mile));
+    rcpp_result_gen = Rcpp::wrap(p_gda_knn_weights(xp_geoda, k, power, is_inverse, is_arc, is_mile));
     return rcpp_result_gen;
 END_RCPP
 }
-// p_kernel_knn_weights
-SEXP p_kernel_knn_weights(SEXP xp_geoda, int k, std::string kernel_method, bool adaptive_bandwidth, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile);
-RcppExport SEXP _rgeoda_p_kernel_knn_weights(SEXP xp_geodaSEXP, SEXP kSEXP, SEXP kernel_methodSEXP, SEXP adaptive_bandwidthSEXP, SEXP use_kernel_diagonalsSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP) {
+// p_gda_kernel_knn_weights
+SEXP p_gda_kernel_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile, std::string kernel_method, double bandwidth, bool adaptive_bandwidth, bool use_kernel_diagonals);
+RcppExport SEXP _rgeoda_p_gda_kernel_knn_weights(SEXP xp_geodaSEXP, SEXP kSEXP, SEXP powerSEXP, SEXP is_inverseSEXP, SEXP is_arcSEXP, SEXP is_mileSEXP, SEXP kernel_methodSEXP, SEXP bandwidthSEXP, SEXP adaptive_bandwidthSEXP, SEXP use_kernel_diagonalsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< SEXP >::type xp_geoda(xp_geodaSEXP);
     Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< double >::type power(powerSEXP);
+    Rcpp::traits::input_parameter< bool >::type is_inverse(is_inverseSEXP);
+    Rcpp::traits::input_parameter< bool >::type is_arc(is_arcSEXP);
+    Rcpp::traits::input_parameter< bool >::type is_mile(is_mileSEXP);
     Rcpp::traits::input_parameter< std::string >::type kernel_method(kernel_methodSEXP);
+    Rcpp::traits::input_parameter< double >::type bandwidth(bandwidthSEXP);
     Rcpp::traits::input_parameter< bool >::type adaptive_bandwidth(adaptive_bandwidthSEXP);
     Rcpp::traits::input_parameter< bool >::type use_kernel_diagonals(use_kernel_diagonalsSEXP);
-    Rcpp::traits::input_parameter< double >::type power(powerSEXP);
-    Rcpp::traits::input_parameter< bool >::type is_inverse(is_inverseSEXP);
-    Rcpp::traits::input_parameter< bool >::type is_arc(is_arcSEXP);
-    Rcpp::traits::input_parameter< bool >::type is_mile(is_mileSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_kernel_knn_weights(xp_geoda, k, kernel_method, adaptive_bandwidth, use_kernel_diagonals, power, is_inverse, is_arc, is_mile));
+    rcpp_result_gen = Rcpp::wrap(p_gda_kernel_knn_weights(xp_geoda, k, power, is_inverse, is_arc, is_mile, kernel_method, bandwidth, adaptive_bandwidth, use_kernel_diagonals));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -421,6 +455,9 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rgeoda_p_GeoDa__GetIntegerCol", (DL_FUNC) &_rgeoda_p_GeoDa__GetIntegerCol, 2},
     {"_rgeoda_p_GeoDa__GetStringCol", (DL_FUNC) &_rgeoda_p_GeoDa__GetStringCol, 2},
     {"_rgeoda_p_GeoDa__GetNullValues", (DL_FUNC) &_rgeoda_p_GeoDa__GetNullValues, 2},
+    {"_rgeoda_p_gda_demean", (DL_FUNC) &_rgeoda_p_gda_demean, 1},
+    {"_rgeoda_p_gda_standardize", (DL_FUNC) &_rgeoda_p_gda_standardize, 1},
+    {"_rgeoda_p_gda_standardize_mad", (DL_FUNC) &_rgeoda_p_gda_standardize_mad, 1},
     {"_rgeoda_p_GeoDaWeight__GetNumObs", (DL_FUNC) &_rgeoda_p_GeoDaWeight__GetNumObs, 1},
     {"_rgeoda_p_GeoDaWeight__IsSymmetric", (DL_FUNC) &_rgeoda_p_GeoDaWeight__IsSymmetric, 1},
     {"_rgeoda_p_GeoDaWeight__HasIsolations", (DL_FUNC) &_rgeoda_p_GeoDaWeight__HasIsolations, 1},
@@ -436,12 +473,12 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rgeoda_p_GeoDaWeight__GetNeighbors", (DL_FUNC) &_rgeoda_p_GeoDaWeight__GetNeighbors, 2},
     {"_rgeoda_p_GeoDaWeight__GetNeighborWeights", (DL_FUNC) &_rgeoda_p_GeoDaWeight__GetNeighborWeights, 2},
     {"_rgeoda_p_gda_min_distthreshold", (DL_FUNC) &_rgeoda_p_gda_min_distthreshold, 3},
-    {"_rgeoda_p_queen_weights", (DL_FUNC) &_rgeoda_p_queen_weights, 4},
-    {"_rgeoda_p_rook_weights", (DL_FUNC) &_rgeoda_p_rook_weights, 4},
-    {"_rgeoda_p_distance_weights", (DL_FUNC) &_rgeoda_p_distance_weights, 6},
-    {"_rgeoda_p_kernel_weights", (DL_FUNC) &_rgeoda_p_kernel_weights, 8},
-    {"_rgeoda_p_knn_weights", (DL_FUNC) &_rgeoda_p_knn_weights, 6},
-    {"_rgeoda_p_kernel_knn_weights", (DL_FUNC) &_rgeoda_p_kernel_knn_weights, 9},
+    {"_rgeoda_p_gda_queen_weights", (DL_FUNC) &_rgeoda_p_gda_queen_weights, 4},
+    {"_rgeoda_p_gda_rook_weights", (DL_FUNC) &_rgeoda_p_gda_rook_weights, 4},
+    {"_rgeoda_p_gda_distance_weights", (DL_FUNC) &_rgeoda_p_gda_distance_weights, 6},
+    {"_rgeoda_p_gda_kernel_weights", (DL_FUNC) &_rgeoda_p_gda_kernel_weights, 8},
+    {"_rgeoda_p_gda_knn_weights", (DL_FUNC) &_rgeoda_p_gda_knn_weights, 6},
+    {"_rgeoda_p_gda_kernel_knn_weights", (DL_FUNC) &_rgeoda_p_gda_kernel_knn_weights, 10},
     {NULL, NULL, 0}
 };
 

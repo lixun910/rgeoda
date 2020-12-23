@@ -14,11 +14,21 @@ CXX_STD=CXX11
 
 CPP_SRC_FILES = \
 	$(RGEODALIB)/libgeoda.cpp \
+	$(RGEODALIB)/gda_data.cpp \
+	$(RGEODALIB)/gda_weights.cpp \
+	$(RGEODALIB)/GenGeomAlgs.cpp \
+	$(RGEODALIB)/GenUtils.cpp \
+	$(RGEODALIB)/SpatialIndAlgs.cpp \
 	$(RGEODALIB)/pg/geoms.c \
 	$(RGEODALIB)/shapelib/dbfopen.c \
 	$(RGEODALIB)/shapelib/safileio.c \
 	$(RGEODALIB)/shapelib/shpopen.c \
 	$(RGEODALIB)/weights/PointsToContigWeights.cpp \
+	$(RGEODALIB)/weights/PolysToContigWeights.cpp \
+	$(RGEODALIB)/weights/GalWeight.cpp \
+	$(RGEODALIB)/weights/GwtWeight.cpp \
+	$(RGEODALIB)/weights/GeodaWeight.cpp \
+	$(RGEODALIB)/weights/VoronoiUtils.cpp \
 	rcpp_rgeoda.cpp \
 	rcpp_weights.cpp \
 	RcppExports.cpp
@@ -30,12 +40,22 @@ CPP_SRC_FILES = \
 
 OBJECTS = \
 	$(RGEODALIB)/libgeoda.o \
+	$(RGEODALIB)/gda_data.o \
+	$(RGEODALIB)/gda_weights.o \
+	$(RGEODALIB)/GenGeomAlgs.o \
+	$(RGEODALIB)/GenUtils.o \
+	$(RGEODALIB)/SpatialIndAlgs.o \
 	$(RGEODALIB)/pg/geoms.o \
 	$(RGEODALIB)/pg/utils.o \
 	$(RGEODALIB)/shapelib/dbfopen.o \
 	$(RGEODALIB)/shapelib/safileio.o \
 	$(RGEODALIB)/shapelib/shpopen.o \
 	$(RGEODALIB)/weights/PointsToContigWeights.o \
+	$(RGEODALIB)/weights/PolysToContigWeights.o \
+	$(RGEODALIB)/weights/GalWeight.o \
+	$(RGEODALIB)/weights/GwtWeight.o \
+	$(RGEODALIB)/weights/GeodaWeight.o \
+	$(RGEODALIB)/weights/VoronoiUtils.o \
 	rcpp_rgeoda.o \
 	rcpp_weights.o \
 	RcppExports.o

@@ -9,6 +9,13 @@
 #' 10/29/2020 init file
 NULL
 
+#' @title p_gda_naturalbreaks
+#'
+#' @description Median absolute deviation to measure  measure of the variability of a univariate sample of quantitative data
+#' @param data An input data for median absolute deviation
+#' @return A numeric vector
+NULL
+
 #' @title p_GeoDa__new
 #'
 #' @description Create an instance of GeoDa by loading a ESRI shapefile
@@ -107,6 +114,33 @@ p_GeoDa__GetStringCol <- function(xp, col_name) {
 #' @return A list of string values
 p_GeoDa__GetNullValues <- function(xp, col_name) {
     .Call('_rgeoda_p_GeoDa__GetNullValues', PACKAGE = 'rgeoda', xp, col_name)
+}
+
+#' @title p_gda_demean
+#'
+#' @description The mean for each variable is subtracting from each observation resulting in mean zero.
+#' @param data An input data for median absolute deviation
+#' @return A list of numeric vectors 
+p_gda_demean <- function(data) {
+    .Call('_rgeoda_p_gda_demean', PACKAGE = 'rgeoda', data)
+}
+
+#' @title p_gda_standardize
+#'
+#' @description Standarize data by transforming data to have zero mean and unit variance
+#' @param data An input data for median absolute deviation
+#' @return A list of numeric vectors 
+p_gda_standardize <- function(data) {
+    .Call('_rgeoda_p_gda_standardize', PACKAGE = 'rgeoda', data)
+}
+
+#' @title p_gda_standardize_mad
+#'
+#' @description Median absolute deviation to measure  measure of the variability of a univariate sample of quantitative data
+#' @param data An input data for median absolute deviation
+#' @return A list of numeric vectors 
+p_gda_standardize_mad <- function(data) {
+    .Call('_rgeoda_p_gda_standardize_mad', PACKAGE = 'rgeoda', data)
 }
 
 #' This file is used to wrap C++ classes and functions defines in RcppExports.R
@@ -223,39 +257,39 @@ p_gda_min_distthreshold <- function(xp_geoda, is_arc, is_mile) {
     .Call('_rgeoda_p_gda_min_distthreshold', PACKAGE = 'rgeoda', xp_geoda, is_arc, is_mile)
 }
 
-#' @title p_queen_weights
+#' @title p_gda_queen_weights
 #' @return An object of GeoDaWeight class
-p_queen_weights <- function(xp_geoda, order, include_lower_order, precision_threshold) {
-    .Call('_rgeoda_p_queen_weights', PACKAGE = 'rgeoda', xp_geoda, order, include_lower_order, precision_threshold)
+p_gda_queen_weights <- function(xp_geoda, order, include_lower_order, precision_threshold) {
+    .Call('_rgeoda_p_gda_queen_weights', PACKAGE = 'rgeoda', xp_geoda, order, include_lower_order, precision_threshold)
 }
 
-#' @title p_rook_weights
+#' @title p_gda_rook_weights
 #' @return An object of GeoDaWeight class
-p_rook_weights <- function(xp_geoda, order, include_lower_order, precision_threshold) {
-    .Call('_rgeoda_p_rook_weights', PACKAGE = 'rgeoda', xp_geoda, order, include_lower_order, precision_threshold)
+p_gda_rook_weights <- function(xp_geoda, order, include_lower_order, precision_threshold) {
+    .Call('_rgeoda_p_gda_rook_weights', PACKAGE = 'rgeoda', xp_geoda, order, include_lower_order, precision_threshold)
 }
 
-#' @title p_distance_weights
+#' @title p_gda_distance_weights
 #' @return An object of GeoDaWeight class
-p_distance_weights <- function(xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile) {
-    .Call('_rgeoda_p_distance_weights', PACKAGE = 'rgeoda', xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile)
+p_gda_distance_weights <- function(xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile) {
+    .Call('_rgeoda_p_gda_distance_weights', PACKAGE = 'rgeoda', xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile)
 }
 
-#' @title p_kernel_weights
+#' @title p_gda_kernel_weights
 #' @return An object of GeoDaWeight class
-p_kernel_weights <- function(xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile) {
-    .Call('_rgeoda_p_kernel_weights', PACKAGE = 'rgeoda', xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile)
+p_gda_kernel_weights <- function(xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile) {
+    .Call('_rgeoda_p_gda_kernel_weights', PACKAGE = 'rgeoda', xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile)
 }
 
-#' @title p_knn_weights
+#' @title p_gda_knn_weights
 #' @return An object of GeoDaWeight class
-p_knn_weights <- function(xp_geoda, k, power, is_inverse, is_arc, is_mile) {
-    .Call('_rgeoda_p_knn_weights', PACKAGE = 'rgeoda', xp_geoda, k, power, is_inverse, is_arc, is_mile)
+p_gda_knn_weights <- function(xp_geoda, k, power, is_inverse, is_arc, is_mile) {
+    .Call('_rgeoda_p_gda_knn_weights', PACKAGE = 'rgeoda', xp_geoda, k, power, is_inverse, is_arc, is_mile)
 }
 
 #' @title p_kernel_knn_weights
 #' @return An object of GeoDaWeight class
-p_kernel_knn_weights <- function(xp_geoda, k, kernel_method, adaptive_bandwidth, use_kernel_diagonals, power, is_inverse, is_arc, is_mile) {
-    .Call('_rgeoda_p_kernel_knn_weights', PACKAGE = 'rgeoda', xp_geoda, k, kernel_method, adaptive_bandwidth, use_kernel_diagonals, power, is_inverse, is_arc, is_mile)
+p_gda_kernel_knn_weights <- function(xp_geoda, k, power, is_inverse, is_arc, is_mile, kernel_method, bandwidth, adaptive_bandwidth, use_kernel_diagonals) {
+    .Call('_rgeoda_p_gda_kernel_knn_weights', PACKAGE = 'rgeoda', xp_geoda, k, power, is_inverse, is_arc, is_mile, kernel_method, bandwidth, adaptive_bandwidth, use_kernel_diagonals)
 }
 
