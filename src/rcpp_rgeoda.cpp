@@ -1,13 +1,11 @@
-//' This file is used to wrap C++ classes and functions defines in RcppExports.R
-//' All other R script files will use this file as a bridge to C++ classes and functions
-//'
-//' Author: lixun910@gmail.com
-//' Changes:
-//' 10/29/2020 init file
+// This file is used to wrap C++ classes and functions defines in RcppExports.R
+// All other R script files will use this file as a bridge to C++ classes and functions
+// Author: lixun910@gmail.com
+// Changes:
+// 10/29/2020 init file
 
 #include <Rcpp.h>
 #include "libgeoda_src/libgeoda.h"
-#include "libgeoda_src/gda_data.h"
 
 using namespace Rcpp;
 
@@ -235,7 +233,7 @@ StringVector p_GeoDa__GetStringCol(SEXP xp, std::string col_name)
 //' @description Get the null flags of a col from GeoDa object
 //'
 //' @return A list of string values
-//  [[Rcpp::export]]
+// [[Rcpp::export]]
 LogicalVector p_GeoDa__GetNullValues(SEXP xp, std::string col_name)
 {
   // grab the object as a XPtr (smart pointer) to GeoDa
@@ -254,100 +252,4 @@ LogicalVector p_GeoDa__GetNullValues(SEXP xp, std::string col_name)
   }
 
   return lv_vals;
-}
-
-//' @title p_gda_demean
-//'
-//' @description The mean for each variable is subtracting from each observation resulting in mean zero.
-//' @param data An input data for median absolute deviation
-//' @return A list of numeric vectors 
-//  [[Rcpp::export]]
-Rcpp::List p_gda_demean(Rcpp::List data) 
-{
-  std::vector<std::vector<double> > _data;
-  for (int i=0; i< data.size(); ++i) {
-    Rcpp::NumericVector tmp = data[i];
-    std::vector<double> vals = as<std::vector<double> >(tmp);
-    _data.push_back(vals);
-  }
-
-  std::vector<std::vector<double> > demean_data = gda_demean(_data);
-
-  Rcpp::List out(data.size());
-  for (int i=0; i< data.size(); ++i) {
-    std::vector<double>& vals = demean_data[i];
-    Rcpp::NumericVector tmp_vals(vals.begin(), vals.end());
-    out[i] = tmp_vals;
-  }
-
-  return out;
-}
-
-//' @title p_gda_standardize
-//'
-//' @description Standarize data by transforming data to have zero mean and unit variance
-//' @param data An input data for median absolute deviation
-//' @return A list of numeric vectors 
-//  [[Rcpp::export]]
-Rcpp::List p_gda_standardize(Rcpp::List data) 
-{
-  std::vector<std::vector<double> > _data;
-  for (int i=0; i< data.size(); ++i) {
-    Rcpp::NumericVector tmp = data[i];
-    std::vector<double> vals = as<std::vector<double> >(tmp);
-    _data.push_back(vals);
-  }
-
-  std::vector<std::vector<double> > std_data = gda_standardize(_data);
-
-  Rcpp::List out(data.size());
-  for (int i=0; i< data.size(); ++i) {
-    std::vector<double>& vals = std_data[i];
-    Rcpp::NumericVector tmp_vals(vals.begin(), vals.end());
-    out[i] = tmp_vals;
-  }
-
-  return out;
-}
-
-//' @title p_gda_standardize_mad
-//'
-//' @description Median absolute deviation to measure  measure of the variability of a univariate sample of quantitative data
-//' @param data An input data for median absolute deviation
-//' @return A list of numeric vectors 
-//  [[Rcpp::export]]
-Rcpp::List p_gda_standardize_mad(Rcpp::List data) 
-{
-  std::vector<std::vector<double> > _data;
-  for (int i=0; i< data.size(); ++i) {
-    Rcpp::NumericVector tmp = data[i];
-    std::vector<double> vals = as<std::vector<double> >(tmp);
-    _data.push_back(vals);
-  }
-
-  std::vector<std::vector<double> > std_data = gda_standardize_mad(_data);
-
-  Rcpp::List out(data.size());
-  for (int i=0; i< data.size(); ++i) {
-    std::vector<double>& vals = std_data[i];
-    Rcpp::NumericVector tmp_vals(vals.begin(), vals.end());
-    out[i] = tmp_vals;
-  }
-
-  return out;
-}
-
-//' @title p_gda_naturalbreaks
-//'
-//' @description Median absolute deviation to measure  measure of the variability of a univariate sample of quantitative data
-//' @param data An input data for median absolute deviation
-//' @return A numeric vector
-//  [[Rcpp::export]
-Rcpp::NumericVector p_gda_naturalbreaks(int k, Rcpp::NumericVector& data)
-{
-  std::vector<double> vals = as<std::vector<double> >(data);
-  std::vector<double> result = gda_naturalbreaks(k, vals);
-
-  Rcpp::NumericVector out(result.begin, result.end);
-  return out;
 }

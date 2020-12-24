@@ -157,14 +157,82 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// p_gda_standardize_mad
-Rcpp::List p_gda_standardize_mad(Rcpp::List data);
-RcppExport SEXP _rgeoda_p_gda_standardize_mad(SEXP dataSEXP) {
+// p_gda_mad
+Rcpp::List p_gda_mad(Rcpp::List data);
+RcppExport SEXP _rgeoda_p_gda_mad(SEXP dataSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::List >::type data(dataSEXP);
-    rcpp_result_gen = Rcpp::wrap(p_gda_standardize_mad(data));
+    rcpp_result_gen = Rcpp::wrap(p_gda_mad(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_naturalbreaks
+Rcpp::NumericVector p_naturalbreaks(int k, Rcpp::NumericVector data);
+RcppExport SEXP _rgeoda_p_naturalbreaks(SEXP kSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_naturalbreaks(k, data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_quantilebreaks
+Rcpp::NumericVector p_quantilebreaks(int k, Rcpp::NumericVector data);
+RcppExport SEXP _rgeoda_p_quantilebreaks(SEXP kSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_quantilebreaks(k, data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_hinge15breaks
+Rcpp::NumericVector p_hinge15breaks(Rcpp::NumericVector data);
+RcppExport SEXP _rgeoda_p_hinge15breaks(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_hinge15breaks(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_hinge30breaks
+Rcpp::NumericVector p_hinge30breaks(Rcpp::NumericVector data);
+RcppExport SEXP _rgeoda_p_hinge30breaks(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_hinge30breaks(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_percentilebreaks
+Rcpp::NumericVector p_percentilebreaks(Rcpp::NumericVector data);
+RcppExport SEXP _rgeoda_p_percentilebreaks(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_percentilebreaks(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_stddevbreaks
+Rcpp::NumericVector p_stddevbreaks(Rcpp::NumericVector data);
+RcppExport SEXP _rgeoda_p_stddevbreaks(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_stddevbreaks(data));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -457,7 +525,13 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rgeoda_p_GeoDa__GetNullValues", (DL_FUNC) &_rgeoda_p_GeoDa__GetNullValues, 2},
     {"_rgeoda_p_gda_demean", (DL_FUNC) &_rgeoda_p_gda_demean, 1},
     {"_rgeoda_p_gda_standardize", (DL_FUNC) &_rgeoda_p_gda_standardize, 1},
-    {"_rgeoda_p_gda_standardize_mad", (DL_FUNC) &_rgeoda_p_gda_standardize_mad, 1},
+    {"_rgeoda_p_gda_mad", (DL_FUNC) &_rgeoda_p_gda_mad, 1},
+    {"_rgeoda_p_naturalbreaks", (DL_FUNC) &_rgeoda_p_naturalbreaks, 2},
+    {"_rgeoda_p_quantilebreaks", (DL_FUNC) &_rgeoda_p_quantilebreaks, 2},
+    {"_rgeoda_p_hinge15breaks", (DL_FUNC) &_rgeoda_p_hinge15breaks, 1},
+    {"_rgeoda_p_hinge30breaks", (DL_FUNC) &_rgeoda_p_hinge30breaks, 1},
+    {"_rgeoda_p_percentilebreaks", (DL_FUNC) &_rgeoda_p_percentilebreaks, 1},
+    {"_rgeoda_p_stddevbreaks", (DL_FUNC) &_rgeoda_p_stddevbreaks, 1},
     {"_rgeoda_p_GeoDaWeight__GetNumObs", (DL_FUNC) &_rgeoda_p_GeoDaWeight__GetNumObs, 1},
     {"_rgeoda_p_GeoDaWeight__IsSymmetric", (DL_FUNC) &_rgeoda_p_GeoDaWeight__IsSymmetric, 1},
     {"_rgeoda_p_GeoDaWeight__HasIsolations", (DL_FUNC) &_rgeoda_p_GeoDaWeight__HasIsolations, 1},

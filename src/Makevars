@@ -31,6 +31,7 @@ CPP_SRC_FILES = \
 	$(RGEODALIB)/weights/VoronoiUtils.cpp \
 	rcpp_rgeoda.cpp \
 	rcpp_weights.cpp \
+	rcpp_utils.cpp \
 	RcppExports.cpp
 
 #C_SRC_FILES = \
@@ -58,6 +59,7 @@ OBJECTS = \
 	$(RGEODALIB)/weights/VoronoiUtils.o \
 	rcpp_rgeoda.o \
 	rcpp_weights.o \
+	rcpp_utils.o \
 	RcppExports.o
 
 .PHONY: all clean

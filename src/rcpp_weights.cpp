@@ -1,9 +1,9 @@
-//' This file is used to wrap C++ classes and functions defines in RcppExports.R
-//' All other R script files will use this file as a bridge to C++ classes and functions
-//'
-//' Author: lixun910@gmail.com
-//' Changes:
-//' 10/29/2020 init rcpp_weights.cpp
+// This file is used to wrap C++ classes and functions defines in RcppExports.R
+// All other R script files will use this file as a bridge to C++ classes and functions
+//
+// Author: lixun910@gmail.com
+// Changes:
+// 10/29/2020 init rcpp_weights.cpp
 
 #include <Rcpp.h>
 #include "libgeoda_src/weights/GeodaWeight.h"
@@ -51,7 +51,7 @@ bool p_GeoDaWeight__HasIsolations(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  bool has_iso = ptr->HasIsolates();
+  bool has_iso = ptr->HasIsolations();
 
   return has_iso;
 }
@@ -96,7 +96,7 @@ int p_GeoDaWeight__GetMinNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  int min_nbrs = ptr->GetMinNumNbrs();
+  int min_nbrs = ptr->GetMinNbrs();
 
   return min_nbrs;
 }
@@ -111,7 +111,7 @@ int p_GeoDaWeight__GetMaxNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  int max_nbrs = ptr->GetMaxNumNbrs();
+  int max_nbrs = ptr->GetMaxNbrs();
 
   return max_nbrs;
 }
@@ -126,7 +126,7 @@ double p_GeoDaWeight__GetMeanNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  return ptr->GetMeanNumNbrs();
+  return ptr->GetMeanNbrs();
 }
 
 //' @title p_GeoDaWeight__GetMedianNeighbors
@@ -139,7 +139,7 @@ double p_GeoDaWeight__GetMedianNeighbors(SEXP xp)
   Rcpp::XPtr<GeoDaWeight> ptr(xp);
 
   // invoke the function
-  return ptr->GetMedianNumNbrs();
+  return ptr->GetMedianNbrs();
 }
 
 //' @title p_GeoDaWeight__GetSpatialLag

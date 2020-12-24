@@ -1,9 +1,11 @@
-#' This file is used to wrap C++ classes and functions defines in RcppExports.R
-#' All other R script files will use this file as a bridge to C++ classes and functions
-#'
-#' Author: lixun910@gmail.com
-#' Changes:
-#' 10/29/2020 Add p_GeoDa class
+# This file is used to wrap C++ classes and functions defines in RcppExports.R
+# All other R script files will use this file as a bridge to C++ classes and functions
+#
+# Author: lixun910@gmail.com
+# Changes:
+# 10/29/2020 Add p_GeoDa class
+# 12/23/2020 Add p_Weight class
+# 12/23/2020 Add p_LISA class
 
 
 #' @title p_GeoDa
@@ -47,6 +49,8 @@ setMethod( "initialize", "p_GeoDa", function(.Object, ...) {
   .Object
 })
 
+
+
 #' @title p_GeoDaWeight
 #' @description p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
 #' See C++ functions in rcpp_weights.cpp
@@ -80,3 +84,39 @@ setMethod( "initialize", "p_GeoDaWeight", function(.Object, ...) {
   }
   .Object
 })
+
+
+#' @title p_LISA
+#' @description p_LISA class is a RefClass that wraps the C++ LISA class
+#' See C++ functions in rcpp_lisa.cpp
+#' @export
+p_LISA <- setClass( "p_LISA", representation( pointer = "externalptr" ) )
+
+#' LISA_method, helper function to generate C functions
+#' e.g. p_LISA_Run
+#' Methods are listed in RcppExports.R
+#'
+p_LISA_method <- function(name) {
+  paste( "p_LISA", name, sep = "__" )
+}
+
+#' $, expose member functions of p_LISA class
+#'
+setMethod( "$", "p_LISA", function(x, name ) {
+  function(...) do.call( p_LISA_method(name) , list(x@pointer , ... ))
+})
+
+#' Constructors for p_LISA class
+#' Note: here simply using argc to determine which constructor should be called
+#'
+setMethod( "initialize", "p_LISA", function(.Object, ...) {
+  argtypes <- mapply(class, list(...));
+  #argv <- list(...);
+  argc <- length(argtypes);
+
+  if (argc == 0) {
+    # this is for using p_LISA as a member in class('LISA')  in lisa.R
+  }
+  .Object
+})
+

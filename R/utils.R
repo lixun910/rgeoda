@@ -25,7 +25,7 @@ standardize <- function(data) {
 #' @return A data array
 #' @export
 median_absolute_deviation <- function(data) {
-  return (p_gda_standardize_mad(data))
+  return (p_gda_mad(data))
 }
 
 ############################################################
@@ -36,7 +36,7 @@ median_absolute_deviation <- function(data) {
 #' @return A array contains values of computed breaks
 #' @export
 natural_breaks <- function(k, data) {
-  return (p_gda_naturalbreaks(k, data))
+  return (p_naturalbreaks(k, data))
 }
 
 ############################################################
@@ -47,49 +47,45 @@ natural_breaks <- function(k, data) {
 #' @return A array contains values of computed breaks
 #' @export
 quantile_breaks <- function(k, data) {
-  return (gda_guantilebreaks(k, data))
+  return (p_guantilebreaks(k, data))
 }
 
 ############################################################
 #' @title (Box) Hinge15 Breaks
-#' @description Hinge15 breaks data into groups like box plot groups (Lower outlier, < 25%, 25-50%, 50-75%, >75%, Upper outlier) with hinge=1.5
-#' @param k A numeric value indicates how many breaks
+#' @description Hinge15 breaks data into 6 groups like box plot groups (Lower outlier, < 25%, 25-50%, 50-75%, >75%, Upper outlier) with hinge=1.5
 #' @param data An input data
 #' @return A array contains values of computed breaks
 #' @export
-hinge15_breaks <- function(k, data) {
-  return (gda_hinge15breaks(k, data))
+hinge15_breaks <- function(data) {
+  return (p_hinge15breaks(data))
 }
 
 ############################################################
 #' @title (Box) Hinge30 Breaks
-#' @description Hinge30 breaks data into groups like box plot groups (Lower outlier, < 25%, 25-50%, 50-75%, >75%, Upper outlier) with hinge=3.0
-#' @param k A numeric value indicates how many breaks
+#' @description Hinge30 breaks data into 6 groups like box plot groups (Lower outlier, < 25%, 25-50%, 50-75%, >75%, Upper outlier) with hinge=3.0
 #' @param data An input data
 #' @return A array contains values of computed breaks
 #' @export
-hinge30_breaks <- function(k, data) {
-  return (gda_hinge30breaks(k, data))
+hinge30_breaks <- function(data) {
+  return (p_hinge30breaks(data))
 }
 
 ############################################################
 #' @title Percentile Breaks
 #' @description Percentile breaks data into 6 groups: the lowest 1%, 1-10%, 10-50%, 50-90%, 90-99% and the top 1%.
-#' @param k A numeric value indicates how many breaks
 #' @param data An input data
 #' @return A array contains values of computed breaks
 #' @export
-percentile_breaks <- function(k, data) {
-  return (gda_percentilebreaks(k, data))
+percentile_breaks <- function(data) {
+  return (p_percentilebreaks(data))
 }
 
 ############################################################
 #' @title Standard Deviation Breaks
 #' @description Standard deviation breaks first transforms data to standard deviation units (mean=0, stddev=1), and then divide the range of values into 6 groups.
-#' @param k A numeric value indicates how many breaks
 #' @param data An input data
 #' @return A array contains values of computed breaks
 #' @export
-stddev_breaks <- function(k, data) {
-  return (gda_stddevbreaks(k, data))
+stddev_breaks <- function(data) {
+  return (p_stddevbreaks(data))
 }
