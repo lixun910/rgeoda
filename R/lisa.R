@@ -206,7 +206,7 @@ local_geary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
     stop("The size of data doesnt not match the number of observations")
   }
 
-  lisa_obj <- p_geary(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
+  lisa_obj <- p_localgeary(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
   return (LISA$new(lisa_obj))
 }
 
@@ -225,7 +225,7 @@ local_multigeary <- function(w, data, permutations=999, significance_cutoff=0.05
     stop("The number of variables has to be larger than 1.")
   }
 
-  lisa_obj <- p_multigeary(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
+  lisa_obj <- p_localmultigeary(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
   return (LISA$new(lisa_obj))
 }
 
