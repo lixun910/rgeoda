@@ -14,6 +14,7 @@ CXX_STD=CXX11
 
 CPP_SRC_FILES = \
 	$(RGEODALIB)/libgeoda.cpp \
+	$(RGEODALIB)/gda_sa.cpp \
 	$(RGEODALIB)/gda_data.cpp \
 	$(RGEODALIB)/gda_weights.cpp \
 	$(RGEODALIB)/GenGeomAlgs.cpp \
@@ -29,9 +30,20 @@ CPP_SRC_FILES = \
 	$(RGEODALIB)/weights/GwtWeight.cpp \
 	$(RGEODALIB)/weights/GeodaWeight.cpp \
 	$(RGEODALIB)/weights/VoronoiUtils.cpp \
+	$(RGEODALIB)/sa/BatchLISA.cpp \
+	$(RGEODALIB)/sa/BatchLocalMoran.cpp \
+	$(RGEODALIB)/sa/LISA.cpp \
+	$(RGEODALIB)/sa/MultiGeary.cpp \
+	$(RGEODALIB)/sa/MultiJoinCount.cpp \
+	$(RGEODALIB)/sa/UniG.cpp \
+	$(RGEODALIB)/sa/UniGeary.cpp \
+	$(RGEODALIB)/sa/UniGstar.cpp \
+	$(RGEODALIB)/sa/UniJoinCount.cpp \
+	$(RGEODALIB)/sa/UniLocalMoran.cpp \
 	rcpp_rgeoda.cpp \
 	rcpp_weights.cpp \
 	rcpp_utils.cpp \
+	rcpp_lisa.cpp \
 	RcppExports.cpp
 
 #C_SRC_FILES = \
@@ -41,6 +53,7 @@ CPP_SRC_FILES = \
 
 OBJECTS = \
 	$(RGEODALIB)/libgeoda.o \
+	$(RGEODALIB)/gda_sa.o \
 	$(RGEODALIB)/gda_data.o \
 	$(RGEODALIB)/gda_weights.o \
 	$(RGEODALIB)/GenGeomAlgs.o \
@@ -57,9 +70,20 @@ OBJECTS = \
 	$(RGEODALIB)/weights/GwtWeight.o \
 	$(RGEODALIB)/weights/GeodaWeight.o \
 	$(RGEODALIB)/weights/VoronoiUtils.o \
+	$(RGEODALIB)/sa/BatchLISA.o \
+	$(RGEODALIB)/sa/BatchLocalMoran.o \
+	$(RGEODALIB)/sa/LISA.o \
+	$(RGEODALIB)/sa/MultiGeary.o \
+	$(RGEODALIB)/sa/MultiJoinCount.o \
+	$(RGEODALIB)/sa/UniG.o \
+	$(RGEODALIB)/sa/UniGeary.o \
+	$(RGEODALIB)/sa/UniGstar.o \
+	$(RGEODALIB)/sa/UniJoinCount.o \
+	$(RGEODALIB)/sa/UniLocalMoran.o \
 	rcpp_rgeoda.o \
 	rcpp_weights.o \
 	rcpp_utils.o \
+	rcpp_lisa.o \
 	RcppExports.o
 
 .PHONY: all clean

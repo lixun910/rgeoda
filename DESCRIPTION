@@ -15,6 +15,7 @@ Collate:
     read_geoda.R
     weights.R
     utils.R
+    lisa.R
 Imports:
     wkb,
     Rcpp (>= 1.0.1)

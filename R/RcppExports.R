@@ -2,15 +2,15 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 p_LISA__Run <- function(xp) {
-    .Call('_rgeoda_p_LISA__Run', PACKAGE = 'rgeoda', xp)
+    invisible(.Call('_rgeoda_p_LISA__Run', PACKAGE = 'rgeoda', xp))
 }
 
 p_LISA__SetNumPermutations <- function(xp, num_perm) {
-    .Call('_rgeoda_p_LISA__SetNumPermutations', PACKAGE = 'rgeoda', xp, num_perm)
+    invisible(.Call('_rgeoda_p_LISA__SetNumPermutations', PACKAGE = 'rgeoda', xp, num_perm))
 }
 
 p_LISA__SetNumThreads <- function(xp, num_threads) {
-    .Call('_rgeoda_p_LISA__SetNumThreads', PACKAGE = 'rgeoda', xp, num_threads)
+    invisible(.Call('_rgeoda_p_LISA__SetNumThreads', PACKAGE = 'rgeoda', xp, num_threads))
 }
 
 p_LISA__GetLISAValues <- function(xp) {
@@ -33,20 +33,20 @@ p_LISA__SetSignificanceCutoff <- function(xp, cutoff) {
     invisible(.Call('_rgeoda_p_LISA__SetSignificanceCutoff', PACKAGE = 'rgeoda', xp, cutoff))
 }
 
-p_LISA__GetFDR <- function(xp) {
-    .Call('_rgeoda_p_LISA__GetFDR', PACKAGE = 'rgeoda', xp)
-}
-
-p_LISA__GetBO <- function(xp) {
-    .Call('_rgeoda_p_LISA__GetBO', PACKAGE = 'rgeoda', xp)
-}
-
 p_LISA__GetLabels <- function(xp) {
     .Call('_rgeoda_p_LISA__GetLabels', PACKAGE = 'rgeoda', xp)
 }
 
 p_LISA__GetColors <- function(xp) {
     .Call('_rgeoda_p_LISA__GetColors', PACKAGE = 'rgeoda', xp)
+}
+
+p_LISA__GetBO <- function(xp, pval) {
+    .Call('_rgeoda_p_LISA__GetBO', PACKAGE = 'rgeoda', xp, pval)
+}
+
+p_LISA__GetFDR <- function(xp, pval) {
+    .Call('_rgeoda_p_LISA__GetFDR', PACKAGE = 'rgeoda', xp, pval)
 }
 
 p_localmoran <- function(xp_w, data, permutations, significance_cutoff, cpu_threads, seed) {
@@ -63,6 +63,22 @@ p_localmultigeary <- function(xp_w, data, permutations, significance_cutoff, cpu
 
 p_localg <- function(xp_w, data, permutations, significance_cutoff, cpu_threads, seed) {
     .Call('_rgeoda_p_localg', PACKAGE = 'rgeoda', xp_w, data, permutations, significance_cutoff, cpu_threads, seed)
+}
+
+p_localgstar <- function(xp_w, data, permutations, significance_cutoff, cpu_threads, seed) {
+    .Call('_rgeoda_p_localgstar', PACKAGE = 'rgeoda', xp_w, data, permutations, significance_cutoff, cpu_threads, seed)
+}
+
+p_localjoincount <- function(xp_w, data, permutations, significance_cutoff, cpu_threads, seed) {
+    .Call('_rgeoda_p_localjoincount', PACKAGE = 'rgeoda', xp_w, data, permutations, significance_cutoff, cpu_threads, seed)
+}
+
+p_localmultijoincount <- function(xp_w, data, permutations, significance_cutoff, cpu_threads, seed) {
+    .Call('_rgeoda_p_localmultijoincount', PACKAGE = 'rgeoda', xp_w, data, permutations, significance_cutoff, cpu_threads, seed)
+}
+
+p_quantilelisa <- function(xp_w, k, quantile, data, permutations, significance_cutoff, cpu_threads, seed) {
+    .Call('_rgeoda_p_quantilelisa', PACKAGE = 'rgeoda', xp_w, k, quantile, data, permutations, significance_cutoff, cpu_threads, seed)
 }
 
 #' @title p_GeoDa__new

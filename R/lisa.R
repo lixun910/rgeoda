@@ -13,7 +13,7 @@
 #' @export
 LISA <- setRefClass("LISA",
   fields = list(
-    gda_lisa = "_p_LISA",
+    gda_lisa = "p_LISA",
     p_vals = "array",
     c_vals = "array",
     lisa_vals = "array",
