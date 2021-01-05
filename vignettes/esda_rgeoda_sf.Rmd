@@ -64,7 +64,7 @@ By default, sf_to_geoda() only using geometries to create a geoda object, which 
 
 ## 3. ESDA with rgeoda
 
-Now, with the geoda object guerry, you can call rgeoda’s spatial analysis functions. For example, to examine the local Moran statistics of variable “crm_prs” (Population per Crime against persons):
+Now, with the geoda object guerry, you can call rgeoda's spatial analysis functions. For example, to examine the local Moran statistics of variable "crm_prs" (Population per Crime against persons):
 
 
 ```{r, class.source='rCode'}

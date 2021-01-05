@@ -1,12 +1,15 @@
 Package: rgeoda
 Type: Package
-Title: R library for spatial data analysis
+Title: R Library for Spatial Data Analysis
 Version: 0.0.4
-Authors@R: person("Xun","Li", email="lixun910@gmail.com", role=c("aut","cre"))
+Date: 2021-01-05
+Authors@R: 
+    c(person(given = "Xun", family = "Li", email="lixun910@gmail.com", role=c("aut","cre")),
+      person(given = "Luc", family = "Anselin", email="anselin@uchicago.edu", role="aut"))
 Maintainer: Xun Li <lixun910@gmail.com>
 Description: A package for spatial data analysis based on libgeoda and GeoDa.
-Depends: R (>= 3.3.0), methods
-License: GPL-3 + file LICENSE
+Depends: methods
+License: GPL (>= 2) 
 Collate: 
     init.R
     rgeoda.R

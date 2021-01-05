@@ -33,7 +33,7 @@ skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="eu
 #' clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP
 #' starts from building a spanning tree with 4 different ways (single-linkage, average-linkage, wards-linkage
 #' and the complete-linkage). The single-linkage way leads to build a minimum spanning tree.
-#' Then,REDCAP provides 2 different ways (first‐order and full-order constraining) to
+#' Then,REDCAP provides 2 different ways (first-order and full-order constraining) to
 #' prune the tree to find clusters. The first-order approach with a minimum spanning tree is
 #' exactly the same with SKATER. In GeoDa and pygeoda, the following methods are provided:
 #' \* First-order and Single-linkage

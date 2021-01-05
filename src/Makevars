@@ -22,6 +22,7 @@ CPP_SRC_FILES = \
 	$(RGEODALIB)/GenUtils.cpp \
 	$(RGEODALIB)/SpatialIndAlgs.cpp \
 	$(RGEODALIB)/pg/geoms.c \
+	$(RGEODALIB)/pg/utils.c \
 	$(RGEODALIB)/shapelib/dbfopen.c \
 	$(RGEODALIB)/shapelib/safileio.c \
 	$(RGEODALIB)/shapelib/shpopen.c \
