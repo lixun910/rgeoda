@@ -6,6 +6,99 @@
 
 using namespace Rcpp;
 
+// p_betweensumofsquare
+double p_betweensumofsquare(Rcpp::List& solution, Rcpp::List& data);
+RcppExport SEXP _rgeoda_p_betweensumofsquare(SEXP solutionSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type solution(solutionSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_betweensumofsquare(solution, data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_totalsumofsquare
+double p_totalsumofsquare(Rcpp::List& data);
+RcppExport SEXP _rgeoda_p_totalsumofsquare(SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_totalsumofsquare(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_withinsumofsquare
+double p_withinsumofsquare(Rcpp::List& solution, Rcpp::List& data);
+RcppExport SEXP _rgeoda_p_withinsumofsquare(SEXP solutionSEXP, SEXP dataSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::List& >::type solution(solutionSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data(dataSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_withinsumofsquare(solution, data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_skater
+Rcpp::List p_skater(int k, SEXP xp_w, Rcpp::List& data, std::string distance_method, NumericVector& bound_vals, double min_bound, int seed);
+RcppExport SEXP _rgeoda_p_skater(SEXP kSEXP, SEXP xp_wSEXP, SEXP dataSEXP, SEXP distance_methodSEXP, SEXP bound_valsSEXP, SEXP min_boundSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type xp_w(xp_wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< std::string >::type distance_method(distance_methodSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type bound_vals(bound_valsSEXP);
+    Rcpp::traits::input_parameter< double >::type min_bound(min_boundSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_skater(k, xp_w, data, distance_method, bound_vals, min_bound, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_redcap
+Rcpp::List p_redcap(int k, SEXP xp_w, Rcpp::List& data, std::string redcap_method, std::string distance_method, NumericVector& bound_vals, double min_bound, int seed);
+RcppExport SEXP _rgeoda_p_redcap(SEXP kSEXP, SEXP xp_wSEXP, SEXP dataSEXP, SEXP redcap_methodSEXP, SEXP distance_methodSEXP, SEXP bound_valsSEXP, SEXP min_boundSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< SEXP >::type xp_w(xp_wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< std::string >::type redcap_method(redcap_methodSEXP);
+    Rcpp::traits::input_parameter< std::string >::type distance_method(distance_methodSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type bound_vals(bound_valsSEXP);
+    Rcpp::traits::input_parameter< double >::type min_bound(min_boundSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_redcap(k, xp_w, data, redcap_method, distance_method, bound_vals, min_bound, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_maxp
+Rcpp::List p_maxp(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, double min_bound, std::string local_search, int iterations, int tabu_length, int conv_tabu, double cool_rate, int sa_maxit, NumericVector& init_regions, std::string distance_method, int seed);
+RcppExport SEXP _rgeoda_p_maxp(SEXP xp_wSEXP, SEXP dataSEXP, SEXP bound_valsSEXP, SEXP min_boundSEXP, SEXP local_searchSEXP, SEXP iterationsSEXP, SEXP tabu_lengthSEXP, SEXP conv_tabuSEXP, SEXP cool_rateSEXP, SEXP sa_maxitSEXP, SEXP init_regionsSEXP, SEXP distance_methodSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp_w(xp_wSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type bound_vals(bound_valsSEXP);
+    Rcpp::traits::input_parameter< double >::type min_bound(min_boundSEXP);
+    Rcpp::traits::input_parameter< std::string >::type local_search(local_searchSEXP);
+    Rcpp::traits::input_parameter< int >::type iterations(iterationsSEXP);
+    Rcpp::traits::input_parameter< int >::type tabu_length(tabu_lengthSEXP);
+    Rcpp::traits::input_parameter< int >::type conv_tabu(conv_tabuSEXP);
+    Rcpp::traits::input_parameter< double >::type cool_rate(cool_rateSEXP);
+    Rcpp::traits::input_parameter< int >::type sa_maxit(sa_maxitSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type init_regions(init_regionsSEXP);
+    Rcpp::traits::input_parameter< std::string >::type distance_method(distance_methodSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_maxp(xp_w, data, bound_vals, min_bound, local_search, iterations, tabu_length, conv_tabu, cool_rate, sa_maxit, init_regions, distance_method, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
 // p_LISA__Run
 void p_LISA__Run(SEXP xp);
 RcppExport SEXP _rgeoda_p_LISA__Run(SEXP xpSEXP) {
@@ -398,6 +491,17 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// p_GeoDa__GetPointer
+SEXP p_GeoDa__GetPointer(SEXP xp);
+RcppExport SEXP _rgeoda_p_GeoDa__GetPointer(SEXP xpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_GeoDa__GetPointer(xp));
+    return rcpp_result_gen;
+END_RCPP
+}
 // p_gda_demean
 Rcpp::List p_gda_demean(Rcpp::List data);
 RcppExport SEXP _rgeoda_p_gda_demean(SEXP dataSEXP) {
@@ -496,6 +600,17 @@ BEGIN_RCPP
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::NumericVector >::type data(dataSEXP);
     rcpp_result_gen = Rcpp::wrap(p_stddevbreaks(data));
+    return rcpp_result_gen;
+END_RCPP
+}
+// p_GeoDaWeight__GetPointer
+SEXP p_GeoDaWeight__GetPointer(SEXP xp);
+RcppExport SEXP _rgeoda_p_GeoDaWeight__GetPointer(SEXP xpSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp(xpSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_GeoDaWeight__GetPointer(xp));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -775,6 +890,12 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_rgeoda_p_betweensumofsquare", (DL_FUNC) &_rgeoda_p_betweensumofsquare, 2},
+    {"_rgeoda_p_totalsumofsquare", (DL_FUNC) &_rgeoda_p_totalsumofsquare, 1},
+    {"_rgeoda_p_withinsumofsquare", (DL_FUNC) &_rgeoda_p_withinsumofsquare, 2},
+    {"_rgeoda_p_skater", (DL_FUNC) &_rgeoda_p_skater, 7},
+    {"_rgeoda_p_redcap", (DL_FUNC) &_rgeoda_p_redcap, 8},
+    {"_rgeoda_p_maxp", (DL_FUNC) &_rgeoda_p_maxp, 13},
     {"_rgeoda_p_LISA__Run", (DL_FUNC) &_rgeoda_p_LISA__Run, 1},
     {"_rgeoda_p_LISA__SetNumPermutations", (DL_FUNC) &_rgeoda_p_LISA__SetNumPermutations, 2},
     {"_rgeoda_p_LISA__SetNumThreads", (DL_FUNC) &_rgeoda_p_LISA__SetNumThreads, 2},
@@ -806,6 +927,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rgeoda_p_GeoDa__GetIntegerCol", (DL_FUNC) &_rgeoda_p_GeoDa__GetIntegerCol, 2},
     {"_rgeoda_p_GeoDa__GetStringCol", (DL_FUNC) &_rgeoda_p_GeoDa__GetStringCol, 2},
     {"_rgeoda_p_GeoDa__GetNullValues", (DL_FUNC) &_rgeoda_p_GeoDa__GetNullValues, 2},
+    {"_rgeoda_p_GeoDa__GetPointer", (DL_FUNC) &_rgeoda_p_GeoDa__GetPointer, 1},
     {"_rgeoda_p_gda_demean", (DL_FUNC) &_rgeoda_p_gda_demean, 1},
     {"_rgeoda_p_gda_standardize", (DL_FUNC) &_rgeoda_p_gda_standardize, 1},
     {"_rgeoda_p_gda_mad", (DL_FUNC) &_rgeoda_p_gda_mad, 1},
@@ -815,6 +937,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rgeoda_p_hinge30breaks", (DL_FUNC) &_rgeoda_p_hinge30breaks, 1},
     {"_rgeoda_p_percentilebreaks", (DL_FUNC) &_rgeoda_p_percentilebreaks, 1},
     {"_rgeoda_p_stddevbreaks", (DL_FUNC) &_rgeoda_p_stddevbreaks, 1},
+    {"_rgeoda_p_GeoDaWeight__GetPointer", (DL_FUNC) &_rgeoda_p_GeoDaWeight__GetPointer, 1},
     {"_rgeoda_p_GeoDaWeight__GetNumObs", (DL_FUNC) &_rgeoda_p_GeoDaWeight__GetNumObs, 1},
     {"_rgeoda_p_GeoDaWeight__IsSymmetric", (DL_FUNC) &_rgeoda_p_GeoDaWeight__IsSymmetric, 1},
     {"_rgeoda_p_GeoDaWeight__HasIsolations", (DL_FUNC) &_rgeoda_p_GeoDaWeight__HasIsolations, 1},

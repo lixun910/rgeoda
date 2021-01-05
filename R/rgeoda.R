@@ -75,12 +75,14 @@ setMethod( "$", "p_GeoDaWeight", function(x, name ) {
 #' Note: here simply using argc to determine which constructor should be called
 #'
 setMethod( "initialize", "p_GeoDaWeight", function(.Object, ...) {
-  argtypes <- mapply(class, list(...));
-  #argv <- list(...);
+  argv = list(...)
+  argtypes <- mapply(class, argv);
   argc <- length(argtypes);
 
   if (argc == 0) {
-    # this is for uring p_GeoDaWeight as a member in class('weight')  in weights.R
+    # this is for using p_GeoDaWeight as a member in class('weight')  in weights.R
+  } else {
+    .Object@pointer <- argv[[1]]
   }
   .Object
 })
@@ -110,12 +112,14 @@ setMethod( "$", "p_LISA", function(x, name ) {
 #' Note: here simply using argc to determine which constructor should be called
 #'
 setMethod( "initialize", "p_LISA", function(.Object, ...) {
-  argtypes <- mapply(class, list(...));
-  #argv <- list(...);
+  argv = list(...)
+  argtypes <- mapply(class, argv);
   argc <- length(argtypes);
 
   if (argc == 0) {
     # this is for using p_LISA as a member in class('LISA')  in lisa.R
+  } else {
+    .Object@pointer <- argv[[1]]
   }
   .Object
 })

@@ -4,16 +4,14 @@
 \alias{hinge30_breaks}
 \title{(Box) Hinge30 Breaks}
 \usage{
-hinge30_breaks(k, data)
+hinge30_breaks(data)
 }
 \arguments{
-\item{k}{A numeric value indicates how many breaks}
-
 \item{data}{An input data}
 }
 \value{
 A array contains values of computed breaks
 }
 \description{
-Hinge30 breaks data into groups like box plot groups (Lower outlier, < 25%, 25-50%, 50-75%, >75%, Upper outlier) with hinge=3.0
+Hinge30 breaks data into 6 groups like box plot groups (Lower outlier, < 25%, 25-50%, 50-75%, >75%, Upper outlier) with hinge=3.0
 }

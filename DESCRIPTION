@@ -16,6 +16,7 @@ Collate:
     weights.R
     utils.R
     lisa.R
+    clustering.R
 Imports:
     wkb,
     Rcpp (>= 1.0.1)

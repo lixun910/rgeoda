@@ -73,6 +73,10 @@ geoda <- setRefClass("geoda",
     GetUndefinedVals = function(col_name) {
       "Get the undefined flags from a column"
       return(gda$GetNullValues(col_name))
+    },
+    GetPointer = function() {
+      "Get the C++ object pointer (internally used)"
+      return(gda$GetPointer())
     }
   )
 )

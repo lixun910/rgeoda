@@ -253,3 +253,10 @@ LogicalVector p_GeoDa__GetNullValues(SEXP xp, std::string col_name)
 
   return lv_vals;
 }
+
+// [[Rcpp::export]]
+SEXP p_GeoDa__GetPointer(SEXP xp)
+{
+  // return c++ object pointer
+  return xp;
+} 

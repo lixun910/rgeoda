@@ -39,6 +39,8 @@ geoda is a RefClass that wraps the C++ GeoDa class (via p_GeoDa defines in rgeod
 
 \item{\code{GetNumObs(...)}}{Get the number of observations}
 
+\item{\code{GetPointer()}}{Get the C++ object pointer (internally used)}
+
 \item{\code{GetRealCol(col_name)}}{Get the real values from a column}
 
 \item{\code{GetUndefinedVals(col_name)}}{Get the undefined flags from a column}

@@ -4,11 +4,9 @@
 \alias{percentile_breaks}
 \title{Percentile Breaks}
 \usage{
-percentile_breaks(k, data)
+percentile_breaks(data)
 }
 \arguments{
-\item{k}{A numeric value indicates how many breaks}
-
 \item{data}{An input data}
 }
 \value{

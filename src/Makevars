@@ -17,6 +17,7 @@ CPP_SRC_FILES = \
 	$(RGEODALIB)/gda_sa.cpp \
 	$(RGEODALIB)/gda_data.cpp \
 	$(RGEODALIB)/gda_weights.cpp \
+	$(RGEODALIB)/gda_clustering.cpp \
 	$(RGEODALIB)/GenGeomAlgs.cpp \
 	$(RGEODALIB)/GenUtils.cpp \
 	$(RGEODALIB)/SpatialIndAlgs.cpp \
@@ -40,10 +41,16 @@ CPP_SRC_FILES = \
 	$(RGEODALIB)/sa/UniGstar.cpp \
 	$(RGEODALIB)/sa/UniJoinCount.cpp \
 	$(RGEODALIB)/sa/UniLocalMoran.cpp \
+	$(RGEODALIB)/clustering/redcap.cpp \
+	$(RGEODALIB)/clustering/redcap_wrapper.cpp \
+	$(RGEODALIB)/clustering/maxp.cpp \
+	$(RGEODALIB)/clustering/maxp_wrapper.cpp \
+	$(RGEODALIB)/clustering/cluster.cpp \
 	rcpp_rgeoda.cpp \
 	rcpp_weights.cpp \
 	rcpp_utils.cpp \
 	rcpp_lisa.cpp \
+	rcpp_clustering.cpp \
 	RcppExports.cpp
 
 #C_SRC_FILES = \
@@ -56,6 +63,7 @@ OBJECTS = \
 	$(RGEODALIB)/gda_sa.o \
 	$(RGEODALIB)/gda_data.o \
 	$(RGEODALIB)/gda_weights.o \
+	$(RGEODALIB)/gda_clustering.o \
 	$(RGEODALIB)/GenGeomAlgs.o \
 	$(RGEODALIB)/GenUtils.o \
 	$(RGEODALIB)/SpatialIndAlgs.o \
@@ -80,15 +88,21 @@ OBJECTS = \
 	$(RGEODALIB)/sa/UniGstar.o \
 	$(RGEODALIB)/sa/UniJoinCount.o \
 	$(RGEODALIB)/sa/UniLocalMoran.o \
+	$(RGEODALIB)/clustering/redcap.o \
+	$(RGEODALIB)/clustering/redcap_wrapper.o \
+	$(RGEODALIB)/clustering/maxp.o \
+	$(RGEODALIB)/clustering/maxp_wrapper.o \
+	$(RGEODALIB)/clustering/cluster.o \
 	rcpp_rgeoda.o \
 	rcpp_weights.o \
 	rcpp_utils.o \
 	rcpp_lisa.o \
+	rcpp_clustering.o \
 	RcppExports.o
 
 .PHONY: all clean
 
-all: clean $(SHLIB)
+all: $(SHLIB)
 
 clean:
 	rm -f $(SHLIB) $(OBJECTS)

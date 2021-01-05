@@ -50,7 +50,7 @@ LISA <- setRefClass("LISA",
       "Get the local spatial autocorrelation values returned from LISA computation."
       return (gda_lisa$GetLISAValues())
     },
-    GetPValues = function() {
+    GetLocalSignificanceValues = function() {
       "Get the local pseudo-p values of significance returned from LISA computation."
       return (gda_lisa$GetLocalSignificanceValues())
     },
@@ -146,7 +146,6 @@ lisa_clusters <- function(gda_lisa, cutoff=0.05) {
 #' @return data a tuple of values
 #' @export
 lisa_num_nbrs <- function(gda_lisa) {
-  ""
   return (gda_lisa$GetNumNeighbors())
 }
 
@@ -157,7 +156,6 @@ lisa_num_nbrs <- function(gda_lisa) {
 #' @return labels a tuple of values
 #' @export
 lisa_labels <- function(gda_lisa) {
-  ""
   return (gda_lisa$GetLabels())
 }
 
@@ -168,7 +166,6 @@ lisa_labels <- function(gda_lisa) {
 #' @return colors a tuple of values
 #' @export
 lisa_colors <- function(gda_lisa) {
-  ""
   return (gda_lisa$GetColors())
 }
 
@@ -177,9 +174,13 @@ lisa_colors <- function(gda_lisa) {
 #' @description The function to apply local Moran statistics
 #' @param w An instance of Weight object
 #' @param data A tuple of values of selected variable
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_moran <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_moran <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -187,8 +188,8 @@ local_moran <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
     stop("The size of data doesnt not match the number of observations")
   }
 
-  lisa_obj <- p_localmoran(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localmoran(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -196,9 +197,13 @@ local_moran <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
 #' @description The function to apply local Geary statistics
 #' @param w An instance of Weight object
 #' @param data A tuple of values of selected variable
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_geary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_geary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -206,8 +211,8 @@ local_geary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
     stop("The size of data doesnt not match the number of observations")
   }
 
-  lisa_obj <- p_localgeary(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localgeary(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -215,9 +220,13 @@ local_geary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
 #' @description The function to apply local Multivariate Geary statistics
 #' @param w An instance of Weight object
 #' @param data A 2D tuple of values of selected variables
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_multigeary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_multigeary <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -225,8 +234,8 @@ local_multigeary <- function(w, data, permutations=999, significance_cutoff=0.05
     stop("The number of variables has to be larger than 1.")
   }
 
-  lisa_obj <- p_localmultigeary(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localmultigeary(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -234,9 +243,13 @@ local_multigeary <- function(w, data, permutations=999, significance_cutoff=0.05
 #' @description The function to apply Getis-Ord's local G statistics
 #' @param w An instance of Weight object
 #' @param data A tuple of values of selected variable
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_g <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_g <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -244,8 +257,8 @@ local_g <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_thr
     stop("The size of data doesnt not match the number of observations")
   }
 
-  lisa_obj <- p_localg(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localg(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -253,9 +266,13 @@ local_g <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_thr
 #' @description The function to apply Getis-Ord's local G* statistics
 #' @param w An instance of Weight object
 #' @param data A tuple of values of selected variable
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_gstar <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_gstar <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -263,8 +280,8 @@ local_gstar <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
     stop("The size of data doesnt not match the number of observations")
   }
 
-  lisa_obj <- p_localgstar(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localgstar(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -272,9 +289,13 @@ local_gstar <- function(w, data, permutations=999, significance_cutoff=0.05, cpu
 #' @description The function to apply local Join Count statistics
 #' @param w An instance of Weight object
 #' @param data A tuple of values of selected variable
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_joincount <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_joincount <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -282,8 +303,8 @@ local_joincount <- function(w, data, permutations=999, significance_cutoff=0.05,
     stop("The size of data doesnt not match the number of observations")
   }
 
-  lisa_obj <- p_joincount(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localjoincount(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -291,9 +312,13 @@ local_joincount <- function(w, data, permutations=999, significance_cutoff=0.05,
 #' @description The function to apply local Multivariate Join Count statistics
 #' @param w An instance of Weight object
 #' @param data A 2D tuple of values of selected variables
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_multijoincount <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=2, seed=123456789) {
+local_multijoincount <- function(w, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -301,8 +326,8 @@ local_multijoincount <- function(w, data, permutations=999, significance_cutoff=
     stop("The number of variables has to be larger than 1.")
   }
 
-  lisa_obj <- p_multijoincount(w$gda_w, data, permutations, significance_cutoff, cpu_threads, seed)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_localmultijoincount(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }
 
 #################################################################
@@ -312,9 +337,13 @@ local_multijoincount <- function(w, data, permutations=999, significance_cutoff=
 #' @param k A value indicates the number of quantiles. Value range e.g. [1, 10]
 #' @param q A value indicates which quantile or interval used in local join count statistics. Value stars from 1.
 #' @param data A tuple of values of selected variable
+#' @param permutations The number of permutations for the LISA computation
+#' @param significance_cutoff  A cutoff value for significance p-values to filter not-significant clusters
+#' @param cpu_threads The number of cpu threads used for parallel LISA computation
+#' @param seed The seed for random number generator
 #' @return lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 #' @export
-local_quantilelisa <- function(w, k, q, data) {
+local_quantilelisa <- function(w, k, q, data, permutations=999, significance_cutoff=0.05, cpu_threads=6, seed=123456789) {
   if (w$num_obs <= 0) {
     stop("Weights object is not valid.")
   }
@@ -325,6 +354,6 @@ local_quantilelisa <- function(w, k, q, data) {
     stop("The value of which quantile been selected should be in the range of [1, k]")
   }
 
-  lisa_obj <- p_quantilelisa(w$gda_w, k, q, data)
-  return (LISA$new(lisa_obj))
+  lisa_obj <- p_quantilelisa(w$GetPointer(), k, q, data, permutations, significance_cutoff, cpu_threads, seed)
+  return (LISA$new(p_LISA(lisa_obj)))
 }

@@ -4,11 +4,9 @@
 \alias{stddev_breaks}
 \title{Standard Deviation Breaks}
 \usage{
-stddev_breaks(k, data)
+stddev_breaks(data)
 }
 \arguments{
-\item{k}{A numeric value indicates how many breaks}
-
 \item{data}{An input data}
 }
 \value{

@@ -12,10 +12,13 @@
 
 using namespace Rcpp;
 
-//' @title p_GeoDaWeight__GetNumObs
-//'
-//' @description Get the number of observations from GeoDaWeight object
-//' @return The number of observations
+// [[Rcpp::export]]
+SEXP p_GeoDaWeight__GetPointer(SEXP xp)
+{
+  // return c++ object pointer
+  return xp;
+} 
+
 //  [[Rcpp::export]]
 int p_GeoDaWeight__GetNumObs(SEXP xp)
 {
@@ -275,6 +278,7 @@ SEXP p_gda_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, dou
   GeoDaWeight* w = gda_queen_weights(geoda, order, include_lower_order, precision_threshold);
 
   Rcpp::XPtr<GeoDaWeight> w_ptr(w, true); // true: we need to register a delete finalizer with the external pointer.
+
   return w_ptr;
 }
 

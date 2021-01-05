@@ -376,7 +376,7 @@ pvals
 `rgeoda` uses `GeoDa`’s C++ code, in which multi-threading is used to accelerate the computation of LISA. We can use the argument `ncpu` to specify how many threads to run the computation:
 
 ```{r}
-lisa <- local_moran(queen_w, crm_prs, ncpu = 4)
+lisa <- local_moran(queen_w, crm_prs, cpu_threads = 4)
 ```
 
 Get the False Discovery Rate value based on current pseudo-p values:
@@ -388,6 +388,7 @@ fdr
 Then, one can set the FDR value as the cutoff p-value to filter the cluster results:
 ```{r}
 cat_fdr <- lisa_clusters(lisa, cutoff = fdr)
+cat_fdr
 ```
 
 #### 4.1.2 Use `local_geary` for Local Geary
@@ -449,6 +450,7 @@ lisa_pvalues(localg_crmprs)
 For the second type of local Getis-Ord statistics, we can call the function `local_gstar()` with the created Queen weights and the data “crm_prp” as input parameters:
 ```{r}
 localgstar_crmprs <- local_gstar(queen_w, crm_prs)
+lisa_pvalues(localgstar_crmprs)
 ```
 
 #### 4.1.5 Local Join Count
@@ -501,41 +503,7 @@ To get the cluster indicators of the quantile LISA computation:
 lisa_clusters(qsa)
 ```
 
-### 4.2 Spatializing Multivariate Analysis
-
-#### 4.2.1 Pincinple Components
-
-This PCA function aims to reproduce the PCA feature and results in `GeoDa`. However, one can use `prcomp` function in R to apply same PCA computations. 
-
-For example, the following example will apply PCA on 6 variables. The `standardize()` function is called to standardize the data, which `pca()` function applies on. 
-
-Other standardization functions include: `demean()` and `mad()`, which are same in the `GeoDa` program.
-```{r}
-#data <- as.list(guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')])
-std_data <- standardize(data)
-pc <- pca(std_data)
-summary(pc)
-```
-
-With the returned object `pc`, one can call `get_kcomponents()` function to get first K components:
-
-For example, to get first 3 components
-```{r}
-get_kcomponents(pc, 3)
-```
-
-#### 4.2.1 Multi Dimensional Scaling
-
-The mds() function is to apply multi-dimensional scaling on input data, with output of a K-dimensional array data. K should be an input parameter for mds() function. 
-
-For example, to apply mds() on the 6 selected variables, and scaling down to a 2-d space:
-
-```{r}
-mds_v <- mds(std_data, 2)
-mds_v
-```
-
-### 4.3 Spatial Clustering
+### 4.2 Spatial Clustering
 
  
 Spatial clustering aims to group of a large number of geographic areas or points into a smaller number of regions based on similiarities in one or more variables. Spatially constrained clustering is needed when clusters are required to be spatially contiguous. 
@@ -550,7 +518,7 @@ The following code is used to get a 2D data vector for the selected variables:
 data <- as.list(guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')])
 ```
 
-#### 4.3.1 SKATER
+#### 4.2.1 SKATER
 
 The Spatial C(K)luster Analysis by Tree Edge Removal(SKATER) algorithm introduced by Assuncao et al. (2006) is based on the optimal pruning of a minimum spanning tree that reflects the contiguity structure among the observations. It provides an optimized algorithm to prune to tree into several clusters that their values of selected variables are as similar as possible.
 
@@ -577,7 +545,7 @@ ratio <-  betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
-#### 4.3.2 REDCAP
+#### 4.2.2 REDCAP
 
 REDCAP (Regionalization with dynamically constrained agglomerative clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP starts from building a spanning tree with 3 different ways (single-linkage, average-linkage, and the complete-linkage). The single-linkage way leads to build a minimum spanning tree. Then,REDCAP provides 2 different ways (first‐order and full-order constraining) to prune the tree to find clusters. The first-order approach with a minimum spanning tree is exactly the same with SKATER. In `GeoDa` and `rgeoda`, the following methods are provided:
 
@@ -585,6 +553,7 @@ REDCAP (Regionalization with dynamically constrained agglomerative clustering an
 * Full-order and Complete-linkage
 * Full-order and Average-linkage
 * Full-order and Single-linkage
+* Full-order and Wards-linkage
 
 For example, to find 4 clusters using the same dataset and weights as above using REDCAP with Full-order and Complete-linkage method:
 
@@ -598,7 +567,7 @@ ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
-#### 4.3.3 Max-p
+#### 4.2.3 Max-p
 
 The so-called max-p regions model (outlined in Duque, Anselin, and Rey 2012) uses a different approach and considers the regionalization problem as an application of integer programming. In addition, the number of regions is determined endogenously.
 
@@ -652,7 +621,7 @@ cat("The ratio of between to total sum of square:", ratio)
 We can also increase the number of iterations for local search process by specifying the parameter `initial` (default value is 99):
 
 ```{r}
-maxp_clusters <- maxp(queen_w, data, bound_vals, min_bound, "greedy", initial=1000)
+maxp_clusters <- maxp(queen_w, data, bound_vals, min_bound, "greedy", iterations=200)
 
 betweenss <- between_sumofsquare(maxp_clusters, data)
 ratio <- betweenss / totalss
