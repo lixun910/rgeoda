@@ -41,11 +41,11 @@ maxp(
 
 \item{sa_maxit}{(optional): The number of iterations of simulated annealing. Defaults to 1}
 
+\item{initial_regions}{(optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters}
+
 \item{distance_method}{(optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"}
 
 \item{random_seed}{(optional) The seed for random number generator. Defaults to 123456789.}
-
-\item{init_regions}{(optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters}
 }
 \value{
 A 2d list represents a group of clusters

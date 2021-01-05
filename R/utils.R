@@ -47,7 +47,7 @@ natural_breaks <- function(k, data) {
 #' @return A array contains values of computed breaks
 #' @export
 quantile_breaks <- function(k, data) {
-  return (p_guantilebreaks(k, data))
+  return (p_quantilebreaks(k, data))
 }
 
 ############################################################

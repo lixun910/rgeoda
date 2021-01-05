@@ -10,11 +10,6 @@ using namespace Rcpp;
 
 #include "libgeoda_src/gda_data.h"
 
-//' @title p_gda_demean
-//'
-//' @description The mean for each variable is subtracting from each observation resulting in mean zero.
-//' @param data An input data for median absolute deviation
-//' @return A list of numeric vectors
 //  [[Rcpp::export]]
 Rcpp::List p_gda_demean(Rcpp::List data)
 {
@@ -37,11 +32,6 @@ Rcpp::List p_gda_demean(Rcpp::List data)
   return out;
 }
 
-//' @title p_gda_standardize
-//'
-//' @description Standarize data by transforming data to have zero mean and unit variance
-//' @param data An input data for median absolute deviation
-//' @return A list of numeric vectors
 //  [[Rcpp::export]]
 Rcpp::List p_gda_standardize(Rcpp::List data)
 {
@@ -64,11 +54,6 @@ Rcpp::List p_gda_standardize(Rcpp::List data)
   return out;
 }
 
-//' @title p_gda_mad
-//'
-//' @description Median absolute deviation to measure  measure of the variability of a univariate sample of quantitative data
-//' @param data An input data for median absolute deviation
-//' @return A list of numeric vectors
 //  [[Rcpp::export]]
 Rcpp::List p_gda_mad(Rcpp::List data)
 {

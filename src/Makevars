@@ -102,7 +102,7 @@ OBJECTS = \
 
 .PHONY: all clean
 
-all: $(SHLIB)
+all: clean $(SHLIB)
 
 clean:
 	rm -f $(SHLIB) $(OBJECTS)

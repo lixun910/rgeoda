@@ -29,9 +29,6 @@ int p_GeoDaWeight__GetNumObs(SEXP xp)
   return ptr->GetNumObs();
 }
 
-//' @title p_GeoDaWeight__IsSymmetric
-//' @description Return if the weights is symmetric
-//' @return Boolean if weights is symmetric
 //  [[Rcpp::export]]
 bool p_GeoDaWeight__IsSymmetric(SEXP xp)
 {
@@ -44,9 +41,6 @@ bool p_GeoDaWeight__IsSymmetric(SEXP xp)
   return is_sym;
 }
 
-//' @title p_GeoDaWeight__HasIsolations
-//' @description Return if the weights has any isolations
-//' @return Boolean if weights has any isolations
 //  [[Rcpp::export]]
 bool p_GeoDaWeight__HasIsolations(SEXP xp)
 {
@@ -59,9 +53,6 @@ bool p_GeoDaWeight__HasIsolations(SEXP xp)
   return has_iso;
 }
 
-//' @title p_GeoDaWeight__GetSparsity
-//' @description Get the sparsity value of weights
-//' @return The sparsity value
 //  [[Rcpp::export]]
 double p_GeoDaWeight__GetSparsity(SEXP xp)
 {
@@ -74,9 +65,6 @@ double p_GeoDaWeight__GetSparsity(SEXP xp)
   return sparsity;
 }
 
-//' @title p_GeoDaWeight__GetDensity
-//' @description Get the density value of weights
-//' @return The sparsity value
 //  [[Rcpp::export]]
 double p_GeoDaWeight__GetDensity(SEXP xp)
 {
@@ -89,9 +77,6 @@ double p_GeoDaWeight__GetDensity(SEXP xp)
   return density;
 }
 
-//' @title p_GeoDaWeight__GetMinNeighbors
-//' @description Get the minimum number of neighbors
-//' @return The minimum number of neighbors
 //  [[Rcpp::export]]
 int p_GeoDaWeight__GetMinNeighbors(SEXP xp)
 {
@@ -104,9 +89,6 @@ int p_GeoDaWeight__GetMinNeighbors(SEXP xp)
   return min_nbrs;
 }
 
-//' @title p_GeoDaWeight__GetMaxNeighbors
-//' @description Get the maximum number of neighbors
-//' @return The maximum number of neighbors
 //  [[Rcpp::export]]
 int p_GeoDaWeight__GetMaxNeighbors(SEXP xp)
 {
@@ -119,9 +101,6 @@ int p_GeoDaWeight__GetMaxNeighbors(SEXP xp)
   return max_nbrs;
 }
 
-//' @title p_GeoDaWeight__GetMeanNeighbors
-//' @description Get the mean number of neighbors
-//' @return The mean number of neighbors
 //  [[Rcpp::export]]
 double p_GeoDaWeight__GetMeanNeighbors(SEXP xp)
 {
@@ -132,9 +111,6 @@ double p_GeoDaWeight__GetMeanNeighbors(SEXP xp)
   return ptr->GetMeanNbrs();
 }
 
-//' @title p_GeoDaWeight__GetMedianNeighbors
-//' @description Get the median number of neighbors
-//' @return The median number of neighbors
 //  [[Rcpp::export]]
 double p_GeoDaWeight__GetMedianNeighbors(SEXP xp)
 {
@@ -145,9 +121,6 @@ double p_GeoDaWeight__GetMedianNeighbors(SEXP xp)
   return ptr->GetMedianNbrs();
 }
 
-//' @title p_GeoDaWeight__GetSpatialLag
-//' @description Get the spatial lag value of idx-th observation
-//' @return The value of spatial lag of idx-th observation
 //  [[Rcpp::export]]
 double p_GeoDaWeight__SpatialLag(SEXP xp, int obs_idx, SEXP vals)
 {
@@ -162,9 +135,6 @@ double p_GeoDaWeight__SpatialLag(SEXP xp, int obs_idx, SEXP vals)
   return lag;
 }
 
-//' @title p_GeoDaWeight__GetNeighborSize()
-//' @description Get the size of neighbors of an observation
-//' @return The size of neighbors
 //  [[Rcpp::export]]
 int p_GeoDaWeight__GetNeighborSize(SEXP xp, int obs_idx)
 {
@@ -177,9 +147,6 @@ int p_GeoDaWeight__GetNeighborSize(SEXP xp, int obs_idx)
   return nn_sz;
 }
 
-//' @title p_GeoDaWeight__SaveToFile()
-//' @description Save the weights to a file
-//' @return Boolean if successfully save the weights to a file
 //  [[Rcpp::export]]
 bool p_GeoDaWeight__SaveToFile(SEXP xp, std::string out_path, std::string layer_name, std::string id_name, SEXP id_vec)
 {
@@ -205,9 +172,6 @@ bool p_GeoDaWeight__SaveToFile(SEXP xp, std::string out_path, std::string layer_
   }
 }
 
-//' @title p_GeoDaWeight__GetNeighbors()
-//' @description Get the neighbors of an observation
-//' @return The list of neighbors
 //  [[Rcpp::export]]
 NumericVector p_GeoDaWeight__GetNeighbors(SEXP xp, int obs_idx)
 {
@@ -227,9 +191,6 @@ NumericVector p_GeoDaWeight__GetNeighbors(SEXP xp, int obs_idx)
   return nv_nn;
 }
 
-//' @title p_GeoDaWeight__GetNeighborWeights()
-//' @description Get the weights value of neighbors of an observation
-//' @return The list of weights values of neighbors
 //  [[Rcpp::export]]
 NumericVector p_GeoDaWeight__GetNeighborWeights(SEXP xp, int obs_idx)
 {
@@ -249,9 +210,6 @@ NumericVector p_GeoDaWeight__GetNeighborWeights(SEXP xp, int obs_idx)
   return nv_nnw;
 }
 
-//' @title p_gda_min_distthreshold
-//' @description Return Get minimum threshold of distance
-//' @return A real value of minimum threshold of distance
 //  [[Rcpp::export]]
 double p_gda_min_distthreshold(SEXP xp_geoda, bool is_arc, bool is_mile)
 {
@@ -265,8 +223,6 @@ double p_gda_min_distthreshold(SEXP xp_geoda, bool is_arc, bool is_mile)
   return min_dist;
 }
 
-//' @title p_gda_queen_weights
-//' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
 SEXP p_gda_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold)
 {
@@ -282,8 +238,6 @@ SEXP p_gda_queen_weights(SEXP xp_geoda, int order, bool include_lower_order, dou
   return w_ptr;
 }
 
-//' @title p_gda_rook_weights
-//' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
 SEXP p_gda_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, double precision_threshold)
 {
@@ -298,8 +252,6 @@ SEXP p_gda_rook_weights(SEXP xp_geoda, int order, bool include_lower_order, doub
   return w_ptr;
 }
 
-//' @title p_gda_distance_weights
-//' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
 SEXP p_gda_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool is_inverse, bool is_arc, bool is_mile)
 {
@@ -314,8 +266,6 @@ SEXP p_gda_distance_weights(SEXP xp_geoda, double dist_thres, double power, bool
   return w_ptr;
 }
 
-//' @title p_gda_kernel_weights
-//' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
 SEXP p_gda_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_method, bool use_kernel_diagonals, double power, bool is_inverse, bool is_arc, bool is_mile)
 {
@@ -330,8 +280,6 @@ SEXP p_gda_kernel_weights(SEXP xp_geoda, double bandwidth, std::string kernel_me
   return w_ptr;
 }
 
-//' @title p_gda_knn_weights
-//' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
 SEXP p_gda_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile)
 {
@@ -346,8 +294,6 @@ SEXP p_gda_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool
   return w_ptr;
 }
 
-//' @title p_kernel_knn_weights
-//' @return An object of GeoDaWeight class
 //  [[Rcpp::export]]
 SEXP p_gda_kernel_knn_weights(SEXP xp_geoda, int k, double power, bool is_inverse, bool is_arc, bool is_mile, std::string kernel_method, double bandwidth, bool adaptive_bandwidth, bool use_kernel_diagonals)
 {

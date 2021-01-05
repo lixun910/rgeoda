@@ -101,33 +101,33 @@ sp_to_geoda = function(sp_obj, with_table=FALSE) {
   file_name <- random_string(1)
 
   # table
-  col_names <- colnames(sp_obj@data)
-  n_cols <- length(col_names)
-  tbl <- GeoDaTable()
-  if (with_table) {
-    for (i in 1:n_cols) {
-      ft <- class(sp_obj@data[[i]])
-      if (ft == "factor") {
-        dat <- sp_obj@data[[i]]
-        tbl$AddStringColumn(col_names[[i]], dat)
-
-      } else if (ft == "integer" || ft == "logical") {
-        dat <- sp_obj@data[[i]]
-        tbl$AddIntColumn(col_names[[i]], dat)
-
-      } else if (ft == "double" || ft == "numeric") {
-        dat <- sp_obj@data[[i]]
-        tbl$AddRealColumn(col_names[[i]], dat)
-
-      } else {
-        dat <- as.character(sp_obj@data[[i]])
-        tbl$AddStringColumn(col_names[[i]], dat)
-      }
-    }
-  } else {
-    n_cols <- 0
-    col_names <- rep("", 0)
-  }
+  #col_names <- colnames(sp_obj@data)
+  #n_cols <- length(col_names)
+  #tbl <- GeoDaTable()
+  #if (with_table) {
+  #  for (i in 1:n_cols) {
+  #    ft <- class(sp_obj@data[[i]])
+  #    if (ft == "factor") {
+  #      dat <- sp_obj@data[[i]]
+  #      tbl$AddStringColumn(col_names[[i]], dat)
+  #
+  #    } else if (ft == "integer" || ft == "logical") {
+  #      dat <- sp_obj@data[[i]]
+  #      tbl$AddIntColumn(col_names[[i]], dat)
+  #
+  #    } else if (ft == "double" || ft == "numeric") {
+  #      dat <- sp_obj@data[[i]]
+  #      tbl$AddRealColumn(col_names[[i]], dat)
+  #
+  #    } else {
+  #      dat <- as.character(sp_obj@data[[i]])
+  #      tbl$AddStringColumn(col_names[[i]], dat)
+  #    }
+  #  }
+  #} else {
+  #  n_cols <- 0
+  #  col_names <- rep("", 0)
+  #}
 
   # map_type
   map_type <- "map_polygons"

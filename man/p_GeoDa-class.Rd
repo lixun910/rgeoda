@@ -4,6 +4,7 @@
 \name{p_GeoDa-class}
 \alias{p_GeoDa-class}
 \alias{p_GeoDa}
+\alias{$,p_GeoDa-method}
 \title{p_GeoDa}
 \description{
 p_GeoDa class is a RefClass that wraps the C++ GeoDa class

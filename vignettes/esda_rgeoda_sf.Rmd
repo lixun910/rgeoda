@@ -3,6 +3,10 @@ title: "ESDA with rGeoDa and sf"
 author: "lixun910"
 date: "7/2/2019"
 output: html_document
+vignette: >
+  %\VignetteIndexEntry{esda_rgeoda_sf}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 ```{css eval=TRUE, hide=TRUE}
@@ -27,6 +31,9 @@ The sf package has been popular tool to handle geospatial data. It is a good sub
 For example, to load a geospatial data (e.g. a ESRI Shapefile) using sf:
 
 ```{r, class.source='rCode'}
+library(rgeoda)
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+
 library(sf)
 guerry_sf <- st_read(guerry_path)
 ```

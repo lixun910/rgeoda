@@ -96,9 +96,12 @@ geoda_open <- function(ds_path) {
 
 #' @title convert rgeoda instance to data.frame
 #' @description Override the as.data.frame function for rgeoda instance
-#' @param gda_obj A rgeoda object
+#' @param x A rgeoda object
+#' @param row.names NULL or a character vector giving the row names for the data frame. Missing values are not allowed.
+#' @param optional optional parameters 
+#' @param ... other arguments passed to methods
 #' @return A data.frame object
 #' @export
-as.data.frame.geoda <- function(gda_obj) {
-  return (gda_obj$table)
+as.data.frame.geoda <- function(x, row.names = NULL, optional = FALSE, ...) {
+  return (x$table)
 }

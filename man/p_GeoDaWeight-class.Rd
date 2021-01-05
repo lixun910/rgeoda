@@ -4,6 +4,7 @@
 \name{p_GeoDaWeight-class}
 \alias{p_GeoDaWeight-class}
 \alias{p_GeoDaWeight}
+\alias{$,p_GeoDaWeight-method}
 \title{p_GeoDaWeight}
 \description{
 p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class

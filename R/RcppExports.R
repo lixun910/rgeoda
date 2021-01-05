@@ -105,102 +105,46 @@ p_quantilelisa <- function(xp_w, k, quantile, data, permutations, significance_c
     .Call('_rgeoda_p_quantilelisa', PACKAGE = 'rgeoda', xp_w, k, quantile, data, permutations, significance_cutoff, cpu_threads, seed)
 }
 
-#' @title p_GeoDa__new
-#'
-#' @description Create an instance of GeoDa by loading a ESRI shapefile
-#'
-#' @param file_path The path of the spatial file (ESRI shapefile)
-#' @return An externptr of GeoDa object
 p_GeoDa__new <- function(file_path) {
     .Call('_rgeoda_p_GeoDa__new', PACKAGE = 'rgeoda', file_path)
 }
 
-#' @title p_GeoDa__new1
-#'
-#' @description Create an instance of GeoDa from sf object
-#'
-#' @param file_path The path of the spatial file (ESRI shapefile)
-#' @return An externptr of GeoDa object
 p_GeoDa__new1 <- function(layer_name, map_type, num_features, wkbs, wkb_bytes_len) {
     .Call('_rgeoda_p_GeoDa__new1', PACKAGE = 'rgeoda', layer_name, map_type, num_features, wkbs, wkb_bytes_len)
 }
 
-#' @title p_GeoDa__GetNumObs
-#'
-#' @description Get the number of obervations from GeoDa object
-#' @return The number of observations
 p_GeoDa__GetNumObs <- function(xp) {
     .Call('_rgeoda_p_GeoDa__GetNumObs', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDa__GetNumCols
-#'
-#' @description Get the number of columns from GeoDa object
-#' @return The number of columns
 p_GeoDa__GetNumCols <- function(xp) {
     .Call('_rgeoda_p_GeoDa__GetNumCols', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDa__GetMapType
-#'
-#' @description Get the map type from GeoDa object
-#' , which has to be one of {point_type, polygon_type, line_type, unkonwn_type}
-#'
-#' @return The id of map type
 p_GeoDa__GetMapType <- function(xp) {
     .Call('_rgeoda_p_GeoDa__GetMapType', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDa__GetFieldNames
-#'
-#' @description Get the field names from GeoDa object
-#'
-#' @return A list of field names
 p_GeoDa__GetFieldNames <- function(xp) {
     .Call('_rgeoda_p_GeoDa__GetFieldNames', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDa__GetFieldTypes
-#'
-#' @description Get the field types from GeoDa object
-#'
-#' @return A list of field types
 p_GeoDa__GetFieldTypes <- function(xp) {
     .Call('_rgeoda_p_GeoDa__GetFieldTypes', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDa__GetNumericCol
-#'
-#' @description Get the values of a numeric col from GeoDa object
-#'
-#' @return A list of double values
 p_GeoDa__GetNumericCol <- function(xp, col_name) {
     .Call('_rgeoda_p_GeoDa__GetNumericCol', PACKAGE = 'rgeoda', xp, col_name)
 }
 
-#' @title p_GeoDa__GetIntegerCol
-#'
-#' @description Get the values of a integer col from GeoDa object
-#'
-#' @return A list of integer values
 p_GeoDa__GetIntegerCol <- function(xp, col_name) {
     .Call('_rgeoda_p_GeoDa__GetIntegerCol', PACKAGE = 'rgeoda', xp, col_name)
 }
 
-#' @title p_GeoDa__GetStringCol
-#'
-#' @description Get the values of a string col from GeoDa object
-#'
-#' @return A list of string values
 p_GeoDa__GetStringCol <- function(xp, col_name) {
     .Call('_rgeoda_p_GeoDa__GetStringCol', PACKAGE = 'rgeoda', xp, col_name)
 }
 
-#' @title p_GeoDa__GetNullValues
-#'
-#' @description Get the null flags of a col from GeoDa object
-#'
-#' @return A list of string values
 p_GeoDa__GetNullValues <- function(xp, col_name) {
     .Call('_rgeoda_p_GeoDa__GetNullValues', PACKAGE = 'rgeoda', xp, col_name)
 }
@@ -209,29 +153,14 @@ p_GeoDa__GetPointer <- function(xp) {
     .Call('_rgeoda_p_GeoDa__GetPointer', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_gda_demean
-#'
-#' @description The mean for each variable is subtracting from each observation resulting in mean zero.
-#' @param data An input data for median absolute deviation
-#' @return A list of numeric vectors
 p_gda_demean <- function(data) {
     .Call('_rgeoda_p_gda_demean', PACKAGE = 'rgeoda', data)
 }
 
-#' @title p_gda_standardize
-#'
-#' @description Standarize data by transforming data to have zero mean and unit variance
-#' @param data An input data for median absolute deviation
-#' @return A list of numeric vectors
 p_gda_standardize <- function(data) {
     .Call('_rgeoda_p_gda_standardize', PACKAGE = 'rgeoda', data)
 }
 
-#' @title p_gda_mad
-#'
-#' @description Median absolute deviation to measure  measure of the variability of a univariate sample of quantitative data
-#' @param data An input data for median absolute deviation
-#' @return A list of numeric vectors
 p_gda_mad <- function(data) {
     .Call('_rgeoda_p_gda_mad', PACKAGE = 'rgeoda', data)
 }
@@ -268,136 +197,82 @@ p_GeoDaWeight__GetNumObs <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetNumObs', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__IsSymmetric
-#' @description Return if the weights is symmetric
-#' @return Boolean if weights is symmetric
 p_GeoDaWeight__IsSymmetric <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__IsSymmetric', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__HasIsolations
-#' @description Return if the weights has any isolations
-#' @return Boolean if weights has any isolations
 p_GeoDaWeight__HasIsolations <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__HasIsolations', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetSparsity
-#' @description Get the sparsity value of weights
-#' @return The sparsity value
 p_GeoDaWeight__GetSparsity <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetSparsity', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetDensity
-#' @description Get the density value of weights
-#' @return The sparsity value
 p_GeoDaWeight__GetDensity <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetDensity', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetMinNeighbors
-#' @description Get the minimum number of neighbors
-#' @return The minimum number of neighbors
 p_GeoDaWeight__GetMinNeighbors <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetMinNeighbors', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetMaxNeighbors
-#' @description Get the maximum number of neighbors
-#' @return The maximum number of neighbors
 p_GeoDaWeight__GetMaxNeighbors <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetMaxNeighbors', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetMeanNeighbors
-#' @description Get the mean number of neighbors
-#' @return The mean number of neighbors
 p_GeoDaWeight__GetMeanNeighbors <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetMeanNeighbors', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetMedianNeighbors
-#' @description Get the median number of neighbors
-#' @return The median number of neighbors
 p_GeoDaWeight__GetMedianNeighbors <- function(xp) {
     .Call('_rgeoda_p_GeoDaWeight__GetMedianNeighbors', PACKAGE = 'rgeoda', xp)
 }
 
-#' @title p_GeoDaWeight__GetSpatialLag
-#' @description Get the spatial lag value of idx-th observation
-#' @return The value of spatial lag of idx-th observation
 p_GeoDaWeight__SpatialLag <- function(xp, obs_idx, vals) {
     .Call('_rgeoda_p_GeoDaWeight__SpatialLag', PACKAGE = 'rgeoda', xp, obs_idx, vals)
 }
 
-#' @title p_GeoDaWeight__GetNeighborSize()
-#' @description Get the size of neighbors of an observation
-#' @return The size of neighbors
 p_GeoDaWeight__GetNeighborSize <- function(xp, obs_idx) {
     .Call('_rgeoda_p_GeoDaWeight__GetNeighborSize', PACKAGE = 'rgeoda', xp, obs_idx)
 }
 
-#' @title p_GeoDaWeight__SaveToFile()
-#' @description Save the weights to a file
-#' @return Boolean if successfully save the weights to a file
 p_GeoDaWeight__SaveToFile <- function(xp, out_path, layer_name, id_name, id_vec) {
     .Call('_rgeoda_p_GeoDaWeight__SaveToFile', PACKAGE = 'rgeoda', xp, out_path, layer_name, id_name, id_vec)
 }
 
-#' @title p_GeoDaWeight__GetNeighbors()
-#' @description Get the neighbors of an observation
-#' @return The list of neighbors
 p_GeoDaWeight__GetNeighbors <- function(xp, obs_idx) {
     .Call('_rgeoda_p_GeoDaWeight__GetNeighbors', PACKAGE = 'rgeoda', xp, obs_idx)
 }
 
-#' @title p_GeoDaWeight__GetNeighborWeights()
-#' @description Get the weights value of neighbors of an observation
-#' @return The list of weights values of neighbors
 p_GeoDaWeight__GetNeighborWeights <- function(xp, obs_idx) {
     .Call('_rgeoda_p_GeoDaWeight__GetNeighborWeights', PACKAGE = 'rgeoda', xp, obs_idx)
 }
 
-#' @title p_gda_min_distthreshold
-#' @description Return Get minimum threshold of distance
-#' @return A real value of minimum threshold of distance
 p_gda_min_distthreshold <- function(xp_geoda, is_arc, is_mile) {
     .Call('_rgeoda_p_gda_min_distthreshold', PACKAGE = 'rgeoda', xp_geoda, is_arc, is_mile)
 }
 
-#' @title p_gda_queen_weights
-#' @return An object of GeoDaWeight class
 p_gda_queen_weights <- function(xp_geoda, order, include_lower_order, precision_threshold) {
     .Call('_rgeoda_p_gda_queen_weights', PACKAGE = 'rgeoda', xp_geoda, order, include_lower_order, precision_threshold)
 }
 
-#' @title p_gda_rook_weights
-#' @return An object of GeoDaWeight class
 p_gda_rook_weights <- function(xp_geoda, order, include_lower_order, precision_threshold) {
     .Call('_rgeoda_p_gda_rook_weights', PACKAGE = 'rgeoda', xp_geoda, order, include_lower_order, precision_threshold)
 }
 
-#' @title p_gda_distance_weights
-#' @return An object of GeoDaWeight class
 p_gda_distance_weights <- function(xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile) {
     .Call('_rgeoda_p_gda_distance_weights', PACKAGE = 'rgeoda', xp_geoda, dist_thres, power, is_inverse, is_arc, is_mile)
 }
 
-#' @title p_gda_kernel_weights
-#' @return An object of GeoDaWeight class
 p_gda_kernel_weights <- function(xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile) {
     .Call('_rgeoda_p_gda_kernel_weights', PACKAGE = 'rgeoda', xp_geoda, bandwidth, kernel_method, use_kernel_diagonals, power, is_inverse, is_arc, is_mile)
 }
 
-#' @title p_gda_knn_weights
-#' @return An object of GeoDaWeight class
 p_gda_knn_weights <- function(xp_geoda, k, power, is_inverse, is_arc, is_mile) {
     .Call('_rgeoda_p_gda_knn_weights', PACKAGE = 'rgeoda', xp_geoda, k, power, is_inverse, is_arc, is_mile)
 }
 
-#' @title p_kernel_knn_weights
-#' @return An object of GeoDaWeight class
 p_gda_kernel_knn_weights <- function(xp_geoda, k, power, is_inverse, is_arc, is_mile, kernel_method, bandwidth, adaptive_bandwidth, use_kernel_diagonals) {
     .Call('_rgeoda_p_gda_kernel_knn_weights', PACKAGE = 'rgeoda', xp_geoda, k, power, is_inverse, is_arc, is_mile, kernel_method, bandwidth, adaptive_bandwidth, use_kernel_diagonals)
 }

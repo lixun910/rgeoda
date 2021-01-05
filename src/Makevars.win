@@ -15,24 +15,92 @@ PKG_LIBS=\
 	-L$(RWINLIB)/lib$(R_ARCH) \
 	-pthread
 
-CPP_SRC_FILES = \
-	$(wildcard $(RGEODALIB)/sa/*.cpp) \
-	$(wildcard $(RGEODALIB)/knn/*.cpp) \
-	$(wildcard $(RGEODALIB)/weights/*.cpp) \
-	$(wildcard $(RGEODALIB)/clustering/*.cpp) \
-	$(wildcard $(RGEODALIB)/*.cpp) \
+CXX_STD = CXX11
 
-C_SRC_FILES = \
-	$(wildcard $(RGEODALIB)/pg/*.c) \
-	$(wildcard $(RGEODALIB)/shapelib/*.c) \
+CPP_SRC_FILES = \
+	$(RGEODALIB)/libgeoda.cpp \
+	$(RGEODALIB)/gda_sa.cpp \
+	$(RGEODALIB)/gda_data.cpp \
+	$(RGEODALIB)/gda_weights.cpp \
+	$(RGEODALIB)/gda_clustering.cpp \
+	$(RGEODALIB)/GenGeomAlgs.cpp \
+	$(RGEODALIB)/GenUtils.cpp \
+	$(RGEODALIB)/SpatialIndAlgs.cpp \
+	$(RGEODALIB)/pg/geoms.c \
+	$(RGEODALIB)/shapelib/dbfopen.c \
+	$(RGEODALIB)/shapelib/safileio.c \
+	$(RGEODALIB)/shapelib/shpopen.c \
+	$(RGEODALIB)/weights/PointsToContigWeights.cpp \
+	$(RGEODALIB)/weights/PolysToContigWeights.cpp \
+	$(RGEODALIB)/weights/GalWeight.cpp \
+	$(RGEODALIB)/weights/GwtWeight.cpp \
+	$(RGEODALIB)/weights/GeodaWeight.cpp \
+	$(RGEODALIB)/weights/VoronoiUtils.cpp \
+	$(RGEODALIB)/sa/BatchLISA.cpp \
+	$(RGEODALIB)/sa/BatchLocalMoran.cpp \
+	$(RGEODALIB)/sa/LISA.cpp \
+	$(RGEODALIB)/sa/MultiGeary.cpp \
+	$(RGEODALIB)/sa/MultiJoinCount.cpp \
+	$(RGEODALIB)/sa/UniG.cpp \
+	$(RGEODALIB)/sa/UniGeary.cpp \
+	$(RGEODALIB)/sa/UniGstar.cpp \
+	$(RGEODALIB)/sa/UniJoinCount.cpp \
+	$(RGEODALIB)/sa/UniLocalMoran.cpp \
+	$(RGEODALIB)/clustering/redcap.cpp \
+	$(RGEODALIB)/clustering/redcap_wrapper.cpp \
+	$(RGEODALIB)/clustering/maxp.cpp \
+	$(RGEODALIB)/clustering/maxp_wrapper.cpp \
+	$(RGEODALIB)/clustering/cluster.cpp \
+	rcpp_rgeoda.cpp \
+	rcpp_weights.cpp \
+	rcpp_utils.cpp \
+	rcpp_lisa.cpp \
+	rcpp_clustering.cpp \
+	RcppExports.cpp
 
 
 OBJECTS = \
-	$(patsubst %.c, %.o, $(C_SRC_FILES)) \
-	$(patsubst %.cpp, %.o, $(CPP_SRC_FILES)) \
-	rgeoda.o \
+	$(RGEODALIB)/libgeoda.o \
+	$(RGEODALIB)/gda_sa.o \
+	$(RGEODALIB)/gda_data.o \
+	$(RGEODALIB)/gda_weights.o \
+	$(RGEODALIB)/gda_clustering.o \
+	$(RGEODALIB)/GenGeomAlgs.o \
+	$(RGEODALIB)/GenUtils.o \
+	$(RGEODALIB)/SpatialIndAlgs.o \
+	$(RGEODALIB)/pg/geoms.o \
+	$(RGEODALIB)/pg/utils.o \
+	$(RGEODALIB)/shapelib/dbfopen.o \
+	$(RGEODALIB)/shapelib/safileio.o \
+	$(RGEODALIB)/shapelib/shpopen.o \
+	$(RGEODALIB)/weights/PointsToContigWeights.o \
+	$(RGEODALIB)/weights/PolysToContigWeights.o \
+	$(RGEODALIB)/weights/GalWeight.o \
+	$(RGEODALIB)/weights/GwtWeight.o \
+	$(RGEODALIB)/weights/GeodaWeight.o \
+	$(RGEODALIB)/weights/VoronoiUtils.o \
+	$(RGEODALIB)/sa/BatchLISA.o \
+	$(RGEODALIB)/sa/BatchLocalMoran.o \
+	$(RGEODALIB)/sa/LISA.o \
+	$(RGEODALIB)/sa/MultiGeary.o \
+	$(RGEODALIB)/sa/MultiJoinCount.o \
+	$(RGEODALIB)/sa/UniG.o \
+	$(RGEODALIB)/sa/UniGeary.o \
+	$(RGEODALIB)/sa/UniGstar.o \
+	$(RGEODALIB)/sa/UniJoinCount.o \
+	$(RGEODALIB)/sa/UniLocalMoran.o \
+	$(RGEODALIB)/clustering/redcap.o \
+	$(RGEODALIB)/clustering/redcap_wrapper.o \
+	$(RGEODALIB)/clustering/maxp.o \
+	$(RGEODALIB)/clustering/maxp_wrapper.o \
+	$(RGEODALIB)/clustering/cluster.o \
+	rcpp_rgeoda.o \
+	rcpp_weights.o \
+	rcpp_utils.o \
+	rcpp_lisa.o \
+	rcpp_clustering.o \
+	RcppExports.o
 
-CXX_STD = CXX11
 
 .PHONY: clean all
 

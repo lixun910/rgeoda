@@ -9,12 +9,6 @@
 
 using namespace Rcpp;
 
-//' @title p_GeoDa__new
-//'
-//' @description Create an instance of GeoDa by loading a ESRI shapefile
-//'
-//' @param file_path The path of the spatial file (ESRI shapefile)
-//' @return An externptr of GeoDa object
 //  [[Rcpp::export]]
 SEXP p_GeoDa__new(std::string file_path)
 {
@@ -26,12 +20,6 @@ SEXP p_GeoDa__new(std::string file_path)
   return ptr;
 }
 
-//' @title p_GeoDa__new1
-//'
-//' @description Create an instance of GeoDa from sf object
-//'
-//' @param file_path The path of the spatial file (ESRI shapefile)
-//' @return An externptr of GeoDa object
 //  [[Rcpp::export]]
 SEXP p_GeoDa__new1(std::string layer_name, std::string map_type, int num_features, RawVector wkbs, NumericVector wkb_bytes_len)
 {
@@ -47,10 +35,6 @@ SEXP p_GeoDa__new1(std::string layer_name, std::string map_type, int num_feature
   return ptr;
 }
 
-//' @title p_GeoDa__GetNumObs
-//'
-//' @description Get the number of obervations from GeoDa object
-//' @return The number of observations
 //  [[Rcpp::export]]
 int p_GeoDa__GetNumObs(SEXP xp)
 {
@@ -64,10 +48,6 @@ int p_GeoDa__GetNumObs(SEXP xp)
 }
 
 
-//' @title p_GeoDa__GetNumCols
-//'
-//' @description Get the number of columns from GeoDa object
-//' @return The number of columns
 //  [[Rcpp::export]]
 int p_GeoDa__GetNumCols(SEXP xp)
 {
@@ -80,12 +60,6 @@ int p_GeoDa__GetNumCols(SEXP xp)
   return num_cols;
 }
 
-//' @title p_GeoDa__GetMapType
-//'
-//' @description Get the map type from GeoDa object
-//' , which has to be one of {point_type, polygon_type, line_type, unkonwn_type}
-//'
-//' @return The id of map type
 //  [[Rcpp::export]]
 int p_GeoDa__GetMapType(SEXP xp)
 {
@@ -98,11 +72,6 @@ int p_GeoDa__GetMapType(SEXP xp)
   return map_type;
 }
 
-//' @title p_GeoDa__GetFieldNames
-//'
-//' @description Get the field names from GeoDa object
-//'
-//' @return A list of field names
 //  [[Rcpp::export]]
 StringVector p_GeoDa__GetFieldNames(SEXP xp)
 {
@@ -124,11 +93,6 @@ StringVector p_GeoDa__GetFieldNames(SEXP xp)
   return sv_field_nms;
 }
 
-//' @title p_GeoDa__GetFieldTypes
-//'
-//' @description Get the field types from GeoDa object
-//'
-//' @return A list of field types
 //  [[Rcpp::export]]
 StringVector p_GeoDa__GetFieldTypes(SEXP xp)
 {
@@ -150,11 +114,6 @@ StringVector p_GeoDa__GetFieldTypes(SEXP xp)
   return sv_field_tps;
 }
 
-//' @title p_GeoDa__GetNumericCol
-//'
-//' @description Get the values of a numeric col from GeoDa object
-//'
-//' @return A list of double values
 //  [[Rcpp::export]]
 NumericVector p_GeoDa__GetNumericCol(SEXP xp, std::string col_name)
 {
@@ -176,11 +135,6 @@ NumericVector p_GeoDa__GetNumericCol(SEXP xp, std::string col_name)
   return nv_vals;
 }
 
-//' @title p_GeoDa__GetIntegerCol
-//'
-//' @description Get the values of a integer col from GeoDa object
-//'
-//' @return A list of integer values
 //  [[Rcpp::export]]
 NumericVector p_GeoDa__GetIntegerCol(SEXP xp, std::string col_name)
 {
@@ -202,11 +156,6 @@ NumericVector p_GeoDa__GetIntegerCol(SEXP xp, std::string col_name)
   return nv_vals;
 }
 
-//' @title p_GeoDa__GetStringCol
-//'
-//' @description Get the values of a string col from GeoDa object
-//'
-//' @return A list of string values
 //  [[Rcpp::export]]
 StringVector p_GeoDa__GetStringCol(SEXP xp, std::string col_name)
 {
@@ -228,11 +177,6 @@ StringVector p_GeoDa__GetStringCol(SEXP xp, std::string col_name)
   return sv_vals;
 }
 
-//' @title p_GeoDa__GetNullValues
-//'
-//' @description Get the null flags of a col from GeoDa object
-//'
-//' @return A list of string values
 // [[Rcpp::export]]
 LogicalVector p_GeoDa__GetNullValues(SEXP xp, std::string col_name)
 {

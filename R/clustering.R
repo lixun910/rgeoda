@@ -87,7 +87,7 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0
 #' @param conv_tabu (optional): The number of non-improving moves. Defaults to 10.
 #' @param cool_rate (optional): The cooling rate of a simulated annealing algorithm. Defaults to 0.85
 #' @param sa_maxit (optional): The number of iterations of simulated annealing. Defaults to 1
-#' @param init_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
 #' @return A 2d list represents a group of clusters
 #' @export
 maxp <- function(w, data, bound_vals, min_bound, local_search="greedy", iterations=99, tabu_length=10, conv_tabu=10, cool_rate=0.85, sa_maxit=1, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
