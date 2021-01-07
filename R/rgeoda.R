@@ -26,7 +26,6 @@ p_GeoDa_method <- function(name) {
 #' @aliases $,p_GeoDa-method
 #' @docType methods
 #' @rdname p_GeoDa-class
-NULL
 setMethod( "$", "p_GeoDa", function(x = "p_GeoDa", name = "ANY") {
   function(...) do.call( p_GeoDa_method(name) , list(x@pointer , ... ))
 })
@@ -71,7 +70,6 @@ p_GeoDaWeight_method <- function(name) {
 #' @aliases $,p_GeoDaWeight-method
 #' @docType methods
 #' @rdname p_GeoDaWeight-class
-NULL
 setMethod( "$", "p_GeoDaWeight", function(x = "p_GeoDaWeight", name = "ANY") {
   function(...) do.call( p_GeoDaWeight_method(name) , list(x@pointer , ... ))
 })
@@ -111,7 +109,6 @@ p_LISA_method <- function(name) {
 #' @aliases $,p_LISA-method
 #' @docType methods
 #' @rdname p_LISA-class
-NULL
 setMethod( "$", "p_LISA", function(x = "p_LISA", name = "ANY" ) {
   function(...) do.call( p_LISA_method(name) , list(x@pointer , ... ))
 })

@@ -3,12 +3,12 @@
 #' @description SKATER forms clusters by spatially partitioning data that has similar values for features of interest.
 #' @param k The number of clusters
 #' @param w An instance of Weight class
-#' @param data A 2d numeric list of selected variable
+#' @param data A list of numeric vectors of selected variable
 #' @param bound_vals (optional) A 1-d vector of selected bounding variable
 #' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (int,optional) The seed for random number generator. Defaults to 123456789.
-#' @return A 2d list represents a group of clusters
+#' @return A list of numeric vectors represents a group of clusters
 #' @export
 skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="euclidean", random_seed=123456789) {
   if (w$num_obs < 1) {
@@ -31,7 +31,7 @@ skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="eu
 #' @title Regionalization with dynamically constrained agglomerative clustering and partitioning
 #' @description REDCAP (Regionalization with dynamically constrained agglomerative
 #' clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP
-#' starts from building a spanning tree with 4 different ways (single-linkage, average-linkage, wards-linkage
+#' starts from building a spanning tree with 4 different ways (single-linkage, average-linkage, ward-linkage
 #' and the complete-linkage). The single-linkage way leads to build a minimum spanning tree.
 #' Then,REDCAP provides 2 different ways (first-order and full-order constraining) to
 #' prune the tree to find clusters. The first-order approach with a minimum spanning tree is
@@ -40,16 +40,16 @@ skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="eu
 #' \* Full-order and Complete-linkage
 #' \* Full-order and Average-linkage
 #' \* Full-order and Single-linkage
-#' \* Full-order and Wards-linkage
+#' \* Full-order and Ward-linkage
 #' @param k The number of clusters
 #' @param w An instance of Weight class
-#' @param data A 2d numeric list of selected variable
-#' @param method {"firstorder-singlelinkage", "fullorder-completelinkage", "fullorder-averagelinkage","fullorder-singlelinkage", "fullorder-wardslinkage"}
+#' @param data A list of numeric vectors of selected variable
+#' @param method {"firstorder-singlelinkage", "fullorder-completelinkage", "fullorder-averagelinkage","fullorder-singlelinkage", "fullorder-wardlinkage"}
 #' @param bound_vals (optional) A 1-d vector of selected bounding variable
 #' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (int,optional) The seed for random number generator. Defaults to 123456789.
-#' @return A 2d list represents a group of clusters
+#' @return A list of numeric vectors represents a group of clusters
 #' @export
 redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0), min_bound=0, distance_method="euclidean", random_seed=123456789) {
   if (w$num_obs < 1) {
@@ -61,7 +61,7 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0
   if (length(data) < 1) {
     stop("The data from selected variable is empty.")
   }
-  method_cands <- c("firstorder-singlelinkage", "fullorder-completelinkage", "fullorder-averagelinkage","fullorder-singlelinkage", "fullorder-wardslinkage")
+  method_cands <- c("firstorder-singlelinkage", "fullorder-completelinkage", "fullorder-averagelinkage","fullorder-singlelinkage", "fullorder-wardlinkage")
   if (!(method %in% method_cands)) {
     stop("The REDCAP method has to be one of ", method_cands)
   }
@@ -73,24 +73,19 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0
 
 
 ############################################################
-#' @title An algorithm to solve the max-p-region problem
+#' @title A greedy algorithm to solve the max-p-region problem
 #' @description The max-p-region problem is a special case of constrained clustering where a finite number of geographical areas, n, are aggregated into the maximum number of regions, p, such that each region satisfies the following const raints: 1. The areas within a region must be geographically connected.
 #' @param w An instance of Weight class
-#' @param data A 2d numeric list of selected variable
-#' @param bound_vals A 1-d vector of selected bounding variable
+#' @param data A list of numeric vectors of selected variable
+#' @param bound_vals A numeric vector of selected bounding variable
 #' @param min_bound A minimum value that the sum value of bounding variable int each cluster should be greater than
-#' @param local_search The name of the heurist algorithm to find a optimal solution. Default to "greedy". Options are "greedy", "tabu" and "sa" (simulated annealing)
+#' @param iterations (optional): The number of iterations of greedy algorithm. Defaults to 99.
+#' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
-#' @param iterations (optional): The number of iterations of greedy algorithm. Defaults to 99.
-#' @param tabu_length (optional): The length of a tabu search heuristic of tabu algorithm. Defaults to 10.
-#' @param conv_tabu (optional): The number of non-improving moves. Defaults to 10.
-#' @param cool_rate (optional): The cooling rate of a simulated annealing algorithm. Defaults to 0.85
-#' @param sa_maxit (optional): The number of iterations of simulated annealing. Defaults to 1
-#' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
-#' @return A 2d list represents a group of clusters
+#' @return A list of numeric vectors represents a group of clusters
 #' @export
-maxp <- function(w, data, bound_vals, min_bound, local_search="greedy", iterations=99, tabu_length=10, conv_tabu=10, cool_rate=0.85, sa_maxit=1, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
   if (w$num_obs < 1) {
     stop("The weights is not valid.")
   }
@@ -107,14 +102,183 @@ maxp <- function(w, data, bound_vals, min_bound, local_search="greedy", iteratio
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
 
-  return(p_maxp(w$GetPointer(), data, bound_vals, min_bound, local_search, iterations, tabu_length, conv_tabu, cool_rate, sa_maxit, initial_regions, distance_method, random_seed))
+  return(p_maxp_greedy(w$GetPointer(), data, bound_vals, min_bound, iterations, initial_regions, distance_method, random_seed))
 }
+
+############################################################
+#' @title A simulated annealing algorithm to solve the max-p-region problem
+#' @description The max-p-region problem is a special case of constrained clustering where a finite number of geographical areas, n, are aggregated into the maximum number of regions, p, such that each region satisfies the following const raints: 1. The areas within a region must be geographically connected.
+#' @param w An instance of Weight class
+#' @param data A list of numeric vectors of selected variable
+#' @param bound_vals A numeric vector of selected bounding variable
+#' @param min_bound A minimum value that the sum value of bounding variable int each cluster should be greater than
+#' @param cooling_rate The cooling rate of a simulated annealing algorithm. Defaults to 0.85
+#' @param iterations (optional): The number of iterations of greedy algorithm. Defaults to 99.
+#' @param sa_maxit (optional): The number of iterations of simulated annealing. Defaults to 1
+#' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
+#' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
+#' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @return A list of numeric vectors represents a group of clusters
+#' @export
+maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, iterations=99, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+  if (w$num_obs < 1) {
+    stop("The weights is not valid.")
+  }
+  if (length(data) < 1) {
+    stop("The data from selected variable is empty.")
+  }
+  if (length(bound_vals) != w$num_obs) {
+    stop("The bound_vals has to be a list of numeric values, e.g. a column of input table.")
+  }
+  if (min_bound <= 0) {
+    stop("The min_bound has to be a positive numeric value.")
+  }
+  if (distance_method != "euclidean" && distance_method != "manhattan") {
+    stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
+  }
+
+  return(p_maxp_sa(w$GetPointer(), data, bound_vals, min_bound, iterations, cooling_rate, sa_maxit, initial_regions, distance_method, random_seed))
+}
+
+############################################################
+#' @title A tabu-search algorithm to solve the max-p-region problem
+#' @description The max-p-region problem is a special case of constrained clustering where a finite number of geographical areas, n, are aggregated into the maximum number of regions, p, such that each region satisfies the following const raints: 1. The areas within a region must be geographically connected.
+#' @param w An instance of Weight class
+#' @param data A list of numeric vectors of selected variable
+#' @param bound_vals A numeric vector of selected bounding variable
+#' @param min_bound A minimum value that the sum value of bounding variable int each cluster should be greater than
+#' @param tabu_length (optional): The length of a tabu search heuristic of tabu algorithm. Defaults to 10.
+#' @param conv_tabu (optional): The number of non-improving moves. Defaults to 10.
+#' @param iterations (optional): The number of iterations of greedy algorithm. Defaults to 99.
+#' @param local_search The name of the heurist algorithm to find a optimal solution. Default to "greedy". Options are "greedy", "tabu" and "sa" (simulated annealing)
+#' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
+#' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
+#' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @return A list of numeric vectors represents a group of clusters
+#' @export
+maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=10, iterations=99, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+  if (w$num_obs < 1) {
+    stop("The weights is not valid.")
+  }
+  if (length(data) < 1) {
+    stop("The data from selected variable is empty.")
+  }
+  if (length(bound_vals) != w$num_obs) {
+    stop("The bound_vals has to be a list of numeric values, e.g. a column of input table.")
+  }
+  if (min_bound <= 0) {
+    stop("The min_bound has to be a positive numeric value.")
+  }
+  if (distance_method != "euclidean" && distance_method != "manhattan") {
+    stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
+  }
+
+  return(p_maxp_tabu(w$GetPointer(), data, bound_vals, min_bound, iterations, tabu_length, conv_tabu, initial_regions, distance_method, random_seed))
+}
+
+############################################################
+#' @title A greedy algorithm to solve the AZP problem
+#' @description The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
+#' @param p The number of spatially constrained clusters
+#' @param w An instance of Weight class
+#' @param data A list of numeric vectors of selected variable
+#' @param bound_vals (optional) A numeric vector of selected bounding variable
+#' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
+#' @param inits (optional) The number of construction re-runs, which is for ARiSeL "automatic regionalization with initial seed location"
+#' @param initial_regions (optional) The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
+#' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
+#' @return A list of numeric vectors represents a group of clusters
+#' @export
+azp_greedy <- function(p, w, data, bound_vals=c(0), min_bound=0, inits=0, initial_regions=vector(), distance_method="euclidean", random_seed=123456789) {
+  if (p < 0) {
+    stop("The p should be a positive integer number.")
+  }
+  if (w$num_obs < 1) {
+    stop("The weights is not valid.")
+  }
+  if (length(data) < 1) {
+    stop("The data from selected variable is empty.")
+  }
+  if (distance_method != "euclidean" && distance_method != "manhattan") {
+    stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
+  }
+
+  return(p_azp_greedy(p, w$GetPointer(), data, bound_vals, min_bound, inits, initial_regions, distance_method, random_seed))
+}
+
+############################################################
+#' @title A simulated annealing algorithm to solve the AZP problem
+#' @description The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
+#' @param p The number of spatially constrained clusters
+#' @param w An instance of Weight class
+#' @param data A list of numeric vectors of selected variable
+#' @param cooling_rate The cooling rate of a simulated annealing algorithm. Defaults to 0.85
+#' @param sa_maxit (optional): The number of iterations of simulated annealing. Defaults to 1
+#' @param bound_vals (optional) A numeric vector of selected bounding variable
+#' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
+#' @param inits (optional) The number of construction re-runs, which is for ARiSeL "automatic regionalization with initial seed location"
+#' @param initial_regions (optional) The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
+#' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
+#' @return A list of numeric vectors represents a group of clusters
+#' @export
+azp_sa<- function(p, w, data, cooling_rate, sa_maxit=1, bound_vals=c(0), min_bound=0, inits=0, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+  if (p < 0) {
+    stop("The p should be a positive integer number.")
+  }
+  if (w$num_obs < 1) {
+    stop("The weights is not valid.")
+  }
+  if (length(data) < 1) {
+    stop("The data from selected variable is empty.")
+  }
+  if (distance_method != "euclidean" && distance_method != "manhattan") {
+    stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
+  }
+
+  return(p_azp_sa(p, w$GetPointer(), data, cooling_rate, sa_maxit, bound_vals, min_bound, inits, initial_regions, distance_method, random_seed))
+}
+
+############################################################
+#' @title A tabu algorithm to solve the AZP problem
+#' @description The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
+#' @param p The number of spatially constrained clusters
+#' @param w An instance of Weight class
+#' @param data A list of numeric vectors of selected variable
+#' @param tabu_length The length of a tabu search heuristic of tabu algorithm. e.g. 10.
+#' @param conv_tabu (optional): The number of non-improving moves. Defaults to 10.
+#' @param bound_vals (optional) A numeric vector of selected bounding variable
+#' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
+#' @param inits (optional) The number of construction re-runs, which is for ARiSeL "automatic regionalization with initial seed location"
+#' @param initial_regions (optional) The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
+#' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
+#' @return A list of numeric vectors represents a group of clusters
+#' @export
+azp_tabu<- function(p, w, data, cooling_rate, tabu_length=10, conv_tabu=10, bound_vals=c(0), min_bound=0, inits=0, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+  if (p < 0) {
+    stop("The p should be a positive integer number.")
+  }
+  if (w$num_obs < 1) {
+    stop("The weights is not valid.")
+  }
+  if (length(data) < 1) {
+    stop("The data from selected variable is empty.")
+  }
+  if (distance_method != "euclidean" && distance_method != "manhattan") {
+    stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
+  }
+
+  return(p_azp_sa(p, w$GetPointer(), data, tabu_length, conv_tabu, bound_vals, min_bound, inits, initial_regions, distance_method, random_seed))
+}
+
 
 ############################################################
 #' @title Between Sum of Square
 #' @description Compute between sum of square value of a group of clusters
-#' @param clusters A 2d list which returns from spatial clustering methods, e.g. skater()
-#' @param data A 2d list which is used in spatial clustering methods, e.g. skater(k, w, data)
+#' @param clusters A list of numeric vectors which returns from spatial clustering methods, e.g. skater()
+#' @param data A list of numeric vectors which is used in spatial clustering methods, e.g. skater(k, w, data)
 #' @return A value of between sum of square value
 #' @export
 between_sumofsquare <- function(clusters, data) {
@@ -125,7 +289,7 @@ between_sumofsquare <- function(clusters, data) {
 ############################################################
 #' @title Total Sum of Square
 #' @description Compute total sum of square value of a 2d tuple data
-#' @param data A 2d list which is used in spatial clustering methods, e.g. skater(k, w, data)
+#' @param data A list of numeric vectors which is used in spatial clustering methods, e.g. skater(k, w, data)
 #' @return A value of total sum of square value
 #' @export
 total_sumofsquare <- function(data) {
@@ -135,8 +299,8 @@ total_sumofsquare <- function(data) {
 ############################################################
 #' @title Within Sum of Square
 #' @description Compute within sum of square value of a group of clusters
-#' @param clusters A 2d list which returns from spatial clustering methods, e.g. skater()
-#' @param data A 2d list which is used in spatial clustering methods, e.g. skater(k, w, data)
+#' @param clusters A list of numeric vectors which returns from spatial clustering methods, e.g. skater()
+#' @param data A list of numeric vectors which is used in spatial clustering methods, e.g. skater(k, w, data)
 #' @return A value of within sum of square value
 #' @export
 within_sumofsquare <- function(clusters, data) {

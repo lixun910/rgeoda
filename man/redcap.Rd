@@ -20,9 +20,9 @@ redcap(
 
 \item{w}{An instance of Weight class}
 
-\item{data}{A 2d numeric list of selected variable}
+\item{data}{A list of numeric vectors of selected variable}
 
-\item{method}{{"firstorder-singlelinkage", "fullorder-completelinkage", "fullorder-averagelinkage","fullorder-singlelinkage", "fullorder-wardslinkage"}}
+\item{method}{{"firstorder-singlelinkage", "fullorder-completelinkage", "fullorder-averagelinkage","fullorder-singlelinkage", "fullorder-wardlinkage"}}
 
 \item{bound_vals}{(optional) A 1-d vector of selected bounding variable}
 
@@ -33,19 +33,19 @@ redcap(
 \item{random_seed}{(int,optional) The seed for random number generator. Defaults to 123456789.}
 }
 \value{
-A 2d list represents a group of clusters
+A list of numeric vectors represents a group of clusters
 }
 \description{
 REDCAP (Regionalization with dynamically constrained agglomerative
 clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP
-starts from building a spanning tree with 4 different ways (single-linkage, average-linkage, wards-linkage
+starts from building a spanning tree with 4 different ways (single-linkage, average-linkage, ward-linkage
 and the complete-linkage). The single-linkage way leads to build a minimum spanning tree.
-Then,REDCAP provides 2 different ways (first‐order and full-order constraining) to
+Then,REDCAP provides 2 different ways (first-order and full-order constraining) to
 prune the tree to find clusters. The first-order approach with a minimum spanning tree is
 exactly the same with SKATER. In GeoDa and pygeoda, the following methods are provided:
 \* First-order and Single-linkage
 \* Full-order and Complete-linkage
 \* Full-order and Average-linkage
 \* Full-order and Single-linkage
-\* Full-order and Wards-linkage
+\* Full-order and Ward-linkage
 }

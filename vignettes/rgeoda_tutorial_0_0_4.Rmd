@@ -549,11 +549,32 @@ ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
-#### 4.2.3 Max-p
+#### 4.2.3 AZP
+
+The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
+
+`rgeoda` provides three different heuristic algorithms to find an optimal solution for AZP:
+
+* greedy
+* Tabu Search
+* Simulated Annealing
+
+The original AZP heuristic is a local optimization procedure that cycles through a series of possible swaps between spatial units at the boundary of a set of regions. The process starts with an initial feasible solution, i.e., a grouping of n spatial units into p contiguous regions. This initial solution can be constructed in a number of different ways. It is critical that the initial solution satisfies the contiguity constraints. For example, this can be accomplished by growing a set of contiguous regions from p randomly selected seed units by adding neighboring locations until the contiguity constraint can no longer be met.
+
+
+```{r}
+azp_clusters <- azp_greedy(5, queen_w, data)
+
+betweenss <- between_sumofsquare(azp_clusters, data)
+ratio <- betweenss / totalss
+cat("The ratio of between to total sum of square:", ratio)
+```
+
+#### 4.2.4 Max-p
 
 The so-called max-p regions model (outlined in Duque, Anselin, and Rey 2012) uses a different approach and considers the regionalization problem as an application of integer programming. In addition, the number of regions is determined endogenously.
 
-The algorithm itself consists of a search process that starts with an initial feasible solution and iteratively improves upon it while maintaining contiguity among the elements of each cluster. Like `Geoda`, `rgeoda` provides three different heuristic algorithms to find an optimal solution for max-p:
+The algorithm itself consists of a search process that starts with an initial feasible solution and iteratively improves upon it while maintaining contiguity among the elements of each cluster. `rgeoda` provides three different heuristic algorithms to find an optimal solution for max-p:
 
 * greedy
 * Tabu Search
@@ -570,10 +591,10 @@ bound_vals <- guerry_df['Pop1831'][,1]
 min_bound <- 3236.67 # 10% of Pop1831
 ```
 
-Then, we can call the max-p function with "greedy" algorith, the bound values and minimum bound value:
+Then, we can call the max-p function with "greedy" algorithm, the bound values and minimum bound value:
 
 ```{r}
-maxp_clusters <- maxp(queen_w, data, bound_vals, min_bound, "greedy")
+maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=99)
 
 betweenss <- between_sumofsquare(maxp_clusters, data)
 ratio <- betweenss / totalss
@@ -583,7 +604,7 @@ cat("The ratio of between to total sum of square:", ratio)
 We can also specify using `tabu search` algorithm in maxp function with the parameter of tabu length:
 
 ```{r}
-maxp_tabu_clusters <- maxp(queen_w, data, bound_vals, min_bound, "tabu", tabu_length=95)
+maxp_tabu_clusters <- maxp_tabu(queen_w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=10)
 
 betweenss <- between_sumofsquare(maxp_tabu_clusters, data)
 ratio <- betweenss / totalss
@@ -593,7 +614,7 @@ cat("The ratio of between to total sum of square:", ratio)
 To apply `simulated annealing` algorithm in maxp function with the parameter of cooling rate:
 
 ```{r}
-maxp_sa_clusters <- maxp(queen_w, data, bound_vals, min_bound, "sa", cool_rate=0.75)
+maxp_sa_clusters <- maxp_sa(queen_w, data, bound_vals, min_bound, cool_rate=0.85, sa_maxit=1)
 
 betweenss <- between_sumofsquare(maxp_sa_clusters, data)
 ratio <- betweenss / totalss
@@ -603,9 +624,10 @@ cat("The ratio of between to total sum of square:", ratio)
 We can also increase the number of iterations for local search process by specifying the parameter `initial` (default value is 99):
 
 ```{r}
-maxp_clusters <- maxp(queen_w, data, bound_vals, min_bound, "greedy", iterations=200)
+maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=200)
 
 betweenss <- between_sumofsquare(maxp_clusters, data)
 ratio <- betweenss / totalss
-cat("Tratio of between to total sum of square:", ratio)
+cat("The ratio of between to total sum of square:", ratio)
 ```
+

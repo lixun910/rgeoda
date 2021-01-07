@@ -19,7 +19,7 @@ skater(
 
 \item{w}{An instance of Weight class}
 
-\item{data}{A 2d numeric list of selected variable}
+\item{data}{A list of numeric vectors of selected variable}
 
 \item{bound_vals}{(optional) A 1-d vector of selected bounding variable}
 
@@ -30,7 +30,7 @@ skater(
 \item{random_seed}{(int,optional) The seed for random number generator. Defaults to 123456789.}
 }
 \value{
-A 2d list represents a group of clusters
+A list of numeric vectors represents a group of clusters
 }
 \description{
 SKATER forms clusters by spatially partitioning data that has similar values for features of interest.

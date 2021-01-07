@@ -21,8 +21,28 @@ p_redcap <- function(k, xp_w, data, redcap_method, distance_method, bound_vals, 
     .Call('_rgeoda_p_redcap', PACKAGE = 'rgeoda', k, xp_w, data, redcap_method, distance_method, bound_vals, min_bound, seed)
 }
 
-p_maxp <- function(xp_w, data, bound_vals, min_bound, local_search, iterations, tabu_length, conv_tabu, cool_rate, sa_maxit, init_regions, distance_method, seed) {
-    .Call('_rgeoda_p_maxp', PACKAGE = 'rgeoda', xp_w, data, bound_vals, min_bound, local_search, iterations, tabu_length, conv_tabu, cool_rate, sa_maxit, init_regions, distance_method, seed)
+p_maxp_greedy <- function(xp_w, data, bound_vals, min_bound, iterations, init_regions, distance_method, seed) {
+    .Call('_rgeoda_p_maxp_greedy', PACKAGE = 'rgeoda', xp_w, data, bound_vals, min_bound, iterations, init_regions, distance_method, seed)
+}
+
+p_maxp_sa <- function(xp_w, data, bound_vals, min_bound, iterations, cooling_rate, sa_maxit, init_regions, distance_method, seed) {
+    .Call('_rgeoda_p_maxp_sa', PACKAGE = 'rgeoda', xp_w, data, bound_vals, min_bound, iterations, cooling_rate, sa_maxit, init_regions, distance_method, seed)
+}
+
+p_maxp_tabu <- function(xp_w, data, bound_vals, min_bound, iterations, tabu_length, conv_tabu, init_regions, distance_method, seed) {
+    .Call('_rgeoda_p_maxp_tabu', PACKAGE = 'rgeoda', xp_w, data, bound_vals, min_bound, iterations, tabu_length, conv_tabu, init_regions, distance_method, seed)
+}
+
+p_azp_greedy <- function(p, xp_w, data, bound_vals, min_bound, inits, init_regions, distance_method, seed) {
+    .Call('_rgeoda_p_azp_greedy', PACKAGE = 'rgeoda', p, xp_w, data, bound_vals, min_bound, inits, init_regions, distance_method, seed)
+}
+
+p_azp_sa <- function(p, xp_w, data, cooling_rate, sa_maxit, bound_vals, min_bound, inits, init_regions, distance_method, seed) {
+    .Call('_rgeoda_p_azp_sa', PACKAGE = 'rgeoda', p, xp_w, data, cooling_rate, sa_maxit, bound_vals, min_bound, inits, init_regions, distance_method, seed)
+}
+
+p_azp_tabu <- function(p, xp_w, data, tabu_length, conv_tabu, bound_vals, min_bound, inits, init_regions, distance_method, seed) {
+    .Call('_rgeoda_p_azp_tabu', PACKAGE = 'rgeoda', p, xp_w, data, tabu_length, conv_tabu, bound_vals, min_bound, inits, init_regions, distance_method, seed)
 }
 
 p_LISA__Run <- function(xp) {
