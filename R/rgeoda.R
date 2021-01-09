@@ -8,7 +8,7 @@
 # 12/23/2020 Add p_LISA class
 
 
-#' @title p_GeoDa (internally used)
+#' @title p_GeoDa
 #' @description p_GeoDa class is a RefClass that wraps the C++ GeoDa class
 #' See C++ functions in rcpp_rgeoda.cpp
 #' @export
@@ -22,10 +22,11 @@ p_GeoDa_method <- function(name) {
   paste( "p_GeoDa", name, sep = "__" )
 }
 
-#' @name $,p_GeoDa-method (internally used)
+#' @name $,p_GeoDa-method
 #' @aliases $,p_GeoDa-method
 #' @docType methods
 #' @rdname p_GeoDa-class
+NULL
 setMethod( "$", "p_GeoDa", function(x = "p_GeoDa", name = "ANY") {
   function(...) do.call( p_GeoDa_method(name) , list(x@pointer , ... ))
 })
@@ -53,7 +54,7 @@ setMethod( "initialize", "p_GeoDa", function(.Object, ...) {
 
 
 #' @title p_GeoDaWeight
-#' @description  (internally used) p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
+#' @description p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
 #' See C++ functions in rcpp_weights.cpp
 #' @export
 p_GeoDaWeight <- setClass( "p_GeoDaWeight", representation( pointer = "externalptr" ) )
@@ -66,10 +67,11 @@ p_GeoDaWeight_method <- function(name) {
   paste( "p_GeoDaWeight", name, sep = "__" )
 }
 
-#' @name $,p_GeoDaWeight-method (internally used)
+#' @name $,p_GeoDaWeight-method
 #' @aliases $,p_GeoDaWeight-method
 #' @docType methods
 #' @rdname p_GeoDaWeight-class
+NULL
 setMethod( "$", "p_GeoDaWeight", function(x = "p_GeoDaWeight", name = "ANY") {
   function(...) do.call( p_GeoDaWeight_method(name) , list(x@pointer , ... ))
 })
@@ -92,7 +94,7 @@ setMethod( "initialize", "p_GeoDaWeight", function(.Object, ...) {
 
 
 #' @title p_LISA
-#' @description  (internally used) p_LISA class is a RefClass that wraps the C++ LISA class
+#' @description p_LISA class is a RefClass that wraps the C++ LISA class
 #' See C++ functions in rcpp_lisa.cpp
 #' @export
 p_LISA <- setClass( "p_LISA", representation( pointer = "externalptr" ) )
@@ -106,10 +108,10 @@ p_LISA_method <- function(name) {
 }
 
 #' @name $,p_LISA-method
-#' @description (internally used) p_LISA-method
 #' @aliases $,p_LISA-method
 #' @docType methods
 #' @rdname p_LISA-class
+NULL
 setMethod( "$", "p_LISA", function(x = "p_LISA", name = "ANY" ) {
   function(...) do.call( p_LISA_method(name) , list(x@pointer , ... ))
 })

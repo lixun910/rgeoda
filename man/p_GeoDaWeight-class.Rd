@@ -4,13 +4,9 @@
 \name{p_GeoDaWeight-class}
 \alias{p_GeoDaWeight-class}
 \alias{p_GeoDaWeight}
-\alias{$,p_GeoDaWeight-method (internally used)}
 \alias{$,p_GeoDaWeight-method}
 \title{p_GeoDaWeight}
-\usage{
-\S4method{$}{p_GeoDaWeight}(x = "p_GeoDaWeight", name = "ANY")
-}
 \description{
-(internally used) p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
+p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
 See C++ functions in rcpp_weights.cpp
 }

@@ -4,12 +4,8 @@
 \name{p_GeoDa-class}
 \alias{p_GeoDa-class}
 \alias{p_GeoDa}
-\alias{$,p_GeoDa-method (internally used)}
 \alias{$,p_GeoDa-method}
-\title{p_GeoDa (internally used)}
-\usage{
-\S4method{$}{p_GeoDa}(x = "p_GeoDa", name = "ANY")
-}
+\title{p_GeoDa}
 \description{
 p_GeoDa class is a RefClass that wraps the C++ GeoDa class
 See C++ functions in rcpp_rgeoda.cpp

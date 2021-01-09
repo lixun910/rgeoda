@@ -6,12 +6,7 @@
 \alias{p_LISA}
 \alias{$,p_LISA-method}
 \title{p_LISA}
-\usage{
-\S4method{$}{p_LISA}(x = "p_LISA", name = "ANY")
-}
 \description{
-(internally used) p_LISA class is a RefClass that wraps the C++ LISA class
+p_LISA class is a RefClass that wraps the C++ LISA class
 See C++ functions in rcpp_lisa.cpp
-
-(internally used) p_LISA-method
 }
