@@ -8,9 +8,10 @@
 #' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (int,optional) The seed for random number generator. Defaults to 123456789.
+#' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="euclidean", random_seed=123456789) {
+skater <- function(k, w, data, bound_vals=vector('numeric'), min_bound=0, distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
     stop("The weights is not valid.")
   }
@@ -23,7 +24,7 @@ skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="eu
   if (distance_method != "euclidean" && distance_method != "manhattan") {
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
-  return(p_skater(k, w$GetPointer(), data, distance_method, bound_vals, min_bound, random_seed))
+  return(p_skater(k, w$GetPointer(), data, distance_method, bound_vals, min_bound, random_seed, cpu_threads))
 }
 
 
@@ -49,9 +50,10 @@ skater <- function(k, w, data, bound_vals=c(0), min_bound=0, distance_method="eu
 #' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (int,optional) The seed for random number generator. Defaults to 123456789.
+#' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0), min_bound=0, distance_method="euclidean", random_seed=123456789) {
+redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=vector('numeric'), min_bound=0, distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
     stop("The weights is not valid.")
   }
@@ -68,7 +70,7 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0
   if (distance_method != "euclidean" && distance_method != "manhattan") {
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
-  return(p_redcap(k, w$GetPointer(), data, method, distance_method, bound_vals, min_bound, random_seed))
+  return(p_redcap(k, w$GetPointer(), data, method, distance_method, bound_vals, min_bound, random_seed, cpu_threads))
 }
 
 
@@ -83,9 +85,10 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=c(0
 #' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
+#' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
     stop("The weights is not valid.")
   }
@@ -102,7 +105,7 @@ maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_r
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
 
-  return(p_maxp_greedy(w$GetPointer(), data, bound_vals, min_bound, iterations, initial_regions, distance_method, random_seed))
+  return(p_maxp_greedy(w$GetPointer(), data, bound_vals, min_bound, iterations, initial_regions, distance_method, random_seed, cpu_threads))
 }
 
 ############################################################
@@ -113,14 +116,15 @@ maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_r
 #' @param bound_vals A numeric vector of selected bounding variable
 #' @param min_bound A minimum value that the sum value of bounding variable int each cluster should be greater than
 #' @param cooling_rate The cooling rate of a simulated annealing algorithm. Defaults to 0.85
-#' @param iterations (optional): The number of iterations of greedy algorithm. Defaults to 99.
+#' @param iterations (optional): The number of iterations of SA algorithm. Defaults to 99.
 #' @param sa_maxit (optional): The number of iterations of simulated annealing. Defaults to 1
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, iterations=99, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, iterations=99, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
     stop("The weights is not valid.")
   }
@@ -137,7 +141,7 @@ maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, it
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
 
-  return(p_maxp_sa(w$GetPointer(), data, bound_vals, min_bound, iterations, cooling_rate, sa_maxit, initial_regions, distance_method, random_seed))
+  return(p_maxp_sa(w$GetPointer(), data, bound_vals, min_bound, iterations, cooling_rate, sa_maxit, initial_regions, distance_method, random_seed, cpu_threads))
 }
 
 ############################################################
@@ -149,14 +153,14 @@ maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, it
 #' @param min_bound A minimum value that the sum value of bounding variable int each cluster should be greater than
 #' @param tabu_length (optional): The length of a tabu search heuristic of tabu algorithm. Defaults to 10.
 #' @param conv_tabu (optional): The number of non-improving moves. Defaults to 10.
-#' @param iterations (optional): The number of iterations of greedy algorithm. Defaults to 99.
-#' @param local_search The name of the heurist algorithm to find a optimal solution. Default to "greedy". Options are "greedy", "tabu" and "sa" (simulated annealing)
+#' @param iterations (optional): The number of iterations of Tabu algorithm. Defaults to 99.
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
+#' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=10, iterations=99, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=10, iterations=99, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
     stop("The weights is not valid.")
   }
@@ -173,7 +177,7 @@ maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
 
-  return(p_maxp_tabu(w$GetPointer(), data, bound_vals, min_bound, iterations, tabu_length, conv_tabu, initial_regions, distance_method, random_seed))
+  return(p_maxp_tabu(w$GetPointer(), data, bound_vals, min_bound, iterations, tabu_length, conv_tabu, initial_regions, distance_method, random_seed, cpu_threads))
 }
 
 ############################################################
@@ -190,7 +194,7 @@ maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-azp_greedy <- function(p, w, data, bound_vals=c(0), min_bound=0, inits=0, initial_regions=vector(), distance_method="euclidean", random_seed=123456789) {
+azp_greedy <- function(p, w, data, bound_vals=vector('numeric'), min_bound=0, inits=0, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789) {
   if (p < 0) {
     stop("The p should be a positive integer number.")
   }
@@ -223,7 +227,7 @@ azp_greedy <- function(p, w, data, bound_vals=c(0), min_bound=0, inits=0, initia
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-azp_sa<- function(p, w, data, cooling_rate, sa_maxit=1, bound_vals=c(0), min_bound=0, inits=0, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+azp_sa<- function(p, w, data, cooling_rate, sa_maxit=1, bound_vals=vector('numeric'), min_bound=0, inits=0, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789) {
   if (p < 0) {
     stop("The p should be a positive integer number.")
   }
@@ -256,7 +260,7 @@ azp_sa<- function(p, w, data, cooling_rate, sa_maxit=1, bound_vals=c(0), min_bou
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @return A list of numeric vectors represents a group of clusters
 #' @export
-azp_tabu<- function(p, w, data, cooling_rate, tabu_length=10, conv_tabu=10, bound_vals=c(0), min_bound=0, inits=0, initial_regions=c(0), distance_method="euclidean", random_seed=123456789) {
+azp_tabu<- function(p, w, data, tabu_length=10, conv_tabu=10, bound_vals=vector('numeric'), min_bound=0, inits=0, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789) {
   if (p < 0) {
     stop("The p should be a positive integer number.")
   }
@@ -270,7 +274,7 @@ azp_tabu<- function(p, w, data, cooling_rate, tabu_length=10, conv_tabu=10, boun
     stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
   }
 
-  return(p_azp_sa(p, w$GetPointer(), data, tabu_length, conv_tabu, bound_vals, min_bound, inits, initial_regions, distance_method, random_seed))
+  return(p_azp_tabu(p, w$GetPointer(), data, tabu_length, conv_tabu, bound_vals, min_bound, inits, initial_regions, distance_method, random_seed))
 }
 
 

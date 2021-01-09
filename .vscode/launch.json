@@ -12,7 +12,7 @@
             "args": [
                 "--vanilla",
                 "-e",
-                "devtools::test()"
+                "devtools::load_all(); devtools::test()"
             ],
             "stopAtEntry": false,
             "envFile": "${workspaceFolder}/.vscode/.env",

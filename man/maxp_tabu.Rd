@@ -12,9 +12,10 @@ maxp_tabu(
   tabu_length = 10,
   conv_tabu = 10,
   iterations = 99,
-  initial_regions = c(0),
+  initial_regions = vector("numeric"),
   distance_method = "euclidean",
-  random_seed = 123456789
+  random_seed = 123456789,
+  cpu_threads = 6
 )
 }
 \arguments{
@@ -30,7 +31,7 @@ maxp_tabu(
 
 \item{conv_tabu}{(optional): The number of non-improving moves. Defaults to 10.}
 
-\item{iterations}{(optional): The number of iterations of greedy algorithm. Defaults to 99.}
+\item{iterations}{(optional): The number of iterations of Tabu algorithm. Defaults to 99.}
 
 \item{initial_regions}{(optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters}
 
@@ -38,7 +39,7 @@ maxp_tabu(
 
 \item{random_seed}{(optional) The seed for random number generator. Defaults to 123456789.}
 
-\item{local_search}{The name of the heurist algorithm to find a optimal solution. Default to "greedy". Options are "greedy", "tabu" and "sa" (simulated annealing)}
+\item{cpu_threads}{(optional) The number of cpu threads used for parallel computation}
 }
 \value{
 A list of numeric vectors represents a group of clusters

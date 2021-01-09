@@ -1,43 +1,41 @@
 ---
-title: "Tutorial of rgeoda v0.0.4"
+title: "Tutorial of rgeoda v0.0.6"
+author: "lixun910"
+date: "1/6/2021"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{rgeoda_tutorial_0_0_4}
+  %\VignetteIndexEntry{rgeoda_tutorial_0_0_6}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
-`rgeoda` is an R library for spatial data analysis. It is an R wrapper of the libgeoda C++ library, which is built based on the `GeoDa` software. The version used in this tutorial is version 0.0.4.
+`rgeoda` is an R library for spatial data analysis. It is an R wrapper of the libgeoda C++ library, which is built based on the `GeoDa` software. The version used in this tutorial is version 0.0.6.
 
 
 ## 1. Install `rgeoda`
 
-Like `GeoDa` desktop software, `rgeoda` is avaiable to different platforms including: Mac, Linux and Windows. 
-
-
-```r
+rgeoda will be submitted to CRAN soon. Once it is accepted, one should be able to install rgeoda in R console 
+```
 install.packages("rgeoda")
 ```
 
-
 ### Load `rgeoda` library in R
+
+
 
 If everything installed without error, you should be able to load `rgeoda`:
 
-```{r setup}
+```{r}
 library(rgeoda)
 ```
 
 ## 2. Load Spatial Data
 
-The data formats that `rgeoda` can read directly includes: ESRI Shapefile (Geojson later).
+The data formats that `rgeoda` can read directly includes ESRI Shapefile and Geojson (coming in next version).
 
 For example, to load the ESRI Shapefile `Guerry.shp` comes with the package:
 
@@ -77,12 +75,12 @@ guerry_df[1,]
 ```
 
 Get data from 3-rd and 5-th columns:
-```{r}
+```
 guerry_df[,c(3,5)]
 ```
 
 Get data from column 'Crm_prs'
-```{r}
+```
 guerry_df['Crm_prs']
 ```
 
@@ -229,7 +227,7 @@ summary(knn6_w)
 
 Kernel weights apply kernel function to determine the distance decay in the derived continuous weights kernel. The kernel weights are defined as a function K(z) of the ratio between the distance dij from i to j, and the bandwidth hi, with z=dij/hi. 
 
-The kernl functions include
+The kernel functions include
 
 * triangular
 * uniform 
@@ -278,7 +276,7 @@ use_kernel_diagonals
 
 ### 4.1 Local Spatial Autocorrelation
 
-`rgeoda` 0.0.4 provids following methods for *univariate local* spatial autocorrelation statistics:
+`rgeoda` 0.0.6 provids following methods for *univariate local* spatial autocorrelation statistics:
 
 
 * Local Moran: local_moran()
@@ -288,9 +286,9 @@ use_kernel_diagonals
 * Quantile LISA: local_quantilelisa()
 
 
-Methods for *bivariate* and *multivariate local* spatial autocorrelation statistics, as well as *global* spatial autocorrelation satatistics, will be included in the next release of `rgeoda`.
+Methods for *bivariate* and *multivariate local* spatial autocorrelation statistics, as well as *global* spatial autocorrelation statistics, will be included in the next release of `rgeoda`.
 
-In this tutorial, we will only introduce how to call these methods using `rgeoda`. Please read [here](http://geodacenter.github.io/workbook/6a_local_auto/lab6a.html) for more information about the local spatial autocorrelation statisticis. 
+In this tutorial, we will only introduce how to call these methods using `rgeoda`. Please read [here](http://geodacenter.github.io/workbook/6a_local_auto/lab6a.html) for more information about the local spatial autocorrelation statistics. 
 
 #### 4.1.1 Local Moran
 
@@ -488,9 +486,9 @@ lisa_clusters(qsa)
 ### 4.2 Spatial Clustering
 
  
-Spatial clustering aims to group of a large number of geographic areas or points into a smaller number of regions based on similiarities in one or more variables. Spatially constrained clustering is needed when clusters are required to be spatially contiguous. 
+Spatial clustering aims to group a large number of geographic areas or points into a smaller number of regions based on similarities in one or more variables. Spatially constrained clustering is needed when clusters are required to be spatially contiguous. 
 
-In `GeoDa`, there are three different approaches explicitly incorporate the contiguity constraint in the optimization process: SKATER, Redcap and Max-p. More more details, please check: http://geodacenter.github.io/workbook/8_spatial_clusters/lab8.html All of these methods are included in rgeoda 0.0.4.
+In `GeoDa`, there are three different methods explicitly incorporate the contiguity constraint in the optimization process: SKATER, Redcap and Max-p. More details, please check: http://geodacenter.github.io/workbook/8_spatial_clusters/lab8.html All of these methods are included in rgeoda 0.0.6.
 
 For example, to apply spatial clustering on the Guerry dataset, we use the queen weights to define the spatial contiguity and select 6 variables for similarity measure: "Crm_prs", "Crm_prp", "Litercy", "Donatns", "Infants", "Suicids". 
 
@@ -529,7 +527,7 @@ cat("The ratio of between to total sum of square:", ratio)
 
 #### 4.2.2 REDCAP
 
-REDCAP (Regionalization with dynamically constrained agglomerative clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP starts from building a spanning tree with 3 different ways (single-linkage, average-linkage, and the complete-linkage). The single-linkage way leads to build a minimum spanning tree. Then,REDCAP provides 2 different ways (first-order and full-order constraining) to prune the tree to find clusters. The first-order approach with a minimum spanning tree is exactly the same with SKATER. In `GeoDa` and `rgeoda`, the following methods are provided:
+REDCAP (Regionalization with dynamically constrained agglomerative clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP starts from building a spanning tree in 3 different ways (single-linkage, average-linkage, and the complete-linkage). The single-linkage way leads to build a minimum spanning tree. Then, REDCAP provides 2 different ways (first-order and full-order constraining) to prune the tree to find clusters. The first-order approach with a minimum spanning tree is the same as SKATER. In `GeoDa` and `rgeoda`, the following methods are provided:
 
 * First-order and Single-linkage
 * Full-order and Complete-linkage
@@ -551,7 +549,7 @@ cat("The ratio of between to total sum of square:", ratio)
 
 #### 4.2.3 AZP
 
-The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
+The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within-sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
 
 `rgeoda` provides three different heuristic algorithms to find an optimal solution for AZP:
 
@@ -559,7 +557,7 @@ The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) a
 * Tabu Search
 * Simulated Annealing
 
-The original AZP heuristic is a local optimization procedure that cycles through a series of possible swaps between spatial units at the boundary of a set of regions. The process starts with an initial feasible solution, i.e., a grouping of n spatial units into p contiguous regions. This initial solution can be constructed in a number of different ways. It is critical that the initial solution satisfies the contiguity constraints. For example, this can be accomplished by growing a set of contiguous regions from p randomly selected seed units by adding neighboring locations until the contiguity constraint can no longer be met.
+The original AZP heuristic is a local optimization procedure that cycles through a series of possible swaps between spatial units at the boundary of a set of regions. The process starts with an initial feasible solution, i.e., a grouping of n spatial units into p contiguous regions. This initial solution can be constructed in several different ways. The initial solution must satisfy the contiguity constraints. For example, this can be accomplished by growing a set of contiguous regions from p randomly selected seed units by adding neighboring locations until the contiguity constraint can no longer be met.
 
 
 ```{r}
@@ -570,9 +568,32 @@ ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
+To call AZP simulate annealing algorithm, one needs to specify `cooling_rate` (default: 0.85):
+
+
+```{r}
+azp_clusters <- azp_sa(5, queen_w, data, cooling_rate = 0.85)
+
+betweenss <- between_sumofsquare(azp_clusters, data)
+ratio <- betweenss / totalss
+cat("The ratio of between to total sum of square:", ratio)
+```
+
+To call AZP Tabu search algorithm, one needs to specify `tabu_length` (deafult: 10) , or `conv_tabu` (default: 10):
+
+
+```{r}
+azp_clusters <- azp_tabu(5, queen_w, data, tabu_length = 10, conv_tabu = 10)
+
+betweenss <- between_sumofsquare(azp_clusters, data)
+ratio <- betweenss / totalss
+cat("The ratio of between to total sum of square:", ratio)
+```
+
+
 #### 4.2.4 Max-p
 
-The so-called max-p regions model (outlined in Duque, Anselin, and Rey 2012) uses a different approach and considers the regionalization problem as an application of integer programming. In addition, the number of regions is determined endogenously.
+The so-called max-p regions model (outlined in Duque, Anselin, and Rey 2012) uses a different approach and considers the regionalization problem as an application of integer programming. Besides, the number of regions is determined endogenously.
 
 The algorithm itself consists of a search process that starts with an initial feasible solution and iteratively improves upon it while maintaining contiguity among the elements of each cluster. `rgeoda` provides three different heuristic algorithms to find an optimal solution for max-p:
 
@@ -580,18 +601,18 @@ The algorithm itself consists of a search process that starts with an initial fe
 * Tabu Search
 * Simulated Annealing
 
-Unlike SKATER and REDCAP that one can specify the number of clusters as an input paramter, max-p doesn't allow to specify the number of clusters explicitly, but a constrained variable and the minimum bounding value that each cluster should reach that are used to find an optimized number of clusters.
+Unlike SKATER and REDCAP that one can specify the number of clusters as an input parameter, max-p doesn't allow to specify the number of clusters explicitly, but a constrained variable and the minimum bounding value that each cluster should reach that are used to find an optimized number of clusters.
 
-For example, to use `greedy` algorithm in maxp function with the same dataset and weights as above to find optimal clusters using max-p:
+For example, to use the `greedy` algorithm in maxp function with the same dataset and weights as above to find optimal clusters using max-p:
 
-First, we need to specify, for example, every cluster must have population >= 3236.67 thousands people:
+First, we need to specify, for example, every cluster must have population >= 3236.67 thousand people:
 
 ```{r}
 bound_vals <- guerry_df['Pop1831'][,1]
 min_bound <- 3236.67 # 10% of Pop1831
 ```
 
-Then, we can call the max-p function with "greedy" algorithm, the bound values and minimum bound value:
+Then, we can call the max-p function with the "greedy" algorithm, the bound values, and minimum bound value:
 
 ```{r}
 maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=99)
@@ -614,20 +635,131 @@ cat("The ratio of between to total sum of square:", ratio)
 To apply `simulated annealing` algorithm in maxp function with the parameter of cooling rate:
 
 ```{r}
-maxp_sa_clusters <- maxp_sa(queen_w, data, bound_vals, min_bound, cool_rate=0.85, sa_maxit=1)
+maxp_sa_clusters <- maxp_sa(queen_w, data, bound_vals, min_bound, cooling_rate=0.85, sa_maxit=1)
 
 betweenss <- between_sumofsquare(maxp_sa_clusters, data)
 ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
-We can also increase the number of iterations for local search process by specifying the parameter `initial` (default value is 99):
+We can also increase the number of iterations for local search process by specifying the parameter `iterations` (default value is 99):
 
 ```{r}
-maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=200)
+maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=199)
 
 betweenss <- between_sumofsquare(maxp_clusters, data)
 ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
+
+## 5 ESDA with sf
+
+
+In this section, we will work with sf library to do exploratory spatial data analysis (ESDA).
+
+### 5.1 Start from `sf` package
+
+The sf package has been popular tool to handle geospatial data. It is a good substitue of sp package which will be deprecated soon.
+
+For example, to load a geospatial data (e.g. a ESRI Shapefile) using sf:
+
+```{r, class.source='rCode'}
+library(rgeoda)
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+
+library(sf)
+guerry_sf <- st_read(guerry_path)
+```
+ 
+You can simply call plot() function to render the first 9 chorepleth maps using the frist 9 variables in the dataset:
+
+```{r, class.source='rCode',fig.width = 6, fig.height=6}
+plot(guerry_sf)
+```
+
+### 5.2 Create rgeoda object from `sf`
+
+
+`sf` package makes it easy to work with geospatial data. It also provides functions to do basic spatial data analysis. `rgeoda` provides helper function `sf_to_geoda` to create a GeoDa instance from a `sf` object. Users can then call GeoDa functions to do further spatial data analysis.
+
+Create a geoda object from the sf object guerry_sp you just created.
+
+
+```{r, class.source='rCode'}
+library(rgeoda)
+
+guerry_gda <- sf_to_geoda(guerry_sf)
+```
+
+rgeoda uses wkb, which is a binary representation of geometries, to exchange data between sf and libgeoda in memory.
+
+By default, sf_to_geoda() only using geometries to create a geoda object, which is fast and user can reuse the data.frame from the sf object to do analysis. This function has an optional parameter with_table, to allow user to use both geometries and data.frame to create a geoda object by calling, for example: sp_to_geoda(guerry_sp, with_table=TRUE)
+
+### 5.3 ESDA with rgeoda
+
+Now, with the geoda object guerry, you can call rgeoda's spatial analysis functions. For example, to examine the local Moran statistics of variable "crm_prs" (Population per Crime against persons):
+
+
+```{r, class.source='rCode'}
+queen_w <- queen_weights(guerry_gda)
+
+guerry_df <- as.data.frame(guerry_sf)
+crm_prs <- guerry_df['Crm_prs'][,1]
+```
+
+#### 5.3.1 Local Moran Map
+
+```{r}
+lisa <- local_moran(queen_w, crm_prs)
+```
+
+Now, with the LISA results, we can do exploratory spatial data analysis by generating a LISA cluster map:
+
+```{r, class.source='rCode', fig.width = 6, fig.height=6}
+lisa_colors <- lisa_colors(lisa)
+lisa_labels <- lisa_labels(lisa)
+lisa_clusters <- lisa_clusters(lisa)
+
+plot(st_geometry(guerry_sf), 
+     col=sapply(lisa_clusters, function(x){return(lisa_colors[[x+1]])}), 
+     border = "#333333", lwd=0.2)
+title(main = "Local Moran Map of Crm_prs")
+legend('bottomleft', legend = lisa_labels, fill = lisa_colors, border = "#eeeeee")
+```
+
+From the above code, you can see that we still use `sf` object to do plotting. The values of cluster indicators from `rgeoda`'s `LISA` object are used to make the LISA map.
+
+You can easily append the lisa results to original `sf` object by manipulating the data.frame object inside the `sf` object.
+```{r}
+guerry_sf$moran_cluster <- lisa_clusters
+
+```
+
+If you check the values of the cluster indicators, you will see they are integer numbers 0 (not significant), 1 (high-high cluster), 2 (low-low cluster), 3 (low-high cluster), 4 (high-low cluster), 5 (neighborless/island), 6 (undefined), which are excatly the same with GeoDa software when you save LISA results to a table:
+
+
+```{r}
+lisa_clusters
+
+```
+
+To create a siginificant map that is associated with the Local Moran map:
+
+```{r, fig.width = 6, fig.height=6}
+lisa_p <- lisa_pvalues(lisa)
+p_labels <- c("Not significant", "p <= 0.05", "p <= 0.01", "p <= 0.001")
+p_colors <- c("#eeeeee", "#84f576", "#53c53c", "#348124")
+plot(st_geometry(guerry_sf), 
+     col=sapply(lisa_p, function(x){
+       if (x <= 0.001) return(p_colors[4])
+       else if (x <= 0.01) return(p_colors[3])
+       else if (x <= 0.05) return (p_colors[2])
+       else return(p_colors[1])
+       }), 
+     border = "#333333", lwd=0.2)
+title(main = "Local Moran Map of Crm_prs")
+legend('bottomleft', legend = p_labels, fill = p_colors, border = "#eeeeee")
+```
+
+
 

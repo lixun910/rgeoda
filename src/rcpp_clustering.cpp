@@ -71,7 +71,7 @@ double p_withinsumofsquare(Rcpp::List& solution, Rcpp::List& data)
 
 //  [[Rcpp::export]]
 Rcpp::List p_skater(int k, SEXP xp_w, Rcpp::List& data, std::string distance_method,
-                    NumericVector& bound_vals, double min_bound, int seed)
+                    NumericVector& bound_vals, double min_bound, int seed, int cpu_threads)
 {
   // grab the object as a XPtr (smart pointer) to LISA
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
@@ -85,7 +85,7 @@ Rcpp::List p_skater(int k, SEXP xp_w, Rcpp::List& data, std::string distance_met
   }
 
   std::vector<double> raw_bound = as<std::vector<double> >(bound_vals);
-  std::vector<std::vector<int> > clusters = gda_skater(k, w, raw_data, distance_method, raw_bound, min_bound, seed);
+  std::vector<std::vector<int> > clusters = gda_skater(k, w, raw_data, distance_method, raw_bound, min_bound, seed, cpu_threads);
 
   Rcpp::List out(clusters.size());
   for (int i=0; i< clusters.size(); ++i) {
@@ -99,7 +99,7 @@ Rcpp::List p_skater(int k, SEXP xp_w, Rcpp::List& data, std::string distance_met
 
 //  [[Rcpp::export]]
 Rcpp::List p_redcap(int k, SEXP xp_w, Rcpp::List& data, std::string redcap_method, std::string distance_method,
-                    NumericVector& bound_vals, double min_bound, int seed)
+                    NumericVector& bound_vals, double min_bound, int seed, int cpu_threads)
 {
   // grab the object as a XPtr (smart pointer) to LISA
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
@@ -113,7 +113,7 @@ Rcpp::List p_redcap(int k, SEXP xp_w, Rcpp::List& data, std::string redcap_metho
   }
 
   std::vector<double> raw_bound = as<std::vector<double> >(bound_vals);
-  std::vector<std::vector<int> > clusters = gda_redcap(k, w, raw_data, redcap_method, distance_method, raw_bound, min_bound, seed);
+  std::vector<std::vector<int> > clusters = gda_redcap(k, w, raw_data, redcap_method, distance_method, raw_bound, min_bound, seed, cpu_threads);
 
   Rcpp::List out(clusters.size());
   for (int i=0; i< clusters.size(); ++i) {
@@ -127,27 +127,30 @@ Rcpp::List p_redcap(int k, SEXP xp_w, Rcpp::List& data, std::string redcap_metho
 
 //  [[Rcpp::export]]
 Rcpp::List p_maxp_greedy(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, double min_bound,
-                  int iterations, NumericVector& init_regions, std::string distance_method, int seed)
+                  int iterations, NumericVector& init_regions, std::string distance_method, int seed, int cpu_threads)
 {
   // grab the object as a XPtr (smart pointer) to LISA
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
   GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
 
+  int num_obs = 0;
   std::vector<std::vector<double> > raw_data;
   for (int i=0; i< data.size(); ++i) {
     Rcpp::NumericVector tmp = data[i];
     std::vector<double> vals = as<std::vector<double> >(tmp);
-    Rcout << vals[0] << "\n";
+    num_obs = vals.size();
     raw_data.push_back(vals);
   }
 
   std::vector<double> raw_bound = as<std::vector<double> >(bound_vals);
-  std::vector<int> raw_init_regions;// = as<std::vector<int> >(init_regions);
+  std::vector<int> raw_init_regions = as<std::vector<int> >(init_regions);
 
   std::vector<std::pair<double, std::vector<double> > > min_bounds, max_bounds;
-  min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  if (raw_bound.size() == num_obs) {
+    min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  }
 
-  std::vector<std::vector<int> > clusters = gda_maxp_greedy(w, raw_data, iterations, min_bounds, max_bounds, raw_init_regions, distance_method, seed);
+  std::vector<std::vector<int> > clusters = gda_maxp_greedy(w, raw_data, iterations, min_bounds, max_bounds, raw_init_regions, distance_method, seed, cpu_threads);
 
   Rcpp::List out(clusters.size());
   for (int i=0; i< clusters.size(); ++i) {
@@ -161,16 +164,18 @@ Rcpp::List p_maxp_greedy(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals,
 
 //  [[Rcpp::export]]
 Rcpp::List p_maxp_sa(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, double min_bound,
-                     int iterations, double cooling_rate, int sa_maxit, NumericVector& init_regions, std::string distance_method, int seed)
+                     int iterations, double cooling_rate, int sa_maxit, NumericVector& init_regions, std::string distance_method, int seed, int cpu_threads)
 {
   // grab the object as a XPtr (smart pointer) to LISA
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
   GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
 
+  int num_obs = 0;
   std::vector<std::vector<double> > raw_data;
   for (int i=0; i< data.size(); ++i) {
     Rcpp::NumericVector tmp = data[i];
     std::vector<double> vals = as<std::vector<double> >(tmp);
+    num_obs = vals.size();
     raw_data.push_back(vals);
   }
 
@@ -178,9 +183,11 @@ Rcpp::List p_maxp_sa(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, dou
   std::vector<int> raw_init_regions = as<std::vector<int> >(init_regions);
 
   std::vector<std::pair<double, std::vector<double> > > min_bounds, max_bounds;
-  min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  if (raw_bound.size() == num_obs) {
+    min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  }
 
-  std::vector<std::vector<int> > clusters = gda_maxp_sa(w, raw_data, iterations, cooling_rate, sa_maxit, min_bounds, max_bounds, raw_init_regions, distance_method, seed);
+  std::vector<std::vector<int> > clusters = gda_maxp_sa(w, raw_data, iterations, cooling_rate, sa_maxit, min_bounds, max_bounds, raw_init_regions, distance_method, seed, cpu_threads);
 
   Rcpp::List out(clusters.size());
   for (int i=0; i< clusters.size(); ++i) {
@@ -194,16 +201,18 @@ Rcpp::List p_maxp_sa(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, dou
 
 //  [[Rcpp::export]]
 Rcpp::List p_maxp_tabu(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, double min_bound,
-                       int iterations, int tabu_length, int conv_tabu, NumericVector& init_regions, std::string distance_method, int seed)
+                       int iterations, int tabu_length, int conv_tabu, NumericVector& init_regions, std::string distance_method, int seed, int cpu_threads)
 {
   // grab the object as a XPtr (smart pointer) to LISA
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
   GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
 
+  int num_obs = 0;
   std::vector<std::vector<double> > raw_data;
   for (int i=0; i< data.size(); ++i) {
     Rcpp::NumericVector tmp = data[i];
     std::vector<double> vals = as<std::vector<double> >(tmp);
+    num_obs = vals.size();
     raw_data.push_back(vals);
   }
 
@@ -211,9 +220,11 @@ Rcpp::List p_maxp_tabu(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, d
   std::vector<int> raw_init_regions = as<std::vector<int> >(init_regions);
 
   std::vector<std::pair<double, std::vector<double> > > min_bounds, max_bounds;
-  min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  if (raw_bound.size() == num_obs) {
+    min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  }
 
-  std::vector<std::vector<int> > clusters = gda_maxp_tabu(w, raw_data, iterations, tabu_length, conv_tabu, min_bounds, max_bounds, raw_init_regions, distance_method, seed);
+  std::vector<std::vector<int> > clusters = gda_maxp_tabu(w, raw_data, iterations, tabu_length, conv_tabu, min_bounds, max_bounds, raw_init_regions, distance_method, seed, cpu_threads);
 
   Rcpp::List out(clusters.size());
   for (int i=0; i< clusters.size(); ++i) {
@@ -229,15 +240,16 @@ Rcpp::List p_maxp_tabu(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, d
 Rcpp::List p_azp_greedy(int p, SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, double min_bound, int inits,
                         NumericVector& init_regions, std::string distance_method, int seed)
 {
-  // grab the object as a XPtr (smart pointer) to LISA
+  // grab the object as a XPtr (smart pointer) to Weight
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
   GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
 
+  int num_obs = 0;
   std::vector<std::vector<double> > raw_data;
   for (int i=0; i< data.size(); ++i) {
     Rcpp::NumericVector tmp = data[i];
     std::vector<double> vals = as<std::vector<double> >(tmp);
-    Rcout << vals[0] << "\n";
+    num_obs = vals.size();
     raw_data.push_back(vals);
   }
 
@@ -245,7 +257,9 @@ Rcpp::List p_azp_greedy(int p, SEXP xp_w, Rcpp::List& data, NumericVector& bound
   std::vector<int> raw_init_regions = as<std::vector<int> >(init_regions);
 
   std::vector<std::pair<double, std::vector<double> > > min_bounds, max_bounds;
-  //min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  if (raw_bound.size() == num_obs) {
+    min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  }
 
   std::vector<std::vector<int> > clusters = gda_azp_greedy(p, w, raw_data, inits, min_bounds, max_bounds, raw_init_regions, distance_method, seed);
 
@@ -260,7 +274,7 @@ Rcpp::List p_azp_greedy(int p, SEXP xp_w, Rcpp::List& data, NumericVector& bound
 }
 
 //  [[Rcpp::export]]
-Rcpp::List p_azp_sa(int p, SEXP xp_w, Rcpp::List& data, double cooling_rate, int sa_maxit, 
+Rcpp::List p_azp_sa(int p, SEXP xp_w, Rcpp::List& data, double cooling_rate, int sa_maxit,
                     NumericVector& bound_vals, double min_bound, int inits,
                     NumericVector& init_regions, std::string distance_method, int seed)
 {
@@ -268,19 +282,22 @@ Rcpp::List p_azp_sa(int p, SEXP xp_w, Rcpp::List& data, double cooling_rate, int
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
   GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
 
+  int num_obs = 0;
   std::vector<std::vector<double> > raw_data;
   for (int i=0; i< data.size(); ++i) {
     Rcpp::NumericVector tmp = data[i];
     std::vector<double> vals = as<std::vector<double> >(tmp);
-    Rcout << vals[0] << "\n";
+    num_obs = vals.size();
     raw_data.push_back(vals);
   }
 
   std::vector<double> raw_bound = as<std::vector<double> >(bound_vals);
-  std::vector<int> raw_init_regions;// = as<std::vector<int> >(init_regions);
+  std::vector<int> raw_init_regions = as<std::vector<int> >(init_regions);
 
   std::vector<std::pair<double, std::vector<double> > > min_bounds, max_bounds;
-  min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  if (raw_bound.size() == num_obs) {
+    min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  }
 
   std::vector<std::vector<int> > clusters = gda_azp_sa(p, w, raw_data, inits, cooling_rate, sa_maxit, min_bounds, max_bounds, raw_init_regions, distance_method, seed);
 
@@ -295,7 +312,7 @@ Rcpp::List p_azp_sa(int p, SEXP xp_w, Rcpp::List& data, double cooling_rate, int
 }
 
 //  [[Rcpp::export]]
-Rcpp::List p_azp_tabu(int p, SEXP xp_w, Rcpp::List& data, int tabu_length, int conv_tabu, 
+Rcpp::List p_azp_tabu(int p, SEXP xp_w, Rcpp::List& data, int tabu_length, int conv_tabu,
                     NumericVector& bound_vals, double min_bound, int inits,
                     NumericVector& init_regions, std::string distance_method, int seed)
 {
@@ -303,11 +320,12 @@ Rcpp::List p_azp_tabu(int p, SEXP xp_w, Rcpp::List& data, int tabu_length, int c
   Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
   GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
 
+  int num_obs = 0;
   std::vector<std::vector<double> > raw_data;
   for (int i=0; i< data.size(); ++i) {
     Rcpp::NumericVector tmp = data[i];
     std::vector<double> vals = as<std::vector<double> >(tmp);
-    Rcout << vals[0] << "\n";
+    num_obs = vals.size();
     raw_data.push_back(vals);
   }
 
@@ -315,7 +333,9 @@ Rcpp::List p_azp_tabu(int p, SEXP xp_w, Rcpp::List& data, int tabu_length, int c
   std::vector<int> raw_init_regions;// = as<std::vector<int> >(init_regions);
 
   std::vector<std::pair<double, std::vector<double> > > min_bounds, max_bounds;
-  min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  if (raw_bound.size() == num_obs) {
+    min_bounds.push_back(std::make_pair(min_bound, raw_bound));
+  }
 
   std::vector<std::vector<int> > clusters = gda_azp_tabu(p, w, raw_data, inits, tabu_length, conv_tabu, min_bounds, max_bounds, raw_init_regions, distance_method, seed);
 

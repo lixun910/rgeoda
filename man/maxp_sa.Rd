@@ -12,9 +12,10 @@ maxp_sa(
   cooling_rate,
   sa_maxit = 1,
   iterations = 99,
-  initial_regions = c(0),
+  initial_regions = vector("numeric"),
   distance_method = "euclidean",
-  random_seed = 123456789
+  random_seed = 123456789,
+  cpu_threads = 6
 )
 }
 \arguments{
@@ -30,13 +31,15 @@ maxp_sa(
 
 \item{sa_maxit}{(optional): The number of iterations of simulated annealing. Defaults to 1}
 
-\item{iterations}{(optional): The number of iterations of greedy algorithm. Defaults to 99.}
+\item{iterations}{(optional): The number of iterations of SA algorithm. Defaults to 99.}
 
 \item{initial_regions}{(optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters}
 
 \item{distance_method}{(optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"}
 
 \item{random_seed}{(optional) The seed for random number generator. Defaults to 123456789.}
+
+\item{cpu_threads}{(optional) The number of cpu threads used for parallel computation}
 }
 \value{
 A list of numeric vectors represents a group of clusters

@@ -8,7 +8,7 @@
 # 12/23/2020 Add p_LISA class
 
 
-#' @title p_GeoDa
+#' @title p_GeoDa (internally used)
 #' @description p_GeoDa class is a RefClass that wraps the C++ GeoDa class
 #' See C++ functions in rcpp_rgeoda.cpp
 #' @export
@@ -22,7 +22,7 @@ p_GeoDa_method <- function(name) {
   paste( "p_GeoDa", name, sep = "__" )
 }
 
-#' @name $,p_GeoDa-method
+#' @name $,p_GeoDa-method (internally used)
 #' @aliases $,p_GeoDa-method
 #' @docType methods
 #' @rdname p_GeoDa-class
@@ -53,7 +53,7 @@ setMethod( "initialize", "p_GeoDa", function(.Object, ...) {
 
 
 #' @title p_GeoDaWeight
-#' @description p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
+#' @description  (internally used) p_GeoDaWeight class is a RefClass that wraps the C++ GeoDaWeight class
 #' See C++ functions in rcpp_weights.cpp
 #' @export
 p_GeoDaWeight <- setClass( "p_GeoDaWeight", representation( pointer = "externalptr" ) )
@@ -66,7 +66,7 @@ p_GeoDaWeight_method <- function(name) {
   paste( "p_GeoDaWeight", name, sep = "__" )
 }
 
-#' @name $,p_GeoDaWeight-method
+#' @name $,p_GeoDaWeight-method (internally used)
 #' @aliases $,p_GeoDaWeight-method
 #' @docType methods
 #' @rdname p_GeoDaWeight-class
@@ -92,7 +92,7 @@ setMethod( "initialize", "p_GeoDaWeight", function(.Object, ...) {
 
 
 #' @title p_LISA
-#' @description p_LISA class is a RefClass that wraps the C++ LISA class
+#' @description  (internally used) p_LISA class is a RefClass that wraps the C++ LISA class
 #' See C++ functions in rcpp_lisa.cpp
 #' @export
 p_LISA <- setClass( "p_LISA", representation( pointer = "externalptr" ) )
@@ -106,6 +106,7 @@ p_LISA_method <- function(name) {
 }
 
 #' @name $,p_LISA-method
+#' @description (internally used) p_LISA-method
 #' @aliases $,p_LISA-method
 #' @docType methods
 #' @rdname p_LISA-class

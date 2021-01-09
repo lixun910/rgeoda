@@ -9,10 +9,11 @@ redcap(
   w,
   data,
   method = "fullorder-averagelinkage",
-  bound_vals = c(0),
+  bound_vals = vector("numeric"),
   min_bound = 0,
   distance_method = "euclidean",
-  random_seed = 123456789
+  random_seed = 123456789,
+  cpu_threads = 6
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ redcap(
 \item{distance_method}{(optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"}
 
 \item{random_seed}{(int,optional) The seed for random number generator. Defaults to 123456789.}
+
+\item{cpu_threads}{(optional) The number of cpu threads used for parallel computation}
 }
 \value{
 A list of numeric vectors represents a group of clusters

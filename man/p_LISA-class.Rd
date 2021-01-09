@@ -10,6 +10,8 @@
 \S4method{$}{p_LISA}(x = "p_LISA", name = "ANY")
 }
 \description{
-p_LISA class is a RefClass that wraps the C++ LISA class
+(internally used) p_LISA class is a RefClass that wraps the C++ LISA class
 See C++ functions in rcpp_lisa.cpp
+
+(internally used) p_LISA-method
 }

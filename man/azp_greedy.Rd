@@ -8,10 +8,10 @@ azp_greedy(
   p,
   w,
   data,
-  bound_vals = c(0),
+  bound_vals = vector("numeric"),
   min_bound = 0,
   inits = 0,
-  initial_regions = vector(),
+  initial_regions = vector("numeric"),
   distance_method = "euclidean",
   random_seed = 123456789
 )

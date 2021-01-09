@@ -4,8 +4,9 @@
 \name{p_GeoDa-class}
 \alias{p_GeoDa-class}
 \alias{p_GeoDa}
+\alias{$,p_GeoDa-method (internally used)}
 \alias{$,p_GeoDa-method}
-\title{p_GeoDa}
+\title{p_GeoDa (internally used)}
 \usage{
 \S4method{$}{p_GeoDa}(x = "p_GeoDa", name = "ANY")
 }

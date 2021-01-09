@@ -10,9 +10,10 @@ maxp_greedy(
   bound_vals,
   min_bound,
   iterations = 99,
-  initial_regions = c(0),
+  initial_regions = vector("numeric"),
   distance_method = "euclidean",
-  random_seed = 123456789
+  random_seed = 123456789,
+  cpu_threads = 6
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ maxp_greedy(
 \item{distance_method}{(optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"}
 
 \item{random_seed}{(optional) The seed for random number generator. Defaults to 123456789.}
+
+\item{cpu_threads}{(optional) The number of cpu threads used for parallel computation}
 }
 \value{
 A list of numeric vectors represents a group of clusters
