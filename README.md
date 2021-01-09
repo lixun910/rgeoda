@@ -10,15 +10,17 @@ https://lixun910.github.io/rgeoda
     
 ### Installation
 
-NOTE: we are working to make rgeoda avaiable in CRAN, so that it could be installed easily. Once it's available on CRAN, one could install it using
+NOTE: we are working to make rgeoda avaiable in CRAN. Once it's available on CRAN, one could install it using
 
 ```R
 install.packages("rgeoda")
 ```
 
+[Status]: NOT AVAILABLE
+
 #### Build and install from source code
 
-In R console, use install.packages() function to install rgeoda from its **source pacakge**:
+In R console, one can use devtools to install rgeoda from its **source pacakge**:
 
 ```R
 devtools::install_github("lixun910/rgeoda")
