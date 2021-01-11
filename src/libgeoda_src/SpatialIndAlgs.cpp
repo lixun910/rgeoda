@@ -52,7 +52,8 @@ void SpatialIndAlgs::default_test()
         // create a box
         box_2d b(pt_2d(i + 0.0f, i + 0.0f), pt_2d(i + 0.5f, i + 0.5f));
         // insert new value
-        rtree.insert(std::make_pair(b, i));
+		box_2d_val v = std::make_pair(b,i);
+        rtree.insert(v);
     }
 
     // find values intersecting some area defined by a box
@@ -947,7 +948,8 @@ void SpatialIndAlgs::fill_pt_rtree(rtree_pt_2d_t& rtree,
 {
 	size_t obs = pts.size();
 	for (size_t i=0; i<obs; ++i) {
-		rtree.insert(make_pair(pts[i], i));
+		pt_2d_val v = make_pair(pts[i], i)
+		rtree.insert(v);
 	}
 }
 
@@ -956,7 +958,8 @@ void SpatialIndAlgs::fill_pt_rtree(rtree_pt_lonlat_t& rtree,
 {
 	size_t obs = pts.size();
 	for (size_t i=0; i<obs; ++i) {
-		rtree.insert(make_pair(pts[i], i));
+		pt_2d_val v = make_pair(pts[i], i)
+		rtree.insert(v);
 	}
 }
 
@@ -965,7 +968,8 @@ void SpatialIndAlgs::fill_pt_rtree(rtree_pt_3d_t& rtree,
 {
 	size_t obs = pts.size();
 	for (size_t i=0; i<obs; ++i) {
-		rtree.insert(make_pair(pts[i], i));
+		pt_2d_val v = make_pair(pts[i], i)
+		rtree.insert(v);
 	}
 }
 
