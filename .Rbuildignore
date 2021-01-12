@@ -6,3 +6,5 @@
 ^\.gitmodules
 ^\.gitattributes
 ^\.vscode
+^docs
+^tests

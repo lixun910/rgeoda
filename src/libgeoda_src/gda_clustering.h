@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-class GeoDaWeight;
+#include "./weights/GeodaWeight.h"
 
 // APIs of clustering
 /**
