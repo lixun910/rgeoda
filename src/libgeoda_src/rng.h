@@ -33,7 +33,6 @@ class Xoroshiro128Random
     long long s1;
 public:
     Xoroshiro128Random() {
-        SetSeed(0);
     }
 
     Xoroshiro128Random(long long xor64) {
@@ -45,8 +44,8 @@ public:
     void SetSeed(long long xor64) {
         // set seed
         // XorShift64* generator to seed:
-        if (xor64 == 0)
-            xor64 = 4101842887655102017L;
+        //if (xor64 == 0)
+        //    xor64 = 4101842887655102017L;
         xor64 ^= (unsigned long long)xor64 >> 12; // a
         xor64 ^= xor64 << 25; // b
         xor64 ^= (unsigned long long)xor64 >> 27; // c

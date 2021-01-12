@@ -1784,8 +1784,9 @@ A double-precison number between 0.0 and 1.0.
   static const int m2 = 2147483399;
   const double scale = 1.0/m1;
 
-  static Xoroshiro128Random rng(0);
-
+  static Xoroshiro128Random rng;
+  rng.SetSeed(4101842887655102017L);
+  
   static int s1 = 0;
   static int s2 = 0;
 

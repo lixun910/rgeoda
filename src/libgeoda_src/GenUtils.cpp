@@ -229,7 +229,8 @@ std::string Gda::CreateUUID(int nSize)
     std::string letters = "abcdefghijklmnopqrstuvwxyz0123456789";
 
     Xoroshiro128Random rng;
-
+    rng.SetSeed(4101842887655102017L);
+    
     std::string uid;
     while ((int)uid.length() < nSize) {
         int iSecret = rng.nextLong() % letters.size();

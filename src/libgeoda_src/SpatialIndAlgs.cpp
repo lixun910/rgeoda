@@ -948,7 +948,7 @@ void SpatialIndAlgs::fill_pt_rtree(rtree_pt_2d_t& rtree,
 {
 	size_t obs = pts.size();
 	for (size_t i=0; i<obs; ++i) {
-		pt_2d_val v = make_pair(pts[i], i)
+		pt_2d_val v = make_pair(pts[i], i);
 		rtree.insert(v);
 	}
 }
@@ -958,7 +958,7 @@ void SpatialIndAlgs::fill_pt_rtree(rtree_pt_lonlat_t& rtree,
 {
 	size_t obs = pts.size();
 	for (size_t i=0; i<obs; ++i) {
-		pt_2d_val v = make_pair(pts[i], i)
+		pt_lonlat_val v = make_pair(pts[i], i);
 		rtree.insert(v);
 	}
 }
@@ -968,7 +968,7 @@ void SpatialIndAlgs::fill_pt_rtree(rtree_pt_3d_t& rtree,
 {
 	size_t obs = pts.size();
 	for (size_t i=0; i<obs; ++i) {
-		pt_2d_val v = make_pair(pts[i], i)
+		pt_3d_val v = make_pair(pts[i], i);
 		rtree.insert(v);
 	}
 }

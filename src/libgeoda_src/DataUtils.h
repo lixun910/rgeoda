@@ -300,6 +300,7 @@ public:
     static void eigen(vector<vector<double> >& matrix, vector<vector<double> >& evecs, vector<double>& evals, int maxiter) {
 
         Xoroshiro128Random rng;
+        rng.SetSeed(4101842887655102017L);
 
         int d = (int)evals.size();
         int k = (int)matrix.size();
@@ -333,6 +334,7 @@ public:
 
     static void reverse_eigen(vector<vector<double> >& matrix, vector<vector<double> >& evecs, vector<double>& evals, int maxiter) {
         Xoroshiro128Random rng;
+        rng.SetSeed(4101842887655102017L);
 
         double rho = largestEigenvalue(matrix);
         int d = (int)evals.size();
@@ -367,6 +369,7 @@ public:
     static double smallestEigenvalue(vector<vector<double> >& matrix)
     {
         Xoroshiro128Random rng;
+        rng.SetSeed(4101842887655102017L);
 
         int n = (int)matrix.size();
         double rho = largestEigenvalue(matrix);
@@ -423,7 +426,8 @@ public:
 
     static void randomize(vector<vector<double> >& matrix) {
         Xoroshiro128Random rng;
-
+        rng.SetSeed(4101842887655102017L);
+        
         int k = (int)matrix.size();
         int n = (int)matrix[0].size();
         for (int i = 0; i < k; i++) {
