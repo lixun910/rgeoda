@@ -85,6 +85,9 @@ geoda <- setRefClass("geoda",
 #' @description Create a geoda object by reading a spatial dataset. The dataset that rgeoda supports includes: ESRI Shapefile, MapInfo File, CSV, GML, GPX, KML, GeoJSON, TopoJSON, OpenFileGDB, GFT Google Fusion Tables, CouchDB
 #' @param ds_path (character) The path of the spatial dataset
 #' @return gda_obj An object of geoda instance
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
 #' @export
 geoda_open <- function(ds_path) {
   if (typeof(ds_path) != "character") {
@@ -98,7 +101,7 @@ geoda_open <- function(ds_path) {
 #' @description Override the as.data.frame function for rgeoda instance
 #' @param x A rgeoda object
 #' @param row.names NULL or a character vector giving the row names for the data frame. Missing values are not allowed.
-#' @param optional optional parameters 
+#' @param optional optional parameters
 #' @param ... other arguments passed to methods
 #' @return A data.frame object
 #' @export

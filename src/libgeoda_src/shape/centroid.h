@@ -129,15 +129,15 @@ class Orientation {
     static bool isCCW(const std::vector<gda::Point>& pts, int start, int end)
     {
         // # of points without closing endpoint
-        const std::size_t nPts = end - start;
+        int nPts = end - start;
 
         if (nPts < 3) return false;
 
         // find highest point
         const gda::Point* hiPt = &pts[start];
-        size_t hiIndex = start;
+        int hiIndex = start;
 
-        for(size_t i = start+1; i <= end; ++i) {
+        for(int i = start+1; i <= end; ++i) {
             const gda::Point* p = &pts[i];
             if(p->y > hiPt->y) {
                 hiPt = p;
@@ -145,7 +145,7 @@ class Orientation {
             }
         }
         // find distinct point before highest point
-        size_t iPrev = hiIndex;
+        int iPrev = hiIndex;
         do {
             if(iPrev == start) {
                 iPrev = end;

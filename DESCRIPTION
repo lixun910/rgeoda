@@ -30,8 +30,6 @@ RoxygenNote: 7.1.1
 Encoding: UTF-8
 Suggests: 
     knitr,
-    rmarkdown,
-    sp,
-    sf
+    rmarkdown
 VignetteBuilder: knitr
 SystemRequirements: C++11
