@@ -15,3 +15,11 @@ Value of the weight matrix sparsity
 \description{
 Get sparsity computed from weights matrix
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+weights_sparsity(queen_w)
+}
+}

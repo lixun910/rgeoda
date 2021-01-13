@@ -124,6 +124,13 @@ summary.Weight <- function(object, ...) {
 #' @description Check if weights matrix is symmetric
 #' @param gda_w A Weight object
 #' @return Boolean value if weights matrix is symmetric
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' is_symmetric(queen_w)
+#' }
 #' @export
 is_symmetric <- function(gda_w) {
   return(gda_w$is_symmetric)
@@ -134,6 +141,13 @@ is_symmetric <- function(gda_w) {
 #' @description Check if weights matrix has isolates, or if any observation has no neighbors
 #' @param gda_w A Weight object
 #' @return Boolean value if weights matrix is symmetric
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' has_isolates(queen_w)
+#' }
 #' @export
 has_isolates <- function(gda_w) {
   return(gda_w$HasIsolations())
@@ -144,6 +158,13 @@ has_isolates <- function(gda_w) {
 #' @description Get sparsity computed from weights matrix
 #' @param gda_w A Weight object
 #' @return Value of the weight matrix sparsity
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' weights_sparsity(queen_w)
+#' }
 #' @export
 weights_sparsity <- function(gda_w) {
   return(gda_w$sparsity)
@@ -154,6 +175,13 @@ weights_sparsity <- function(gda_w) {
 #' @description Get density computed from weights matrix
 #' @param gda_w A Weight object
 #' @return Value of the weight matrix density
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' weights_density(queen_w)
+#' }
 #' @export
 weights_density <- function(gda_w) {
   return (gda_w$density)
@@ -223,6 +251,11 @@ min_distthreshold <- function(geoda_obj, is_arc = FALSE, is_mile = TRUE) {
 #' @param include_lower_order (Optional)  Whether or not the lower order neighbors should be included in the weights structure
 #' @param precision_threshold  (Optional) The precision of the underlying shape file is insufficient to allow for an exact match of coordinates to determine which polygons are neighbors
 #' @return w An object of Weight class
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' summary(queen_w)
 #' @export
 queen_weights <- function(geoda_obj, order=1, include_lower_order = FALSE, precision_threshold = 0) {
 

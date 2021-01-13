@@ -88,6 +88,8 @@ geoda <- setRefClass("geoda",
 #' @examples
 #' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
 #' guerry <- geoda_open(guerry_path)
+#' guerry_df <- as.data.frame(guerry) # access as a data.frame
+#' head(guerry_df)
 #' @export
 geoda_open <- function(ds_path) {
   if (typeof(ds_path) != "character") {

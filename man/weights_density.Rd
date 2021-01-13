@@ -15,3 +15,11 @@ Value of the weight matrix density
 \description{
 Get density computed from weights matrix
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+weights_density(queen_w)
+}
+}

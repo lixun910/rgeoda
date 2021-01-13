@@ -18,4 +18,6 @@ Create a geoda object by reading a spatial dataset. The dataset that rgeoda supp
 \examples{
 guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
 guerry <- geoda_open(guerry_path)
+guerry_df <- as.data.frame(guerry) # access as a data.frame
+head(guerry_df)
 }
