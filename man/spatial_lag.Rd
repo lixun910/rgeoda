@@ -19,3 +19,12 @@ Value of the spatial lag for idx-th observation
 \description{
 Compute the spatial lag for idx-th observation using selected variable and current weights matrix
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+lag0 <- spatial_lag(queen_w, idx = 1, values = crm_prs)
+cat("\nSpatial lag of the 1-st observation of variable crm_prs is:", lag0)
+}
+}

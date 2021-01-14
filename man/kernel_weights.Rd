@@ -38,5 +38,12 @@ w An instance of Weight
 \description{
 Create a kernel weights by specifying a bandwidth and a kernel method
 }
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+bandwidth <- min_distthreshold(guerry)
+kernel_w <- kernel_weights(guerry, bandwidth, kernel_method = "uniform")
+summary(kernel_w)
+}
 \keyword{kernel}
 \keyword{weights}

@@ -2,13 +2,15 @@
 
 rgeoda is a R package for spatial data analysis based on libgeoda and GeoDa.
   
-    
-### Tutorials
+rgeoda pkgdown site: https://lixun910.github.io/rgeoda
 
-https://lixun910.github.io/rgeoda
+## Tutorials
+
+* rgeoda 0.0.6 tutorial: https://lixun910.github.io/rgeoda/articles/rgeoda_tutorial_0_0_6.html
+* ESDA using sf and rgeoda: https://lixun910.github.io/rgeoda/articles/rgeoda_tutorial_0_0_6.html
 
     
-### Installation
+## Installation
 
 NOTE: we are working to make rgeoda avaiable in CRAN. Once it's available on CRAN, one could install it using
 
@@ -16,7 +18,7 @@ NOTE: we are working to make rgeoda avaiable in CRAN. Once it's available on CRA
 install.packages("rgeoda")
 ```
 
-[Status]: NOT AVAILABLE
+[![cran status](https://www.r-pkg.org/badges/version/rgeoda)]
 
 #### Build and install from source code
 
@@ -68,9 +70,11 @@ sudo apt-get install build-essential
     * Local Getis-Ord 
     * Local Join Count
     * Multivariate Local Geary
-    * Multivariate Local Join Count
+    * Local Join Count
+    * Bivariate Local Join Count
+    * (Multivariate) Colocation Local Join Count
     * Quantile LISA
-    * False Discovery Rate (FDR)
+    * Multivariate Quantile LISA
 
 * Spatial Clustering
     * SKATER

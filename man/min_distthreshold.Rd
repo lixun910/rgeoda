@@ -19,3 +19,11 @@ dist A real value of minimum threshold of distance
 \description{
 Get minimum threshold of distance that makes sure each observation has at least one neighbor
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+dist_thres <- min_distthreshold(guerry)
+dist_thres
+}
+}

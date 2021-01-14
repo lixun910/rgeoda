@@ -238,3 +238,66 @@ LISA *gda_quantilelisa(GeoDaWeight *w, unsigned int k, unsigned int quantile, co
     jc->SetSignificanceCutoff(significance_cutoff);
     return jc;
 }
+
+LISA *gda_multiquantilelisa(GeoDaWeight *w, const std::vector<int>& k_s, const std::vector<int>& quantile_s, const std::vector<std::vector<double> > &data_s,
+                       const std::vector<std::vector<bool> > &undefs_s, double significance_cutoff,
+                       int nCPUs, int permutations, int last_seed_used)
+{
+    if (w == 0)
+        return 0;
+
+    int num_obs = w->num_obs;
+
+    if (k_s.size() != quantile_s.size() || k_s.size() != data_s.size()) 
+        return 0;
+
+    // multi local joincount
+    std::vector<std::vector<double> > data;
+    std::vector<std::vector<bool> > undefs;
+
+    int num_vars = k_s.size();
+    for (int i=0; i<num_vars; ++i) {
+        int k = k_s[i];
+        int q = quantile_s[i];
+
+        std::vector<bool> copy_undefs = undefs_s[i];
+        std::vector<double> copy_data = data_s[i];
+
+        std::vector<double> breaks = GenUtils::QuantileBreaks(k, copy_data, copy_undefs); 
+
+        q = q - 1;
+        double break_left = DBL_MIN;
+        double break_right = DBL_MAX;
+
+        if (q == 0)
+        {
+            break_right = breaks[q];
+        }
+        else if (q== breaks.size())
+        {
+            break_left = breaks[q - 1];
+        }
+        else
+        {
+            break_left = breaks[q - 1];
+            break_right = breaks[q];
+        }
+
+        std::vector<double> bin_data(num_obs, 0);
+
+        for (int j = 0; j < num_obs; ++j)
+        {
+            if (copy_data[j] >= break_left && copy_data[j] < break_right)
+            {
+                bin_data[j] = 1;
+            }
+        }
+
+        data.push_back(bin_data);
+    }
+
+    MultiJoinCount *jc = new MultiJoinCount(num_obs, w, data, undefs_s, nCPUs, permutations, last_seed_used);
+    jc->SetSignificanceCutoff(significance_cutoff);
+
+    return jc;
+}

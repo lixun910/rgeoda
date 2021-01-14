@@ -23,3 +23,14 @@ Boolean value indicates if save successfully or failed
 \description{
 Save current spatial weights to a file
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+save_weights(rook_w, out_path = '/Users/xun/Downloads/Guerry_r.gal', 
+            layer_name = 'Guerry', 
+            id_name = 'CODE_DE', 
+            id_values = as.integer(guerry_df['CODE_DE'][,1]))
+}
+}

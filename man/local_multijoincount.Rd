@@ -16,7 +16,7 @@ local_multijoincount(
 \arguments{
 \item{w}{An instance of Weight object}
 
-\item{data}{A 2D tuple of values of selected variables}
+\item{data}{A list of numeric values of selected variables}
 
 \item{permutations}{The number of permutations for the LISA computation}
 
@@ -31,4 +31,14 @@ lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 }
 \description{
 The function to apply local Multivariate Join Count statistics
+}
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+bin_data <- guerry_df[c('TopWealth','TopWealth', 'TopLit')]
+lisa <- local_multijoincount(queen_w, bin_data)
+clsts <- lisa_clusters(lisa)
+clsts
 }

@@ -32,5 +32,11 @@ w An instance of Weight
 \description{
 Create a k-nearest neighbors based weights
 }
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+knn6_w <- knn_weights(guerry, 6)
+summary(knn6_w)
+}
 \keyword{knn}
 \keyword{weights}

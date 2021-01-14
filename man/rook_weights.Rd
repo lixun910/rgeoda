@@ -26,3 +26,9 @@ w An object of Weight class
 \description{
 Create a Rook contiguity weights with options of "order", "include lower order" and "precision threshold"
 }
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+rook_w <- rook_weights(guerry)
+summary(rook_w)
+}

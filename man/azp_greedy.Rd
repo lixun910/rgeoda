@@ -41,3 +41,14 @@ A list of numeric vectors represents a group of clusters
 \description{
 The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+azp_clusters <- azp_greedy(5, queen_w, data)
+azp_clusters
+}
+}

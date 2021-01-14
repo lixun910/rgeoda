@@ -1290,7 +1290,8 @@ private:
 		}
 
 
-		if( (ss_size & 1) == 1 )
+		//if( (ss_size & 1) == 1 )  Big<2> 2 &1  != 1
+		if ( false )
 		{
 			// ss_size is odd
 			x0 = ss1;

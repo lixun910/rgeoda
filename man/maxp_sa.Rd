@@ -47,3 +47,16 @@ A list of numeric vectors represents a group of clusters
 \description{
 The max-p-region problem is a special case of constrained clustering where a finite number of geographical areas, n, are aggregated into the maximum number of regions, p, such that each region satisfies the following const raints: 1. The areas within a region must be geographically connected.
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+bound_vals <- guerry_df['Pop1831'][,1]
+min_bound <- 3236.67 # 10\% of Pop1831
+maxp_clusters <- maxp_sa(queen_w, data, bound_vals, min_bound, cooling_rate=0.85, sa_maxit=1)
+maxp_clusters
+}
+}

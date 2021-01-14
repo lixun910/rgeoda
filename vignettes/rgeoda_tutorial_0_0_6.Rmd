@@ -462,15 +462,33 @@ lisa_num_nbrs(localjc_crm)
 
 #### 4.1.6 Multivariate Local Join Count:
 
+Bivariate Local Join Count
+
 ```{r}
-bin_data <- guerry_df[c('TopWealth','TopLit')]
-multijc <- local_multijoincount(queen_w, bin_data)
+top_crm <- guerry_df['TopCrm'][,1] # get 0/1 values 
+top_lit <- guerry_df['TopLit'][,1] # get 0/1 values of variable "top_lit"of variable "top_crm"
+
+jc <- local_bijoincount(queen_w, top_crm, top_lit)
 ```
 
 To get the cluster indicators of the multivariate local join count computation:
 ```{r}
-lisa_clusters(multijc)
+lisa_pvalues(jc)
 ```
+
+
+Co-location Local Join Count:
+
+```{r}
+bin_data <- guerry_df[c('TopWealth','TopWealth', 'TopLit')] # get 0/1 values of variable "TopWealth", "TopWealth" and "TopLit"
+jc <- local_multijoincount(queen_w, bin_data)
+```
+
+To get the cluster indicators of the multivariate local join count computation:
+```{r}
+lisa_pvalues(jc)
+```
+
 
 #### 4.1.7 Quantile LISA
 
@@ -483,7 +501,21 @@ To get the cluster indicators of the quantile LISA computation:
 lisa_clusters(qsa)
 ```
 
-### 4.2 Spatial Clustering
+Multivariate Quantile LISA
+
+```{r}
+crm_prp <- guerry_df['Crm_prp'][,1]
+quantiles <- list(list(4,1,crm_prs), list(4,1, crm_prp))
+qsa <- local_multiquantilelisa(queen_w, quantiles)
+```
+
+To get the cluster indicators of the quantile LISA computation:
+```{r}
+lisa_clusters(qsa)
+```
+
+
+## 5 Spatial Clustering
 
  
 Spatial clustering aims to group a large number of geographic areas or points into a smaller number of regions based on similarities in one or more variables. Spatially constrained clustering is needed when clusters are required to be spatially contiguous. 
@@ -498,7 +530,7 @@ The following code is used to get a 2D data vector for the selected variables:
 data <- as.list(guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')])
 ```
 
-#### 4.2.1 SKATER
+### 5.1 SKATER
 
 The Spatial C(K)luster Analysis by Tree Edge Removal(SKATER) algorithm introduced by Assuncao et al. (2006) is based on the optimal pruning of a minimum spanning tree that reflects the contiguity structure among the observations. It provides an optimized algorithm to prune to tree into several clusters that their values of selected variables are as similar as possible.
 
@@ -525,7 +557,7 @@ ratio <-  betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
-#### 4.2.2 REDCAP
+### 5.2 REDCAP
 
 REDCAP (Regionalization with dynamically constrained agglomerative clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP starts from building a spanning tree in 3 different ways (single-linkage, average-linkage, and the complete-linkage). The single-linkage way leads to build a minimum spanning tree. Then, REDCAP provides 2 different ways (first-order and full-order constraining) to prune the tree to find clusters. The first-order approach with a minimum spanning tree is the same as SKATER. In `GeoDa` and `rgeoda`, the following methods are provided:
 
@@ -547,7 +579,7 @@ ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
 
-#### 4.2.3 AZP
+### 5.3 AZP
 
 The automatic zoning procedure (AZP) was initially outlined in Openshaw (1977) as a way to address some of the consequences of the modifiable areal unit problem (MAUP). In essence, it consists of a heuristic to find the best set of combinations of contiguous spatial units into p regions, minimizing the within-sum of squares as a criterion of homogeneity. The number of regions needs to be specified beforehand, as in most other clustering methods considered so far.
 
@@ -591,7 +623,7 @@ cat("The ratio of between to total sum of square:", ratio)
 ```
 
 
-#### 4.2.4 Max-p
+### 5.4 Max-p
 
 The so-called max-p regions model (outlined in Duque, Anselin, and Rey 2012) uses a different approach and considers the regionalization problem as an application of integer programming. Besides, the number of regions is determined endogenously.
 
@@ -651,3 +683,4 @@ betweenss <- between_sumofsquare(maxp_clusters, data)
 ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
 ```
+

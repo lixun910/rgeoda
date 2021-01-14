@@ -311,3 +311,34 @@ SEXP p_quantilelisa(SEXP xp_w, int k, int quantile, NumericVector& data, int per
   Rcpp::XPtr<LISA> lisa_ptr(lisa, true);
   return lisa_ptr;
 }
+
+//  [[Rcpp::export]]
+SEXP p_multiquantilelisa(SEXP xp_w, NumericVector& k_s, NumericVector& q_s, Rcpp::List& data_s, int permutations, double significance_cutoff, int cpu_threads, int seed)
+{
+  // grab the object as a XPtr (smart pointer) to GeoDaWeight
+  Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
+  GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
+
+  std::vector<int> ks = as<std::vector<int> >(k_s);
+  std::vector<int> qs = as<std::vector<int> >(q_s);
+
+  int n = data_s.size();
+  std::vector<std::vector<double> > raw_data_s(n);
+  std::vector<std::vector<bool> > undefs_s(n);
+
+  for (int i=0; i< n; ++i) {
+    Rcpp::NumericVector tmp = data_s[i];
+    std::vector<double> vals = as<std::vector<double> >(tmp);
+
+    raw_data_s[i] = vals;
+
+    for (int j=0; j< tmp.size(); ++j) {
+      undefs_s[i].push_back(tmp.is_na(j));
+    }
+  }
+
+  LISA* lisa = gda_multiquantilelisa(w, ks, qs, raw_data_s, undefs_s, significance_cutoff, cpu_threads, permutations, seed);
+
+  Rcpp::XPtr<LISA> lisa_ptr(lisa, true);
+  return lisa_ptr;
+}

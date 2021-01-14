@@ -7,7 +7,8 @@ Authors@R:
     c(person(given = "Xun", family = "Li", email="lixun910@gmail.com", role=c("aut","cre")),
       person(given = "Luc", family = "Anselin", email="anselin@uchicago.edu", role="aut"))
 Maintainer: Xun Li <lixun910@gmail.com>
-Description: A package for spatial data analysis based on libgeoda and GeoDa.
+Description: Provides core GeoDa features including: Exploratory Spatial Data Analysis, Spatial Cluster Detection and Clustering Analysis, Regionalization etc.
+BugReports: https://github.com/lixun910/rgeoda/issues/
 Depends: methods
 License: GPL (>= 2) 
 Collate: 

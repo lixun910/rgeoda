@@ -17,3 +17,15 @@ A value of Bonferroni bound
 \description{
 Get Bonferroni bound value based on current LISA computation and current significat p-value
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+crm_prs <- guerry_df['Crm_prs'][,1] # get values of variable "crm_prs"
+lisa <- local_moran(queen_w, crm_prs)
+bo <- lisa_bo(lisa, 0.05)
+bo
+}
+}

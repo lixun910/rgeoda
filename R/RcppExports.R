@@ -125,6 +125,10 @@ p_quantilelisa <- function(xp_w, k, quantile, data, permutations, significance_c
     .Call('_rgeoda_p_quantilelisa', PACKAGE = 'rgeoda', xp_w, k, quantile, data, permutations, significance_cutoff, cpu_threads, seed)
 }
 
+p_multiquantilelisa <- function(xp_w, k_s, q_s, data_s, permutations, significance_cutoff, cpu_threads, seed) {
+    .Call('_rgeoda_p_multiquantilelisa', PACKAGE = 'rgeoda', xp_w, k_s, q_s, data_s, permutations, significance_cutoff, cpu_threads, seed)
+}
+
 p_GeoDa__new <- function(file_path) {
     .Call('_rgeoda_p_GeoDa__new', PACKAGE = 'rgeoda', file_path)
 }

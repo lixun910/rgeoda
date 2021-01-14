@@ -15,3 +15,12 @@ A data array
 \description{
 Standarize data by transforming data to have zero mean and unit variance
 }
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+crm_prs <- guerry_df['Crm_prs'][,1] # get values of variable "crm_prs"
+crm_prp <- guerry_df['Crm_prp'][,1] # get values of variable "crm_prp"
+data <- list(crm_prs, crm_prp)
+standardize(data)
+}

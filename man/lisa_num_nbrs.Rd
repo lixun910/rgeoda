@@ -2,7 +2,7 @@
 % Please edit documentation in R/lisa.R
 \name{lisa_num_nbrs}
 \alias{lisa_num_nbrs}
-\title{Get numbers of neighbors of all observations}
+\title{Get numbers of neighbors for all observations}
 \usage{
 lisa_num_nbrs(gda_lisa)
 }
@@ -10,8 +10,20 @@ lisa_num_nbrs(gda_lisa)
 \item{gda_lisa}{An instance of LISA object}
 }
 \value{
-data a tuple of values
+data A numeric array
 }
 \description{
-Get numbers of neighbors of all observations
+Get numbers of neighbors for all observations
+}
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+crm_prs <- guerry_df['Crm_prs'][,1] # get values of variable "crm_prs"
+lisa <- local_moran(queen_w, crm_prs)
+nn <- lisa_num_nbrs(lisa)
+nn
+}
 }

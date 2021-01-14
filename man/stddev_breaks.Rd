@@ -15,3 +15,10 @@ A array contains values of computed breaks
 \description{
 Standard deviation breaks first transforms data to standard deviation units (mean=0, stddev=1), and then divide the range of values into 6 groups.
 }
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+crm_prs <- guerry_df['Crm_prs'][,1] # get values of variable "crm_prs"
+stddev_breaks(data=crm_prs)
+}

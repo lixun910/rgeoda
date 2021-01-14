@@ -462,6 +462,24 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// p_multiquantilelisa
+SEXP p_multiquantilelisa(SEXP xp_w, NumericVector& k_s, NumericVector& q_s, Rcpp::List& data_s, int permutations, double significance_cutoff, int cpu_threads, int seed);
+RcppExport SEXP _rgeoda_p_multiquantilelisa(SEXP xp_wSEXP, SEXP k_sSEXP, SEXP q_sSEXP, SEXP data_sSEXP, SEXP permutationsSEXP, SEXP significance_cutoffSEXP, SEXP cpu_threadsSEXP, SEXP seedSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< SEXP >::type xp_w(xp_wSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type k_s(k_sSEXP);
+    Rcpp::traits::input_parameter< NumericVector& >::type q_s(q_sSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List& >::type data_s(data_sSEXP);
+    Rcpp::traits::input_parameter< int >::type permutations(permutationsSEXP);
+    Rcpp::traits::input_parameter< double >::type significance_cutoff(significance_cutoffSEXP);
+    Rcpp::traits::input_parameter< int >::type cpu_threads(cpu_threadsSEXP);
+    Rcpp::traits::input_parameter< int >::type seed(seedSEXP);
+    rcpp_result_gen = Rcpp::wrap(p_multiquantilelisa(xp_w, k_s, q_s, data_s, permutations, significance_cutoff, cpu_threads, seed));
+    return rcpp_result_gen;
+END_RCPP
+}
 // p_GeoDa__new
 SEXP p_GeoDa__new(std::string file_path);
 RcppExport SEXP _rgeoda_p_GeoDa__new(SEXP file_pathSEXP) {
@@ -1021,6 +1039,7 @@ static const R_CallMethodDef CallEntries[] = {
     {"_rgeoda_p_localjoincount", (DL_FUNC) &_rgeoda_p_localjoincount, 6},
     {"_rgeoda_p_localmultijoincount", (DL_FUNC) &_rgeoda_p_localmultijoincount, 6},
     {"_rgeoda_p_quantilelisa", (DL_FUNC) &_rgeoda_p_quantilelisa, 8},
+    {"_rgeoda_p_multiquantilelisa", (DL_FUNC) &_rgeoda_p_multiquantilelisa, 8},
     {"_rgeoda_p_GeoDa__new", (DL_FUNC) &_rgeoda_p_GeoDa__new, 1},
     {"_rgeoda_p_GeoDa__new1", (DL_FUNC) &_rgeoda_p_GeoDa__new1, 5},
     {"_rgeoda_p_GeoDa__GetNumObs", (DL_FUNC) &_rgeoda_p_GeoDa__GetNumObs, 1},

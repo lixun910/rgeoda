@@ -22,7 +22,7 @@ local_quantilelisa(
 
 \item{q}{A value indicates which quantile or interval used in local join count statistics. Value stars from 1.}
 
-\item{data}{A tuple of values of selected variable}
+\item{data}{A numeric array of selected variable}
 
 \item{permutations}{The number of permutations for the LISA computation}
 
@@ -37,4 +37,14 @@ lisa_obj An instance of LISA (LocalSpatialAutocorrelation) object
 }
 \description{
 The function to apply quantile LISA statistics
+}
+\examples{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+guerry_df <- as.data.frame(guerry) # use as data.frame
+crm_prs <- guerry_df['Crm_prs'][,1]
+lisa <- local_quantilelisa(queen_w, k=4, q=1, crm_prs)
+clsts <- lisa_clusters(lisa)
+clsts
 }

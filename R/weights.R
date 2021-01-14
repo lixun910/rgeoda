@@ -1,5 +1,5 @@
 #################################################################
-#' @title Weight class
+#' @title Weight class (Internally Used)
 #' @description A wrapper class for GeoDaWeight class
 #' @field gda_w An object of GeoDaWeight
 #' @field is_symmetric If weights matrix is symmetric
@@ -92,6 +92,13 @@ Weight <- setRefClass("Weight",
 #' @param object A Weight object
 #' @param ... summary optional parameters
 #' @return A summary description of Weight object
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' summary(queen_w)
+#' }
 #' @export
 summary.Weight <- function(object, ...) {
   gda_w <- object
@@ -193,6 +200,14 @@ weights_density <- function(gda_w) {
 #' @param gda_w A Weight object
 #' @param idx A value indicates idx-th observation, idx start from 1
 #' @return Vector of the neighbor indices, idx start from 1
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' nbrs <- get_neighbors(queen_w, idx = 1)
+#' cat("\nNeighbors of the 1-st observation are:", nbrs)
+#' }
 #' @export
 get_neighbors <- function(gda_w, idx) {
   idx <- idx - 1
@@ -212,6 +227,14 @@ get_neighbors <- function(gda_w, idx) {
 #' @param idx A value indicates idx-th observation, idx start from 1
 #' @param values A vector of values
 #' @return Value of the spatial lag for idx-th observation
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' lag0 <- spatial_lag(queen_w, idx = 1, values = crm_prs)
+#' cat("\nSpatial lag of the 1-st observation of variable crm_prs is:", lag0)
+#' }
 #' @export
 spatial_lag <- function(gda_w, idx, values) {
   idx <- idx - 1
@@ -227,6 +250,16 @@ spatial_lag <- function(gda_w, idx, values) {
 #' @param id_name The id name (or field name), which is an associated column contains unique values, that makes sure that the weights are connected to the correct observations in the data table.
 #' @param id_values The tuple of values of selected id_name (column or field)
 #' @return Boolean value indicates if save successfully or failed
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' save_weights(rook_w, out_path = '/Users/xun/Downloads/Guerry_r.gal', 
+#'             layer_name = 'Guerry', 
+#'             id_name = 'CODE_DE', 
+#'             id_values = as.integer(guerry_df['CODE_DE'][,1]))
+#' }
 #' @export
 save_weights <- function(gda_w, out_path, layer_name, id_name, id_values) {
   return(gda_w$SaveToFile(out_path, layer_name, id_name, id_values))
@@ -238,6 +271,13 @@ save_weights <- function(gda_w, out_path, layer_name, id_name, id_values) {
 #' @param is_arc (optional) FALSE (default) or TRUE, compute arc distance between two observations
 #' @param is_mile (optional) TRUE (default) or FALSE, convert distance unit from mile to km.
 #' @return dist A real value of minimum threshold of distance
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' dist_thres <- min_distthreshold(guerry)
+#' dist_thres
+#' }
 #' @export
 min_distthreshold <- function(geoda_obj, is_arc = FALSE, is_mile = TRUE) {
   return (p_gda_min_distthreshold(geoda_obj$GetPointer(), is_arc, is_mile))
@@ -286,6 +326,11 @@ queen_weights <- function(geoda_obj, order=1, include_lower_order = FALSE, preci
 #' @param include_lower_order (Optional)  Whether or not the lower order neighbors should be included in the weights structure
 #' @param precision_threshold  (Optional) The precision of the underlying shape file is insufficient to allow for an exact match of coordinates to determine which polygons are neighbors
 #' @return w An object of Weight class
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' rook_w <- rook_weights(guerry)
+#' summary(rook_w)
 #' @export
 rook_weights <- function(geoda_obj, order = 1, include_lower_order = FALSE, precision_threshold = 0) {
 
@@ -318,6 +363,12 @@ rook_weights <- function(geoda_obj, order = 1, include_lower_order = FALSE, prec
 #' @param is_arc (optional) FALSE (default) or TRUE, compute arc distance between two observations
 #' @param is_mile (optional) TRUE (default) or FALSE, convert distance unit from mile to km.
 #' @return w An instance of GeoDaWeight
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' dist_thres <- min_distthreshold(guerry)
+#' dist_w <- distance_weights(guerry, dist_thres)
+#' summary(dist_w)
 #' @export
 distance_weights <- function(geoda_obj, dist_thres, power = 1.0, is_inverse = FALSE, is_arc = FALSE, is_mile=TRUE){
 
@@ -348,6 +399,12 @@ distance_weights <- function(geoda_obj, dist_thres, power = 1.0, is_inverse = FA
 #' @param is_arc (optional) FALSE (default) or TRUE, compute arc distance between two observations
 #' @param is_mile (optional) TRUE (default) or FALSE, convert distance unit from mile to km.
 #' @return w An instance of Weight
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' bandwidth <- min_distthreshold(guerry)
+#' kernel_w <- kernel_weights(guerry, bandwidth, kernel_method = "uniform")
+#' summary(kernel_w)
 #' @export
 kernel_weights <- function(geoda_obj, bandwidth, kernel_method,
                            use_kernel_diagonals = FALSE, power = 1.0, is_inverse = FALSE,
@@ -382,6 +439,11 @@ kernel_weights <- function(geoda_obj, bandwidth, kernel_method,
 #' @param is_arc (optional) FALSE (default) or TRUE, compute arc distance between two observations
 #' @param is_mile (optional) TRUE (default) or FALSE, convert distance unit from mile to km.
 #' @return w An instance of Weight
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' knn6_w <- knn_weights(guerry, 6)
+#' summary(knn6_w)
 #' @export
 knn_weights <- function(geoda_obj, k, power = 1.0, is_inverse = FALSE,
                         is_arc = FALSE, is_mile = TRUE) {
@@ -415,6 +477,11 @@ knn_weights <- function(geoda_obj, k, power = 1.0, is_inverse = FALSE,
 #' @param is_arc (optional) FALSE (default) or TRUE, compute arc distance between two observations
 #' @param is_mile (optional) TRUE (default) or FALSE, convert distance unit from mile to km.
 #' @return w An instance of Weight
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' adptkernel_w = kernel_knn_weights(guerry, 6, "uniform")
+#' summary(adptkernel_w)
 #' @export
 kernel_knn_weights <- function(geoda_obj, k, kernel_method, adaptive_bandwidth = TRUE,
                                use_kernel_diagonals = FALSE, power = 1.0, is_inverse = FALSE,

@@ -104,6 +104,18 @@ LISA *gda_quantilelisa(GeoDaWeight *w, unsigned int k, unsigned int quantile, co
 
 /**
  *
+ * @param w
+ * @param k
+ * @param quantile
+ * @param data
+ * @param undefs
+ * @return
+ */
+LISA *gda_multiquantilelisa(GeoDaWeight *w, const std::vector<int>& k_s, const std::vector<int>& quantile_s, const std::vector<std::vector<double> > &data_s,
+                       const std::vector<std::vector<bool> > &undefs_s, double significance_cutoff,
+                       int nCPUs, int permutations, int last_seed_used);
+/**
+ *
  * @param lisa
  * @param current_p
  * @return

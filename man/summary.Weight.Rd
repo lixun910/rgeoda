@@ -17,3 +17,11 @@ A summary description of Weight object
 \description{
 Override the summary() function for spatial weights
 }
+\examples{
+\dontrun{
+guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+guerry <- geoda_open(guerry_path)
+queen_w <- queen_weights(guerry)
+summary(queen_w)
+}
+}

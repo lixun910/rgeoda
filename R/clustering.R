@@ -10,6 +10,14 @@
 #' @param random_seed (int,optional) The seed for random number generator. Defaults to 123456789.
 #' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' guerry_clusters <- skater(4, queen_w, data)
+#' guerry_clusters
 #' @export
 skater <- function(k, w, data, bound_vals=vector('numeric'), min_bound=0, distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
@@ -52,6 +60,14 @@ skater <- function(k, w, data, bound_vals=vector('numeric'), min_bound=0, distan
 #' @param random_seed (int,optional) The seed for random number generator. Defaults to 123456789.
 #' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' guerry_clusters <- redcap(4, queen_w, data, "fullorder-completelinkage")
+#' guerry_clusters
 #' @export
 redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=vector('numeric'), min_bound=0, distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
@@ -87,6 +103,18 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=vec
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' bound_vals <- guerry_df['Pop1831'][,1]
+#' min_bound <- 3236.67 # 10% of Pop1831
+#' maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=99)
+#' maxp_clusters
+#' }
 #' @export
 maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
@@ -123,6 +151,18 @@ maxp_greedy <- function(w, data, bound_vals, min_bound, iterations=99, initial_r
 #' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
 #' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' bound_vals <- guerry_df['Pop1831'][,1]
+#' min_bound <- 3236.67 # 10% of Pop1831
+#' maxp_clusters <- maxp_sa(queen_w, data, bound_vals, min_bound, cooling_rate=0.85, sa_maxit=1)
+#' maxp_clusters
+#' }
 #' @export
 maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, iterations=99, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
@@ -159,6 +199,18 @@ maxp_sa <- function(w, data, bound_vals, min_bound, cooling_rate, sa_maxit=1, it
 #' @param initial_regions (optional): The initial regions that the local search starts with. Default is empty. means the local search starts with a random process to "grow" clusters
 #' @param cpu_threads (optional) The number of cpu threads used for parallel computation
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' bound_vals <- guerry_df['Pop1831'][,1]
+#' min_bound <- 3236.67 # 10% of Pop1831
+#' maxp_clusters <- maxp_tabu(queen_w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=10)
+#' maxp_clusters
+#' }
 #' @export
 maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=10, iterations=99, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789, cpu_threads=6) {
   if (w$num_obs < 1) {
@@ -193,6 +245,16 @@ maxp_tabu <- function(w, data, bound_vals, min_bound, tabu_length=10, conv_tabu=
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' azp_clusters <- azp_greedy(5, queen_w, data)
+#' azp_clusters
+#' }
 #' @export
 azp_greedy <- function(p, w, data, bound_vals=vector('numeric'), min_bound=0, inits=0, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789) {
   if (p < 0) {
@@ -226,6 +288,16 @@ azp_greedy <- function(p, w, data, bound_vals=vector('numeric'), min_bound=0, in
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' azp_clusters <- azp_sa(5, queen_w, data, cooling_rate = 0.85)
+#' azp_clusters
+#' }
 #' @export
 azp_sa<- function(p, w, data, cooling_rate, sa_maxit=1, bound_vals=vector('numeric'), min_bound=0, inits=0, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789) {
   if (p < 0) {
@@ -259,6 +331,16 @@ azp_sa<- function(p, w, data, cooling_rate, sa_maxit=1, bound_vals=vector('numer
 #' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
 #' @param random_seed (optional) The seed for random number generator. Defaults to 123456789.
 #' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' \dontrun{
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' azp_clusters <- azp_tabu(5, queen_w, data, tabu_length=10, conv_tabu=10)
+#' azp_clusters
+#' }
 #' @export
 azp_tabu<- function(p, w, data, tabu_length=10, conv_tabu=10, bound_vals=vector('numeric'), min_bound=0, inits=0, initial_regions=vector('numeric'), distance_method="euclidean", random_seed=123456789) {
   if (p < 0) {
