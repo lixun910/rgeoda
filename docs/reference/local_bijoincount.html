@@ -184,13 +184,13 @@
 <span class='va'>guerry</span> <span class='op'>&lt;-</span> <span class='fu'><a href='geoda_open.html'>geoda_open</a></span><span class='op'>(</span><span class='va'>guerry_path</span><span class='op'>)</span>
 <span class='va'>queen_w</span> <span class='op'>&lt;-</span> <span class='fu'><a href='queen_weights.html'>queen_weights</a></span><span class='op'>(</span><span class='va'>guerry</span><span class='op'>)</span>
 <span class='va'>guerry_df</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span><span class='op'>(</span><span class='va'>guerry</span><span class='op'>)</span> <span class='co'># use as data.frame</span>
-<span class='va'>top_crm</span> <span class='op'>&lt;-</span> <span class='va'>guerry_df</span><span class='op'>[</span><span class='st'>'TopCrm'</span><span class='op'>]</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span> <span class='co'># get 0/1 values of variable "top_crm"</span>
-<span class='va'>top_lit</span> <span class='op'>&lt;-</span> <span class='va'>guerry_df</span><span class='op'>[</span><span class='st'>'TopLit'</span><span class='op'>]</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span> <span class='co'># get 0/1 values of variable "top_lit"</span>
-<span class='va'>lisa</span> <span class='op'>&lt;-</span> <span class='fu'>local_bijoincount</span><span class='op'>(</span><span class='va'>queen_w</span>, <span class='va'>top_crm</span>, <span class='va'>top_lit</span><span class='op'>)</span>
+<span class='va'>top_crm</span> <span class='op'>&lt;-</span> <span class='va'>guerry_df</span><span class='op'>[</span><span class='st'>'TopCrm'</span><span class='op'>]</span><span class='op'>[</span>,<span class='fl'>1</span><span class='op'>]</span>
+<span class='va'>inv_crm</span> <span class='op'>&lt;-</span>  <span class='fl'>1</span> <span class='op'>-</span> <span class='va'>top_crm</span>
+<span class='va'>lisa</span> <span class='op'>&lt;-</span> <span class='fu'>local_bijoincount</span><span class='op'>(</span><span class='va'>queen_w</span>, <span class='va'>top_crm</span>, <span class='va'>inv_crm</span><span class='op'>)</span>
 <span class='va'>clsts</span><span class='op'>&lt;-</span> <span class='fu'><a href='lisa_clusters.html'>lisa_clusters</a></span><span class='op'>(</span><span class='va'>lisa</span><span class='op'>)</span>
 <span class='va'>clsts</span>
-</div><div class='output co'>#&gt;  [1] 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-#&gt; [39] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+</div><div class='output co'>#&gt;  [1] 0 1 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0
+#&gt; [39] 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 1
 #&gt; [77] 0 0 0 0 0 0 0 0 0</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
