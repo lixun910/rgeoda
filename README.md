@@ -98,3 +98,6 @@ sudo apt-get install build-essential
   * Standardize data (Z)
   * Median absolute deviation
 
+## Citation
+
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.4437879.svg)](https://doi.org/10.5281/zenodo.4437879)
