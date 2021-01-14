@@ -444,16 +444,18 @@ For example, we can call the function `local_joincount()` with a Queen weights a
 top_crm <- guerry_df['TopCrm'][,1]
 localjc_crm <- local_joincount(queen_w, top_crm)
 ```
+
+To get the pseudo-p values of the local Join Count  computation:
+```{r}
+lisa_pvalues(localjc_crm)
+```
+
 To get the cluster indicators of the local Join Count computation:
 
 ```{r}
 lisa_clusters(localjc_crm)
 ```
 
-To get the pseudo-p values of the local Join Count  computation:
-```{r}
-lisa_pvalues(localjc_crm)
-```
 
 To get the number of neighbors of the local Join Count computation:
 ```{r}
@@ -462,13 +464,17 @@ lisa_num_nbrs(localjc_crm)
 
 #### 4.1.6 Multivariate Local Join Count:
 
-Bivariate Local Join Count
+Bivariate Local Join Count: in a bivariate local join count, the two events cannot happen in the same location, which is also called "no-colocation" in this tutorial. To demonstrate this function, we just manually create a new variable from top_crm:
 
 ```{r}
 top_crm <- guerry_df['TopCrm'][,1] # get 0/1 values 
-top_lit <- guerry_df['TopLit'][,1] # get 0/1 values of variable "top_lit"of variable "top_crm"
+inv_crm <- 1 - top_crm # create no-location case
+```
 
-jc <- local_bijoincount(queen_w, top_crm, top_lit)
+Now, top_crm and inv_crm are no-colocation bivariate cases. Then, we apply the local_bijoicount():
+
+```{r}
+jc <- local_bijoincount(queen_w, top_crm, inv_crm)
 ```
 
 To get the cluster indicators of the multivariate local join count computation:
@@ -476,11 +482,17 @@ To get the cluster indicators of the multivariate local join count computation:
 lisa_pvalues(jc)
 ```
 
-
-Co-location Local Join Count:
+To get the cluster indicators of the local Join Count computation:
 
 ```{r}
-bin_data <- guerry_df[c('TopWealth','TopWealth', 'TopLit')] # get 0/1 values of variable "TopWealth", "TopWealth" and "TopLit"
+lisa_clusters(jc)
+```
+
+
+Co-location Local Join Count: where two or more events happen in the same location. Therefore, the function local_multijoincount takes a list of variables with 0/1 values as the input parameter:
+
+```{r}
+bin_data <- guerry_df[c('TopWealth','TopWealth', 'TopLit')] 
 jc <- local_multijoincount(queen_w, bin_data)
 ```
 
@@ -492,16 +504,21 @@ lisa_pvalues(jc)
 
 #### 4.1.7 Quantile LISA
 
+The quantile LISA converts the continuous variable to a binary variable that takes the value of 1 for a specific quantile, and then apply local join count statistics on the binary data. For example, we take the first from the 4 quantiles of variable "crm_prs" and apply local_quantilelisa()
+
 ```{r}
 qsa <- local_quantilelisa(queen_w, 4, 1, crm_prs)
 ```
 
-To get the cluster indicators of the quantile LISA computation:
+To get the p-values and cluster indicators of the quantile LISA computation:
 ```{r}
+lisa_pvalues(qsa)
 lisa_clusters(qsa)
 ```
 
 Multivariate Quantile LISA
+
+One can construct binary data from different variables with different configurations of number of quantiles and which quantile to use (set value to 1), and check the local spatial autocorrelation:
 
 ```{r}
 crm_prp <- guerry_df['Crm_prp'][,1]
@@ -509,8 +526,9 @@ quantiles <- list(list(4,1,crm_prs), list(4,1, crm_prp))
 qsa <- local_multiquantilelisa(queen_w, quantiles)
 ```
 
-To get the cluster indicators of the quantile LISA computation:
+To get the p-values and cluster indicators of the quantile LISA computation:
 ```{r}
+lisa_pvalues(qsa)
 lisa_clusters(qsa)
 ```
 
@@ -652,6 +670,12 @@ maxp_clusters <- maxp_greedy(queen_w, data, bound_vals, min_bound, iterations=99
 betweenss <- between_sumofsquare(maxp_clusters, data)
 ratio <- betweenss / totalss
 cat("The ratio of between to total sum of square:", ratio)
+```
+
+```
+Note: the results of max-p may be different with GeoDa desktop software, it is caused by the different implementation of boost::unordered_map in version 1.58 (used in GeoDa) and version 1.75 (used in rgeoda via BH package). The keys in boost::unordered_map are not ordered and have different orders in the two Boost versions we used. This involves a different mechanism of randomness in max-p algorithm when picking which area or region to process. Therefore, the results might be slightly different. This is normal and shows the sensitiveness of the max-p algorithm: see https://geodacenter.github.io/workbook/9d_spatial4/lab9d.html#max-p-region-problem for more about sensitivy study of max-p algorithm.
+
+If you want to replicate the identical results as in GeoDa software, please install BH == 1.58.0-1 and build/install rgeoda from source using: devtools::install_github("lixun910/rgeoda")
 ```
 
 We can also specify using `tabu search` algorithm in maxp function with the parameter of tabu length:

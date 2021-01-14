@@ -40,9 +40,9 @@ guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
 guerry <- geoda_open(guerry_path)
 queen_w <- queen_weights(guerry)
 guerry_df <- as.data.frame(guerry) # use as data.frame
-top_crm <- guerry_df['TopCrm'][,1] # get 0/1 values of variable "top_crm"
-top_lit <- guerry_df['TopLit'][,1] # get 0/1 values of variable "top_lit"
-lisa <- local_bijoincount(queen_w, top_crm, top_lit)
+top_crm <- guerry_df['TopCrm'][,1]
+inv_crm <-  1 - top_crm
+lisa <- local_bijoincount(queen_w, top_crm, inv_crm)
 clsts<- lisa_clusters(lisa)
 clsts
 }

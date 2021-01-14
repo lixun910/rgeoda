@@ -464,9 +464,9 @@ local_joincount <- function(w, data, permutations=999, significance_cutoff=0.05,
 #' guerry <- geoda_open(guerry_path)
 #' queen_w <- queen_weights(guerry)
 #' guerry_df <- as.data.frame(guerry) # use as data.frame
-#' top_crm <- guerry_df['TopCrm'][,1] # get 0/1 values of variable "top_crm"
-#' top_lit <- guerry_df['TopLit'][,1] # get 0/1 values of variable "top_lit"
-#' lisa <- local_bijoincount(queen_w, top_crm, top_lit)
+#' top_crm <- guerry_df['TopCrm'][,1]
+#' inv_crm <-  1 - top_crm
+#' lisa <- local_bijoincount(queen_w, top_crm, inv_crm)
 #' clsts<- lisa_clusters(lisa)
 #' clsts
 #' @export
@@ -480,7 +480,9 @@ local_bijoincount <- function(w, data1, data2, permutations=999, significance_cu
   if (length(data2) != w$num_obs) {
     stop("The size of data2 doesnt not match the number of observations")
   }
-
+  if (sum(data1 + data2) != w$num_obs) {
+    stop("The bivariate local join count only applies on two variables with no-colocation.")
+  }
   data <- list(data1, data2)
   lisa_obj <- p_localmultijoincount(w$GetPointer(), data, permutations, significance_cutoff, cpu_threads, seed)
   return (LISA$new(p_LISA(lisa_obj)))
