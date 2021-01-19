@@ -10,7 +10,7 @@ Maintainer: Xun Li <lixun910@gmail.com>
 Description: Provides spatial data analysis functionalities including Exploratory Spatial Data Analysis, 
     Spatial Cluster Detection and Clustering Analysis, Regionalization, etc. based on the C++ source code 
     of GeoDa, which is an open-source software tool that serves as an introduction to spatial data analysis.
-    The GeoDa software and its documentation are available at https://geodacenter.github.io.
+    The GeoDa software and its documentation are available at <https://geodacenter.github.io>.
 BugReports: https://github.com/lixun910/rgeoda/issues/
 Depends: methods
 License: GPL (>= 2) 

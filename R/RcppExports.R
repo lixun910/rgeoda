@@ -21,6 +21,10 @@ p_redcap <- function(k, xp_w, data, redcap_method, distance_method, bound_vals, 
     .Call('_rgeoda_p_redcap', PACKAGE = 'rgeoda', k, xp_w, data, redcap_method, distance_method, bound_vals, min_bound, seed, cpu_threads)
 }
 
+p_schc <- function(k, xp_w, data, linkage_method, distance_method, bound_vals, min_bound) {
+    .Call('_rgeoda_p_schc', PACKAGE = 'rgeoda', k, xp_w, data, linkage_method, distance_method, bound_vals, min_bound)
+}
+
 p_maxp_greedy <- function(xp_w, data, bound_vals, min_bound, iterations, init_regions, distance_method, seed, cpu_threads) {
     .Call('_rgeoda_p_maxp_greedy', PACKAGE = 'rgeoda', xp_w, data, bound_vals, min_bound, iterations, init_regions, distance_method, seed, cpu_threads)
 }

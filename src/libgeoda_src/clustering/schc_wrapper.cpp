@@ -15,12 +15,10 @@ using namespace SpanningTreeClustering;
 schc_wrapper::schc_wrapper(unsigned int k,
         GeoDaWeight *w,
         const std::vector<std::vector<double> > &data,
-        unsigned int redcap_method,
+        unsigned int method,
         const std::string &distance_method,
         const std::vector<double>& bound_vals,
-        double min_bound,
-        int rand_seed,
-        int cpu_threads)
+        double min_bound)
 {
     if (w) {
         num_obs = w->num_obs;
@@ -66,19 +64,18 @@ schc_wrapper::schc_wrapper(unsigned int k,
             // call redcap
             std::vector<bool> undefs(num_obs, false); // not used
             AbstractClusterFactory* redcap = 0;
-            if (redcap_method == 0) {
-                redcap = new FirstOrderSLKRedCap(num_obs, n_cols, distances, matrix, undefs,
+            int cpu_threads = 1; // not used
+
+            if (method == 0) {
+                redcap = new FullOrderSLKRedCap(num_obs, n_cols, distances, matrix, undefs,
                                                  gal, _bound_vals, min_bound, cpu_threads);
-            } else if (redcap_method == 1) {
+            } else if (method == 1) {
                 redcap = new FullOrderCLKRedCap(num_obs, n_cols, distances, matrix, undefs,
-                                                 gal, _bound_vals, min_bound, cpu_threads);
-            } else if (redcap_method == 2) {
+                                                gal, _bound_vals, min_bound, cpu_threads);
+            } else if (method == 2) {
                 redcap = new FullOrderALKRedCap(num_obs, n_cols, distances, matrix, undefs,
                                                 gal, _bound_vals, min_bound, true, cpu_threads);
-            } else if (redcap_method == 3) {
-                redcap = new FullOrderSLKRedCap(num_obs, n_cols, distances, matrix, undefs,
-                                                gal, _bound_vals, min_bound, cpu_threads);
-            } else if (redcap_method == 4) {
+            } else if (method == 3) {
                 redcap = new FullOrderWardRedCap(num_obs, n_cols, distances, matrix, undefs,
                                                 gal, _bound_vals, min_bound, cpu_threads);
             }
@@ -126,8 +123,6 @@ schc_wrapper::schc_wrapper(unsigned int k,
                 clusterid = NULL;
 
                 // sort result
-                std::vector<std::vector<int> > cluster_ids(k);
-
                 cluster_ids.resize(k);
                 for (int i=0; i < clusters.size(); i++) {
                     cluster_ids[ clusters[i] - 1 ].push_back(i);

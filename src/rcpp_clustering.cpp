@@ -126,6 +126,34 @@ Rcpp::List p_redcap(int k, SEXP xp_w, Rcpp::List& data, std::string redcap_metho
 }
 
 //  [[Rcpp::export]]
+Rcpp::List p_schc(int k, SEXP xp_w, Rcpp::List& data, std::string linkage_method, std::string distance_method,
+                    NumericVector& bound_vals, double min_bound)
+{
+  // grab the object as a XPtr (smart pointer) to LISA
+  Rcpp::XPtr<GeoDaWeight> ptr(xp_w);
+  GeoDaWeight* w = static_cast<GeoDaWeight*> (R_ExternalPtrAddr(ptr));
+
+  std::vector<std::vector<double> > raw_data;
+  for (int i=0; i< data.size(); ++i) {
+    Rcpp::NumericVector tmp = data[i];
+    std::vector<double> vals = as<std::vector<double> >(tmp);
+    raw_data.push_back(vals);
+  }
+
+  std::vector<double> raw_bound = as<std::vector<double> >(bound_vals);
+  std::vector<std::vector<int> > clusters = gda_schc(k, w, raw_data, linkage_method, distance_method, raw_bound, min_bound);
+
+  Rcpp::List out(clusters.size());
+  for (int i=0; i< clusters.size(); ++i) {
+    std::vector<int>& vals = clusters[i];
+    Rcpp::NumericVector tmp_vals(vals.begin(), vals.end());
+    out[i] = tmp_vals;
+  }
+
+  return out;
+}
+
+//  [[Rcpp::export]]
 Rcpp::List p_maxp_greedy(SEXP xp_w, Rcpp::List& data, NumericVector& bound_vals, double min_bound,
                   int iterations, NumericVector& init_regions, std::string distance_method, int seed, int cpu_threads)
 {

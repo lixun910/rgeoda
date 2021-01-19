@@ -37,6 +37,50 @@ skater <- function(k, w, data, bound_vals=vector('numeric'), min_bound=0, distan
 
 
 ############################################################
+#' @title Spatially Constrained Hierarchical Clucstering (SCHC)
+#' @description Spatially constrained hierarchical clustering is a special form of constrained clustering, where the constraint is based on contiguity (common borders).
+#' The method builds up the clusters using agglomerative hierarchical clustering methods:
+#' single linkage, complete linkage, average linkage and Ward's method (a special form of centroid linkage).
+#' Meanwhile, it also maintains the spatial contiguity when merging two clusters.
+#' @param k The number of clusters
+#' @param w An instance of Weight class
+#' @param data A list of numeric vectors of selected variable
+#' @param method {"single", "complete", "average","ward"}
+#' @param bound_vals (optional) A 1-d vector of selected bounding variable
+#' @param min_bound (optional) A minimum value that the sum value of bounding variable int each cluster should be greater than
+#' @param distance_method (optional) The distance method used to compute the distance betwen observation i and j. Defaults to "euclidean". Options are "euclidean" and "manhattan"
+#' @return A list of numeric vectors represents a group of clusters
+#' @examples
+#' guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+#' guerry <- geoda_open(guerry_path)
+#' queen_w <- queen_weights(guerry)
+#' guerry_df <- as.data.frame(guerry) # use as data.frame
+#' data <- guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')]
+#' guerry_clusters <- schc(4, queen_w, data, "complete")
+#' guerry_clusters
+#' @export
+schc <- function(k, w, data, method="average", bound_vals=vector('numeric'), min_bound=0, distance_method="euclidean") {
+  if (w$num_obs < 1) {
+    stop("The weights is not valid.")
+  }
+  if (k <1 && k > w$num_obs) {
+    stop("The number of clusters should be a positive integer number, which is less than the number of observations.")
+  }
+  if (length(data) < 1) {
+    stop("The data from selected variable is empty.")
+  }
+  method_cands <- c("single", "complete", "average","ward")
+  if (!(method %in% method_cands)) {
+    stop("The SCHC method has to be one of ", method_cands)
+  }
+  if (distance_method != "euclidean" && distance_method != "manhattan") {
+    stop("The distance method needs to be either 'euclidean' or 'manhattan'.")
+  }
+  return(p_schc(k, w$GetPointer(), data, method, distance_method, bound_vals, min_bound))
+}
+
+
+############################################################
 #' @title Regionalization with dynamically constrained agglomerative clustering and partitioning
 #' @description REDCAP (Regionalization with dynamically constrained agglomerative
 #' clustering and partitioning) is developed by D. Guo (2008). Like SKATER, REDCAP
@@ -88,7 +132,6 @@ redcap <- function(k, w, data, method="fullorder-averagelinkage", bound_vals=vec
   }
   return(p_redcap(k, w$GetPointer(), data, method, distance_method, bound_vals, min_bound, random_seed, cpu_threads))
 }
-
 
 ############################################################
 #' @title A greedy algorithm to solve the max-p-region problem

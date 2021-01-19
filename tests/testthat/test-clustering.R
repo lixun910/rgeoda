@@ -1,5 +1,23 @@
 context("clustering.R")
 
+testthat::test_that('schc', {
+    guerry_path <- system.file("extdata", "Guerry.shp", package = "rgeoda")
+    guerry <- geoda_open(guerry_path)
+    guerry_df <- as.data.frame(guerry)
+    queen_w <- queen_weights(guerry)
+    data <- as.list(guerry_df[c('Crm_prs','Crm_prp','Litercy','Donatns','Infants','Suicids')])
+
+    clusters <- schc(5, queen_w, data, 'average')
+
+    totalss <- total_sumofsquare( data )
+    betweenss <- between_sumofsquare(clusters, data)
+    ratio <- betweenss / totalss
+
+
+    testthat::expect_equal( ratio, 0.21477112549551957699)
+
+})
+
 # NOTE!!!!!!!!!
 # The results are computed using Boost library 1.58.0. To pass the following test cases
 # , please install BH package version==1.58.0

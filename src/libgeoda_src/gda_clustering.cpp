@@ -1,9 +1,10 @@
-
+#include <iostream>
 #include <boost/algorithm/string.hpp>
 #include "weights/GeodaWeight.h"
 #include "clustering/maxp_wrapper.h"
 #include "clustering/redcap_wrapper.h"
 #include "clustering/azp_wrapper.h"
+#include "clustering/schc_wrapper.h"
 #include "GenUtils.h"
 #include "gda_clustering.h"
 
@@ -176,6 +177,33 @@ const std::vector<std::vector<int> > gda_skater(unsigned int k,
     return gda_redcap(k, w, data, "firstorder-singlelinkage", distance_method, bound_vals, min_bound, rand_seed, cpu_threads);
 }
 
+const std::vector<std::vector<int> > gda_schc(unsigned int k,
+                                                GeoDaWeight *w,
+                                                const std::vector<std::vector<double> > &data,
+                                                const std::string &linkage_method,
+                                                const std::string &distance_method,
+                                                const std::vector<double>& bound_vals,
+                                                double min_bound)
+{
+    std::vector<std::vector<int> > result;
+    unsigned int method = 0;
+    if (boost::iequals(linkage_method, "single")) {
+        method = 0;
+    } else if  (boost::iequals(linkage_method, "complete")){
+        method = 1;
+    } else if  (boost::iequals(linkage_method, "average")) {
+        method = 2;
+    } else if  (boost::iequals(linkage_method, "ward")) {
+        method = 3;
+    }
+
+    if (w == 0 ||  method > 4) return result;
+
+    if ((int)k > w->num_obs) return result;
+
+    schc_wrapper schc(k, w, data, method, distance_method, bound_vals, min_bound);
+    return schc.GetClusters();
+}
 
 double gda_sumofsquares(const std::vector<double>& vals)
 {

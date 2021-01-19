@@ -18,9 +18,7 @@ public:
                    unsigned int redcap_method,
                    const std::string &distance_method,
                    const std::vector<double>& bound_vals,
-                   double min_bound,
-                   int rand_seed,
-                   int cpu_threads);
+                   double min_bound);
 
     virtual ~schc_wrapper();
 

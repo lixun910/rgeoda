@@ -206,6 +206,27 @@ const std::vector<std::vector<int> > gda_skater(unsigned int k,
 
 /**
  *
+ * @param k
+ * @param w
+ * @param data
+ * @param linkage_method
+ * @param distance_method
+ * @param bound_vals
+ * @param min_bound
+ * @param rand_seed
+ * @param cpu_threads
+ * @return
+ */
+const std::vector<std::vector<int> > gda_schc(unsigned int k,
+                                                GeoDaWeight *w,
+                                                const std::vector<std::vector<double> > &data,
+                                                const std::string &linkage_method,
+                                                const std::string &distance_method,
+                                                const std::vector<double>& bound_vals,
+                                                double min_bound);
+
+/**
+ *
  * @param vals
  * @return
  */
