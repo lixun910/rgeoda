@@ -18,7 +18,7 @@ NOTE: we are working to make rgeoda avaiable in CRAN. Once it's available on CRA
 install.packages("rgeoda")
 ```
 
-[![cran status](https://www.r-pkg.org/badges/version/rgeoda)]
+![cran status](https://www.r-pkg.org/badges/version/rgeoda)
 
 #### Build and install from source code
 
@@ -77,13 +77,18 @@ sudo apt-get install build-essential
     * Multivariate Quantile LISA
 
 * Spatial Clustering
+    * SCHC Spatial Constrained Hierarchical Clustering 
+      * Single-linkage
+      * Complete-linkage
+      * Average-linkage
+      * Ward-linkage
     * SKATER
     * REDCAP
       * First-order and Single-linkage
       * Full-order and Complete-linkage
       * Full-order and Average-linkage
       * Full-order and Single-linkage
-      * Full-order and Wards-linkage
+      * Full-order and Ward-linkage
     * AZP
       * greedy
       * Tabu Search
