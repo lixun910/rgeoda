@@ -2,12 +2,12 @@
 
 rgeoda is a R package for spatial data analysis based on libgeoda and GeoDa.
   
-rgeoda pkgdown site: https://lixun910.github.io/rgeoda
+rgeoda pkgdown site: https://geodacenter.github.io/rgeoda
 
 ## Tutorials
 
-* rgeoda 0.0.6 tutorial: https://lixun910.github.io/rgeoda/articles/rgeoda_tutorial_0_0_6.html
-* ESDA using sf and rgeoda: https://lixun910.github.io/rgeoda/articles/rgeoda_tutorial_0_0_6.html
+* rgeoda 0.0.6 tutorial: https://geodacenter.github.io/rgeoda/articles/rgeoda_tutorial_0_0_6.html
+* ESDA using sf and rgeoda: https://geodacenter.github.io/rgeoda/articles/rgeoda_tutorial_0_0_6.html
 
     
 ## Installation
