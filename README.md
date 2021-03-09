@@ -1,3 +1,7 @@
+# This repo is archived. 
+
+Please use: https://github.com/geodacenter/rgeoda
+
 # rgeoda
 
 rgeoda is a R package for spatial data analysis based on libgeoda and GeoDa.
